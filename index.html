@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <title>Binary Search Notes</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #dedede;
+      --cp-border-strong: #919191;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #6f6f6f;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-success: #16a34a;
+      --cp-danger: #dc2626;
+      --cp-warning: #f59e0b;
+      --cp-link: #0078d4;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+      --cp-overlay: rgba(255, 255, 255, 0.8);
+      --cp-panel: rgba(255, 255, 255, 0.86);
+      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.55);
+      --cp-highlight: rgba(177, 31, 75, 0.12);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #3d3b3a;
+      --cp-bg-elevated: #343231;
+      --cp-surface: #292929;
+      --cp-surface-soft: #2e2e2e;
+      --cp-border: #474747;
+      --cp-border-strong: #5f5f5f;
+      --cp-text: #dedede;
+      --cp-text-muted: #919191;
+      --cp-text-soft: #b0b0b0;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-success: #4ade80;
+      --cp-danger: #f87171;
+      --cp-warning: #fbbf24;
+      --cp-link: #4da6ff;
+      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      --cp-overlay: rgba(41, 41, 41, 0.88);
+      --cp-panel: rgba(41, 41, 41, 0.72);
+      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-sheen: rgba(255, 255, 255, 0.04);
+      --cp-highlight: rgba(253, 142, 161, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    summary:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--cp-highlight);
+      outline-offset: 3px;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, "Courier New", Courier, monospace;
+    }
+
+    code {
+      color: var(--cp-accent);
+      font-size: 0.92em;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-overlay);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(900px, calc(100% - 40px));
+      height: 64px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+    }
+
+    .theme-button {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      cursor: pointer;
+    }
+
+    .theme-button:hover {
+      border-color: var(--cp-border-strong);
+    }
+
+    .theme-button svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .page {
+      width: min(900px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 64px 0 96px;
+    }
+
+    .page-header {
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--cp-accent);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 4.6rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .intro {
+      margin: 18px 0 0;
+      color: var(--cp-text-muted);
+      font-size: 1.05rem;
+    }
+
+    .contents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .contents a {
+      padding: 6px 10px;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .contents a:hover {
+      border-color: var(--cp-accent);
+      color: var(--cp-accent);
+    }
+
+    section {
+      padding: 34px 0;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    section:last-of-type {
+      border-bottom: 0;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--cp-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .card {
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: 0 0 2px var(--cp-highlight), 0 1px 2px var(--cp-highlight);
+    }
+
+    .code-card {
+      overflow: hidden;
+    }
+
+    .code-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px 9px 16px;
+      border-bottom: 1px solid var(--cp-border);
+      color: var(--cp-text-muted);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      background: var(--cp-bg-elevated);
+      color: var(--cp-text);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      tab-size: 4;
+    }
+
+    .copy-button {
+      padding: 4px 8px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background: var(--cp-surface-soft);
+      color: var(--cp-text);
+    }
+
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .pattern {
+      padding: 20px;
+    }
+
+    .pattern h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .shape {
+      display: flex;
+      gap: 5px;
+      margin: 14px 0;
+    }
+
+    .shape span {
+      display: grid;
+      min-width: 34px;
+      height: 34px;
+      flex: 1;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 7px;
+      background: var(--cp-surface-soft);
+      color: var(--cp-text-muted);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .shape .true {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+    }
+
+    .hook {
+      margin: 14px 0 0;
+      padding-top: 12px;
+      border-top: 1px solid var(--cp-border);
+      color: var(--cp-accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .final-rule {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-left: 4px solid var(--cp-accent);
+      border-radius: 0 0.625rem 0.625rem 0;
+      background: var(--cp-accent-soft);
+      font-weight: 750;
+    }
+
+    .final-rule span {
+      display: block;
+    }
+
+    .rule-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .rule-number {
+      display: grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .rule-list strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .rule-list p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .warning {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border: 1px solid var(--cp-warning);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+
+    .warning strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .warning p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.88rem;
+    }
+
+    .example-table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .example-table th,
+    .example-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--cp-border);
+      text-align: left;
+    }
+
+    .example-table th {
+      color: var(--cp-text-muted);
+      font-size: 0.73rem;
+      text-transform: uppercase;
+    }
+
+    .example-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .good {
+      color: var(--cp-success);
+      font-weight: 700;
+    }
+
+    .bad {
+      color: var(--cp-danger);
+      font-weight: 700;
+    }
+
+    .boolean-shape {
+      color: var(--cp-text);
+      white-space: nowrap;
+    }
+
+    .boundary-detail {
+      display: block;
+      margin-top: 2px;
+      color: var(--cp-text-muted);
+      font-size: 0.76rem;
+      font-weight: 400;
+    }
+
+    .operator-note {
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--cp-accent);
+      border-radius: 0 0.625rem 0.625rem 0;
+      background: var(--cp-accent-soft);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .rotation-block {
+      display: grid;
+      gap: 14px;
+    }
+
+    .rotation-item {
+      padding: 20px;
+    }
+
+    .rotation-item h3 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+    }
+
+    .rotation-item > p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .boolean-line {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      background: var(--cp-bg-elevated);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .clean-up {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .clean-up-box {
+      padding: 14px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-bg-elevated);
+    }
+
+    .clean-up-box span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--cp-text-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .clean-up-box code {
+      color: var(--cp-text);
+      white-space: nowrap;
+    }
+
+    .arrow {
+      color: var(--cp-accent);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .memory-hook {
+      margin: 16px 0 0;
+      color: var(--cp-accent);
+      font-weight: 800;
+    }
+
+    .complexity-note {
+      margin: 14px 0 0;
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
+    }
+
+    details {
+      overflow: hidden;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+
+    details + details {
+      margin-top: 10px;
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 15px 16px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 750;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      color: var(--cp-text-muted);
+      content: "+";
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 1.1rem;
+    }
+
+    details[open] summary::after {
+      content: "-";
+    }
+
+    .solution-body {
+      border-top: 1px solid var(--cp-border);
+    }
+
+    .solution-note {
+      margin: 0;
+      padding: 14px 16px;
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
+    }
+
+    .solution-body .code-card {
+      border: 0;
+      border-top: 1px solid var(--cp-border);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .library-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .library-item {
+      padding: 15px 16px;
+      border: 1px dashed var(--cp-border-strong);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+
+    .library-item.active {
+      border-style: solid;
+      border-color: var(--cp-accent);
+      background: var(--cp-accent-soft);
+    }
+
+    .library-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.9rem;
+    }
+
+    .library-item span {
+      color: var(--cp-text-muted);
+      font-size: 0.75rem;
+    }
+
+    .library-item.active span {
+      color: var(--cp-accent);
+      font-weight: 700;
+    }
+
+    .footer {
+      padding-top: 36px;
+      color: var(--cp-text-muted);
+      font-size: 0.82rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 20;
+      padding: 9px 12px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-panel-strong);
+      box-shadow: var(--cp-shadow);
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 150ms ease, transform 150ms ease;
+      pointer-events: none;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner,
+      .page {
+        width: min(100% - 28px, 900px);
+      }
+
+      .page {
+        padding-top: 44px;
+      }
+
+      .pattern-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .clean-up {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        text-align: center;
+        transform: rotate(90deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">BS</div>
+        <span>Algorithm Notes</span>
+      </div>
+      <button class="theme-button" id="themeButton" type="button" aria-label="Toggle color theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+    <header class="page-header">
+      <p class="kicker">Algorithm 01</p>
+      <h1>Binary Search</h1>
+      <p class="intro">Find a monotonic boundary. Save a valid midpoint, then move toward the first or last valid index.</p>
+    </header>
+
+    <nav class="contents" aria-label="On this page">
+      <a href="#framework">Framework</a>
+      <a href="#rules">Rules</a>
+      <a href="#rotated">Rotated arrays</a>
+      <a href="#solutions">Full solutions</a>
+      <a href="#library">Other algorithms</a>
+    </nav>
+
+    <section id="framework">
+      <div class="section-title">
+        <h2>Boundary framework</h2>
+        <p>The reusable setup stays the same.</p>
+      </div>
+
+      <div class="card code-card">
+        <div class="code-label">
+          <span>Fixed setup</span>
+          <button class="copy-button" type="button" data-copy="setupCode">Copy</button>
+        </div>
+        <pre id="setupCode">l, r = 0, len(nums) - 1
+ans = -1
+
+while l &lt;= r:
+    m = l + (r - l) // 2</pre>
+      </div>
+
+      <div class="pattern-grid">
+        <article class="card pattern">
+          <h3>First valid</h3>
+          <div class="shape" aria-label="False false false true true true">
+            <span>F</span><span>F</span><span>F</span>
+            <span class="true">T</span><span class="true">T</span><span class="true">T</span>
+          </div>
+          <pre>if valid(m):
+    ans = m
+    r = m - 1
+else:
+    l = m + 1</pre>
+          <p class="hook">FIRST -> save -> go LEFT</p>
+        </article>
+
+        <article class="card pattern">
+          <h3>Last valid</h3>
+          <div class="shape" aria-label="True true true false false false">
+            <span class="true">T</span><span class="true">T</span><span class="true">T</span>
+            <span>F</span><span>F</span><span>F</span>
+          </div>
+          <pre>if valid(m):
+    ans = m
+    l = m + 1
+else:
+    r = m - 1</pre>
+          <p class="hook">LAST -> save -> go RIGHT</p>
+        </article>
+      </div>
+
+      <div class="final-rule">
+        <span>First valid: save <code>m</code>, search left.</span>
+        <span>Last valid: save <code>m</code>, search right.</span>
+      </div>
+    </section>
+
+    <section id="rules">
+      <div class="section-title">
+        <h2>Before using the template</h2>
+        <p>Your predicate must pass both checks.</p>
+      </div>
+
+      <ul class="rule-list">
+        <li>
+          <span class="rule-number">1</span>
+          <div><strong>Fixed</strong><p><code>valid(i)</code> keeps the same meaning while <code>l</code> and <code>r</code> move.</p></div>
+        </li>
+        <li>
+          <span class="rule-number">2</span>
+          <div><strong>Monotonic</strong><p>The results have exactly one boundary: <code>F...T</code> or <code>T...F</code>.</p></div>
+        </li>
+      </ul>
+
+      <p class="operator-note">The operator does not decide FIRST or LAST. The boolean shape decides it.</p>
+
+      <div class="card table-wrap">
+        <table class="example-table">
+          <thead><tr><th>Predicate</th><th>Example</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>nums[i] &gt;= target</code></td>
+              <td>
+                <code class="boolean-shape">[1,3,5,7,9] -> F F F T T</code>
+                <span class="boundary-detail">target = 7</span>
+              </td>
+              <td class="good">
+                First valid
+                <span class="boundary-detail">First True is index 3, value 7. Save and go left.</span>
+              </td>
+            </tr>
+            <tr>
+              <td><code>nums[i] &lt;= target</code></td>
+              <td>
+                <code class="boolean-shape">[1,3,5,7,9] -> T T T F F</code>
+                <span class="boundary-detail">target = 5</span>
+              </td>
+              <td class="good">
+                Last valid
+                <span class="boundary-detail">Last True is index 2, value 5. Save and go right.</span>
+              </td>
+            </tr>
+            <tr>
+              <td><code>nums[i] &lt;= nums[r]</code></td>
+              <td><span class="boundary-detail">The value of r moves during the search.</span></td>
+              <td class="bad">Not fixed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning">
+        <strong>Exact target</strong>
+        <p>The boundary gives a candidate. Verify it afterward: <code>ans != -1 and nums[ans] == target</code>.</p>
+      </div>
+    </section>
+
+    <section id="rotated">
+      <div class="section-title">
+        <h2>Rotated sorted arrays</h2>
+        <p>First find the rotation boundary, then search one sorted side.</p>
+      </div>
+
+      <div class="rotation-block">
+        <article class="card rotation-item">
+          <h3>Distinct values</h3>
+          <p>Keep <code>last = nums[-1]</code> fixed. The first value satisfying <code>nums[i] &lt;= last</code> is the pivot.</p>
+          <div class="boolean-line">[4, 5, 6, 7, 0, 1, 2] -> F F F F T T T</div>
+          <p class="memory-hook">FIRST valid -> rotation boundary</p>
+        </article>
+
+        <article class="card rotation-item">
+          <h3>Duplicate values</h3>
+          <p>Copies of <code>last</code> at the beginning create an extra True prefix and break monotonicity.</p>
+
+          <div class="clean-up">
+            <div class="clean-up-box">
+              <span>Before</span>
+              <code>T T F F T T T</code>
+            </div>
+            <div class="arrow" aria-hidden="true">-&gt;</div>
+            <div class="clean-up-box">
+              <span>Skip leading copies of last</span>
+              <code>F F T T T</code>
+            </div>
+          </div>
+
+          <p class="memory-hook">Check target == last -> skip leading last values -> FIRST nums[i] &lt;= last</p>
+          <p class="complexity-note">Usually <code>O(log n)</code>; worst case <code>O(n)</code>. The linear worst case is unavoidable with unrestricted duplicates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="solutions">
+      <div class="section-title">
+        <h2>Full solutions</h2>
+        <p>Keep these closed during quick review. Open only when needed.</p>
+      </div>
+
+      <details>
+        <summary>Exact target using first valid</summary>
+        <div class="solution-body">
+          <p class="solution-note">Find the first <code>nums[i] &gt;= target</code>, then verify equality.</p>
+          <div class="card code-card">
+            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="exactCode">Copy</button></div>
+            <pre id="exactCode">class Solution:
+    def search(self, nums: List[int], target: int) -&gt; int:
+        l, r = 0, len(nums) - 1
+        ans = -1
+
+        while l &lt;= r:
+            m = l + (r - l) // 2
+
+            if nums[m] &gt;= target:
+                ans = m
+                r = m - 1
+            else:
+                l = m + 1
+
+        return ans if ans != -1 and nums[ans] == target else -1</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Search in Rotated Sorted Array</summary>
+        <div class="solution-body">
+          <p class="solution-note">Distinct values: find the first <code>nums[i] &lt;= last</code>, choose a sorted side, then run last-valid search.</p>
+          <div class="card code-card">
+            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="rotatedCode">Copy</button></div>
+            <pre id="rotatedCode">class Solution:
+    def search(self, nums: List[int], target: int) -&gt; int:
+        l, r = 0, len(nums) - 1
+        last = nums[-1]
+        pivot = -1
+
+        while l &lt;= r:
+            m = l + (r - l) // 2
+            if nums[m] &lt;= last:
+                pivot = m
+                r = m - 1
+            else:
+                l = m + 1
+
+        if nums[pivot] &lt;= target &lt;= nums[-1]:
+            l, r = pivot, len(nums) - 1
+        else:
+            l, r = 0, pivot - 1
+
+        ans = -1
+        while l &lt;= r:
+            m = l + (r - l) // 2
+            if nums[m] &lt;= target:
+                ans = m
+                l = m + 1
+            else:
+                r = m - 1
+
+        return ans if ans != -1 and nums[ans] == target else -1</pre>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Search in Rotated Sorted Array II</summary>
+        <div class="solution-body">
+          <p class="solution-note">Duplicates: remove the unwanted True prefix before applying the same boundary framework.</p>
+          <div class="card code-card">
+            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="duplicateCode">Copy</button></div>
+            <pre id="duplicateCode">class Solution:
+    def search(self, nums: List[int], target: int) -&gt; bool:
+        end = len(nums) - 1
+        last = nums[end]
+
+        if target == last:
+            return True
+
+        start = 0
+        while start &lt; end and nums[start] == last:
+            start += 1
+
+        # First nums[i] &lt;= last
+        l, r = start, end
+        pivot = -1
+
+        while l &lt;= r:
+            m = l + (r - l) // 2
+            if nums[m] &lt;= last:
+                pivot = m
+                r = m - 1
+            else:
+                l = m + 1
+
+        if target &lt; last:
+            l, r = pivot, end
+        else:
+            l, r = start, pivot - 1
+
+        # Last nums[i] &lt;= target
+        ans = -1
+
+        while l &lt;= r:
+            m = l + (r - l) // 2
+            if nums[m] &lt;= target:
+                ans = m
+                l = m + 1
+            else:
+                r = m - 1
+
+        return ans != -1 and nums[ans] == target</pre>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section id="library">
+      <div class="section-title">
+        <h2>Algorithm library</h2>
+        <p>Binary Search is ready. These topics are placeholders for future notes.</p>
+      </div>
+
+      <div class="library-grid">
+        <div class="library-item active"><strong>Binary Search</strong><span>Current note</span></div>
+        <div class="library-item"><strong>Arrays &amp; Hashing</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Two Pointers</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Sliding Window</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Stack</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Linked List</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Trees</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Heap / Priority Queue</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Backtracking</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Graphs</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Dynamic Programming</strong><span>Coming soon</span></div>
+        <div class="library-item"><strong>Greedy</strong><span>Coming soon</span></div>
+      </div>
+    </section>
+
+    <footer class="footer">Algorithm Notes / Binary Search</footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const themeButton = document.getElementById("themeButton");
+    const toast = document.getElementById("toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("visible"), 1400);
+    }
+
+    themeButton.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      showToast(`${next[0].toUpperCase()}${next.slice(1)} theme`);
+    });
+
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+      return Promise.resolve();
+    }
+
+    document.querySelectorAll(".copy-button").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const source = document.getElementById(button.dataset.copy);
+        await copyText(source.textContent);
+        showToast("Copied");
+      });
+    });
+  </script>
+</body>
+</html>
