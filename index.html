@@ -3,67 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      let saved = null;
+      try {
+        saved = localStorage.getItem("algorithm-notes-theme");
+      } catch {
+        saved = null;
+      }
       const theme =
-        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        param || saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
   </script>
-  <title>Binary Search Notes</title>
+  <title>Algorithm Notes</title>
   <style>
     :root {
       color-scheme: light;
-      --cp-bg: #f7f4ef;
-      --cp-bg-elevated: #fcfbf8;
+      --cp-bg: #f8fbff;
+      --cp-bg-elevated: #fbfdff;
       --cp-surface: #ffffff;
-      --cp-surface-soft: #f5f5f5;
-      --cp-border: #dedede;
-      --cp-border-strong: #919191;
-      --cp-text: #242424;
-      --cp-text-muted: #5c5c5c;
-      --cp-text-soft: #6f6f6f;
-      --cp-accent: #b11f4b;
-      --cp-accent-hover: #9a1a41;
-      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-surface-soft: #f2f7fc;
+      --cp-border: #e1ebf4;
+      --cp-border-strong: #a9bfd3;
+      --cp-text: #24384a;
+      --cp-text-muted: #657b8e;
+      --cp-text-soft: #7a8d9e;
+      --cp-accent: #3f78ad;
+      --cp-accent-hover: #326591;
+      --cp-accent-soft: rgba(63, 120, 173, 0.08);
       --cp-accent-fg: #ffffff;
       --cp-success: #16a34a;
       --cp-danger: #dc2626;
       --cp-warning: #f59e0b;
-      --cp-link: #0078d4;
-      --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
-      --cp-overlay: rgba(255, 255, 255, 0.8);
-      --cp-panel: rgba(255, 255, 255, 0.86);
-      --cp-panel-strong: rgba(255, 255, 255, 0.96);
+      --cp-link: #326fa8;
+      --cp-shadow: 0 18px 48px rgba(36, 56, 74, 0.1);
+      --cp-overlay: rgba(248, 251, 255, 0.9);
+      --cp-panel: rgba(255, 255, 255, 0.92);
+      --cp-panel-strong: rgba(255, 255, 255, 0.98);
       --cp-sheen: rgba(255, 255, 255, 0.55);
-      --cp-highlight: rgba(177, 31, 75, 0.12);
+      --cp-highlight: rgba(63, 120, 173, 0.12);
     }
     html[data-theme="dark"] {
       color-scheme: dark;
-      --cp-bg: #3d3b3a;
-      --cp-bg-elevated: #343231;
-      --cp-surface: #292929;
-      --cp-surface-soft: #2e2e2e;
-      --cp-border: #474747;
-      --cp-border-strong: #5f5f5f;
-      --cp-text: #dedede;
-      --cp-text-muted: #919191;
-      --cp-text-soft: #b0b0b0;
-      --cp-accent: #fd8ea1;
-      --cp-accent-hover: #fb7b91;
-      --cp-accent-soft: rgba(253, 142, 161, 0.14);
-      --cp-accent-fg: #1a1a1a;
+      --cp-bg: #151c24;
+      --cp-bg-elevated: #111820;
+      --cp-surface: #1d2732;
+      --cp-surface-soft: #24313d;
+      --cp-border: #344657;
+      --cp-border-strong: #5c748a;
+      --cp-text: #edf5fc;
+      --cp-text-muted: #a8bacb;
+      --cp-text-soft: #c5d1dc;
+      --cp-accent: #7db7ff;
+      --cp-accent-hover: #9bc8ff;
+      --cp-accent-soft: rgba(125, 183, 255, 0.14);
+      --cp-accent-fg: #0c1722;
       --cp-success: #4ade80;
       --cp-danger: #f87171;
       --cp-warning: #fbbf24;
-      --cp-link: #4da6ff;
+      --cp-link: #7db7ff;
       --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
-      --cp-overlay: rgba(41, 41, 41, 0.88);
-      --cp-panel: rgba(41, 41, 41, 0.72);
-      --cp-panel-strong: rgba(41, 41, 41, 0.96);
+      --cp-overlay: rgba(21, 28, 36, 0.9);
+      --cp-panel: rgba(29, 39, 50, 0.78);
+      --cp-panel-strong: rgba(29, 39, 50, 0.98);
       --cp-sheen: rgba(255, 255, 255, 0.04);
-      --cp-highlight: rgba(253, 142, 161, 0.12);
+      --cp-highlight: rgba(125, 183, 255, 0.16);
     }
 
     * {
@@ -71,8 +78,8 @@
     }
 
     html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 88px;
+      scroll-behavior: auto;
+      scroll-padding-top: 76px;
     }
 
     body {
@@ -89,8 +96,8 @@
     }
 
     button:focus-visible,
-    summary:focus-visible,
-    a:focus-visible {
+    a:focus-visible,
+    summary:focus-visible {
       outline: 3px solid var(--cp-highlight);
       outline-offset: 3px;
     }
@@ -105,46 +112,173 @@
       font-size: 0.92em;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-bottom: 1px solid var(--cp-border);
-      background: var(--cp-overlay);
-      backdrop-filter: blur(12px);
+    .app {
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      min-height: 100vh;
     }
 
-    .topbar-inner {
+    .sidebar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: min(900px, calc(100% - 40px));
-      height: 64px;
-      margin: 0 auto;
+      flex-direction: column;
+      height: 100vh;
+      padding: 20px 14px;
+      overflow-y: auto;
+      border-right: 1px solid var(--cp-border);
+      background: var(--cp-bg-elevated);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
+      padding: 0 8px 20px;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
 
     .brand-mark {
       display: grid;
-      width: 30px;
-      height: 30px;
+      width: 34px;
+      height: 34px;
       place-items: center;
-      border-radius: 8px;
+      border-radius: 0.625rem;
       background: var(--cp-accent);
       color: var(--cp-accent-fg);
       font-family: Consolas, "Courier New", Courier, monospace;
       font-size: 0.72rem;
     }
 
-    .theme-button {
+    .nav-label {
+      margin: 12px 10px 7px;
+      color: var(--cp-text-muted);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .topic-nav {
       display: grid;
+      gap: 4px;
+    }
+
+    .topic-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 10px;
+      border: 1px solid transparent;
+      border-radius: 0.625rem;
+      background: transparent;
+      color: var(--cp-text-muted);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .topic-button:hover:not(:disabled) {
+      background: var(--cp-surface-soft);
+      color: var(--cp-text);
+    }
+
+    .topic-button.active {
+      border-color: var(--cp-border);
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-weight: 750;
+    }
+
+    .topic-button:disabled {
+      cursor: default;
+      opacity: 0.58;
+    }
+
+    .topic-icon {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      flex: 0 0 25px;
+      place-items: center;
+      border: 1px solid var(--cp-border);
+      border-radius: 7px;
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .topic-button.active .topic-icon {
+      border-color: var(--cp-accent);
+    }
+
+    .soon {
+      margin-left: auto;
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .sidebar-spacer {
+      flex: 1;
+      min-height: 24px;
+    }
+
+    .theme-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      width: 100%;
+      padding: 4px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+
+    .theme-option {
+      min-height: 32px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--cp-text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .theme-option:hover {
+      background: var(--cp-surface-soft);
+      color: var(--cp-text);
+    }
+
+    .theme-option.active {
+      background: var(--cp-accent);
+      color: var(--cp-accent-fg);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-overlay);
+      backdrop-filter: blur(12px);
+    }
+
+    .menu-button {
+      display: none;
       width: 36px;
       height: 36px;
       place-items: center;
@@ -155,30 +289,39 @@
       cursor: pointer;
     }
 
-    .theme-button:hover {
-      border-color: var(--cp-border-strong);
+    .menu-button svg {
+      width: 18px;
+      height: 18px;
     }
 
-    .theme-button svg {
-      width: 17px;
-      height: 17px;
+    .current-topic {
+      font-size: 0.86rem;
+      font-weight: 750;
     }
 
-    .page {
-      width: min(900px, calc(100% - 40px));
+    .topic-panel {
+      display: none;
+    }
+
+    .topic-panel.active {
+      display: block;
+    }
+
+    .note {
+      width: min(900px, calc(100% - 48px));
       margin: 0 auto;
-      padding: 64px 0 96px;
+      padding: 54px 0 96px;
     }
 
-    .page-header {
-      max-width: 680px;
+    .note-header {
+      max-width: 720px;
       margin-bottom: 28px;
     }
 
     .kicker {
       margin: 0 0 8px;
       color: var(--cp-accent);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -194,25 +337,25 @@
     .intro {
       margin: 18px 0 0;
       color: var(--cp-text-muted);
-      font-size: 1.05rem;
+      font-size: 1.04rem;
     }
 
     .contents {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 36px;
-      padding-bottom: 28px;
+      margin-bottom: 32px;
+      padding-bottom: 26px;
       border-bottom: 1px solid var(--cp-border);
     }
 
     .contents a {
-      padding: 6px 10px;
+      padding: 5px 10px;
       border: 1px solid var(--cp-border);
       border-radius: 999px;
       background: var(--cp-surface);
       color: var(--cp-text-muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-decoration: none;
     }
@@ -222,29 +365,29 @@
       color: var(--cp-accent);
     }
 
-    section {
-      padding: 34px 0;
+    .note-section {
+      padding: 32px 0;
       border-bottom: 1px solid var(--cp-border);
     }
 
-    section:last-of-type {
+    .note-section:last-of-type {
       border-bottom: 0;
     }
 
     .section-title {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .section-title h2 {
       margin: 0;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       letter-spacing: -0.03em;
     }
 
     .section-title p {
       margin: 4px 0 0;
       color: var(--cp-text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
 
     .card {
@@ -265,17 +408,17 @@
       padding: 9px 12px 9px 16px;
       border-bottom: 1px solid var(--cp-border);
       color: var(--cp-text-muted);
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 700;
     }
 
     pre {
       margin: 0;
-      padding: 18px;
+      padding: 17px;
       overflow-x: auto;
       background: var(--cp-bg-elevated);
       color: var(--cp-text);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       line-height: 1.65;
       tab-size: 4;
     }
@@ -286,7 +429,7 @@
       border-radius: 7px;
       background: transparent;
       color: var(--cp-text-muted);
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 700;
       cursor: pointer;
     }
@@ -296,20 +439,25 @@
       color: var(--cp-text);
     }
 
-    .pattern-grid {
+    .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
+      gap: 14px;
     }
 
-    .pattern {
-      padding: 20px;
+    .pad {
+      padding: 19px;
     }
 
-    .pattern h3 {
-      margin: 0;
+    .pad h3 {
+      margin: 0 0 6px;
       font-size: 1rem;
+    }
+
+    .pad > p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
     }
 
     .shape {
@@ -320,7 +468,7 @@
 
     .shape span {
       display: grid;
-      min-width: 34px;
+      min-width: 32px;
       height: 34px;
       flex: 1;
       place-items: center;
@@ -329,7 +477,7 @@
       background: var(--cp-surface-soft);
       color: var(--cp-text-muted);
       font-family: Consolas, "Courier New", Courier, monospace;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 800;
     }
 
@@ -340,30 +488,41 @@
     }
 
     .hook {
-      margin: 14px 0 0;
-      padding-top: 12px;
+      margin: 13px 0 0;
+      padding-top: 11px;
       border-top: 1px solid var(--cp-border);
       color: var(--cp-accent);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
     }
 
-    .final-rule {
-      margin-top: 16px;
-      padding: 16px 18px;
+    .callout {
+      margin-top: 14px;
+      padding: 14px 16px;
       border-left: 4px solid var(--cp-accent);
       border-radius: 0 0.625rem 0.625rem 0;
       background: var(--cp-accent-soft);
-      font-weight: 750;
     }
 
-    .final-rule span {
+    .callout.warning {
+      border-left-color: var(--cp-warning);
+      background: var(--cp-surface);
+    }
+
+    .callout strong {
       display: block;
+      margin-bottom: 3px;
+    }
+
+    .callout p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.86rem;
     }
 
     .rule-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -371,20 +530,20 @@
 
     .rule-list li {
       display: grid;
-      grid-template-columns: 28px 1fr;
+      grid-template-columns: 27px 1fr;
       gap: 10px;
       align-items: start;
     }
 
-    .rule-number {
+    .number {
       display: grid;
-      width: 26px;
-      height: 26px;
+      width: 25px;
+      height: 25px;
       place-items: center;
       border-radius: 50%;
       background: var(--cp-accent-soft);
       color: var(--cp-accent);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 800;
     }
 
@@ -396,165 +555,191 @@
     .rule-list p {
       margin: 0;
       color: var(--cp-text-muted);
-      font-size: 0.9rem;
-    }
-
-    .warning {
-      margin-top: 20px;
-      padding: 16px 18px;
-      border: 1px solid var(--cp-warning);
-      border-radius: 0.625rem;
-      background: var(--cp-surface);
-    }
-
-    .warning strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .warning p {
-      margin: 0;
-      color: var(--cp-text-muted);
       font-size: 0.88rem;
-    }
-
-    .example-table {
-      width: 100%;
-      margin-top: 16px;
-      border-collapse: collapse;
-      font-size: 0.86rem;
     }
 
     .table-wrap {
       overflow-x: auto;
     }
 
-    .example-table th,
-    .example-table td {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    th,
+    td {
       padding: 11px 12px;
       border-bottom: 1px solid var(--cp-border);
       text-align: left;
+      vertical-align: top;
     }
 
-    .example-table th {
+    th {
       color: var(--cp-text-muted);
-      font-size: 0.73rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .example-table tr:last-child td {
+    tr:last-child td {
       border-bottom: 0;
+    }
+
+    td strong {
+      display: block;
+    }
+
+    .detail {
+      display: block;
+      margin-top: 2px;
+      color: var(--cp-text-muted);
+      font-size: 0.74rem;
     }
 
     .good {
       color: var(--cp-success);
-      font-weight: 700;
+      font-weight: 750;
     }
 
     .bad {
       color: var(--cp-danger);
-      font-weight: 700;
-    }
-
-    .boolean-shape {
-      color: var(--cp-text);
-      white-space: nowrap;
-    }
-
-    .boundary-detail {
-      display: block;
-      margin-top: 2px;
-      color: var(--cp-text-muted);
-      font-size: 0.76rem;
-      font-weight: 400;
-    }
-
-    .operator-note {
-      margin: 16px 0 0;
-      padding: 14px 16px;
-      border-left: 4px solid var(--cp-accent);
-      border-radius: 0 0.625rem 0.625rem 0;
-      background: var(--cp-accent-soft);
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    .rotation-block {
-      display: grid;
-      gap: 14px;
-    }
-
-    .rotation-item {
-      padding: 20px;
-    }
-
-    .rotation-item h3 {
-      margin: 0 0 5px;
-      font-size: 1rem;
-    }
-
-    .rotation-item > p {
-      margin: 0;
-      color: var(--cp-text-muted);
-      font-size: 0.9rem;
+      font-weight: 750;
     }
 
     .boolean-line {
-      margin-top: 14px;
-      padding: 11px 13px;
+      margin-top: 13px;
+      padding: 10px 12px;
+      overflow-x: auto;
       border-radius: 8px;
       background: var(--cp-bg-elevated);
       font-family: Consolas, "Courier New", Courier, monospace;
-      font-size: 0.8rem;
-      overflow-x: auto;
+      font-size: 0.78rem;
       white-space: nowrap;
     }
 
-    .clean-up {
+    .steps {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 12px;
-      align-items: center;
-      margin-top: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 14px;
     }
 
-    .clean-up-box {
-      padding: 14px;
+    .step {
+      padding: 13px;
       border: 1px solid var(--cp-border);
       border-radius: 0.625rem;
-      background: var(--cp-bg-elevated);
+      background: var(--cp-surface);
     }
 
-    .clean-up-box span {
+    .step strong {
       display: block;
-      margin-bottom: 5px;
-      color: var(--cp-text-muted);
-      font-size: 0.72rem;
-      font-weight: 700;
+      color: var(--cp-accent);
+      font-size: 0.76rem;
       text-transform: uppercase;
     }
 
-    .clean-up-box code {
+    .step span {
+      color: var(--cp-text-muted);
+      font-size: 0.79rem;
+    }
+
+    .tree-scroll {
+      overflow-x: auto;
+      padding: 16px 16px 6px;
+      background: var(--cp-bg-elevated);
+    }
+
+    .tree-svg {
+      display: block;
+      width: 100%;
+      min-width: 650px;
+      height: auto;
+    }
+
+    .tree-edge {
+      fill: none;
+      stroke: var(--cp-border-strong);
+      stroke-width: 2;
+    }
+
+    .tree-node rect {
+      fill: var(--cp-surface);
+      stroke: var(--cp-border-strong);
+      stroke-width: 2;
+    }
+
+    .tree-node text {
+      fill: var(--cp-text);
+      font-family: Consolas, "Courier New", Courier, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+
+    .tree-leaf rect {
+      fill: var(--cp-accent-soft);
+      stroke: var(--cp-accent);
+    }
+
+    .tree-leaf text {
+      fill: var(--cp-accent);
+    }
+
+    .tree-label {
+      fill: var(--cp-text-muted);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+
+    .visual-caption {
+      margin: 0;
+      padding: 13px 16px;
+      border-top: 1px solid var(--cp-border);
+      color: var(--cp-text-muted);
+      font-size: 0.84rem;
+    }
+
+    .path-cycle {
+      display: flex;
+      align-items: stretch;
+      gap: 7px;
+      margin-top: 14px;
+      overflow-x: auto;
+      padding-bottom: 3px;
+    }
+
+    .path-state {
+      min-width: 135px;
+      flex: 1;
+      padding: 12px;
+      border: 1px solid var(--cp-border);
+      border-radius: 0.625rem;
+      background: var(--cp-surface);
+    }
+
+    .path-state strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--cp-accent);
+      font-size: 0.69rem;
+      text-transform: uppercase;
+    }
+
+    .path-state code {
       color: var(--cp-text);
       white-space: nowrap;
     }
 
-    .arrow {
+    .path-arrow {
+      display: grid;
+      min-width: 20px;
+      place-items: center;
       color: var(--cp-accent);
-      font-size: 1.4rem;
-      font-weight: 800;
-    }
-
-    .memory-hook {
-      margin: 16px 0 0;
-      color: var(--cp-accent);
-      font-weight: 800;
-    }
-
-    .complexity-note {
-      margin: 14px 0 0;
-      color: var(--cp-text-muted);
-      font-size: 0.86rem;
+      font-weight: 900;
     }
 
     details {
@@ -565,18 +750,17 @@
     }
 
     details + details {
-      margin-top: 10px;
+      margin-top: 9px;
     }
 
     summary {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 15px 16px;
+      padding: 14px 15px;
       cursor: pointer;
       list-style: none;
-      font-weight: 750;
     }
 
     summary::-webkit-details-marker {
@@ -587,11 +771,24 @@
       color: var(--cp-text-muted);
       content: "+";
       font-family: Consolas, "Courier New", Courier, monospace;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
     }
 
     details[open] summary::after {
       content: "-";
+    }
+
+    .summary-title strong {
+      display: block;
+    }
+
+    .summary-title span {
+      display: block;
+      overflow: hidden;
+      color: var(--cp-text-muted);
+      font-size: 0.75rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .solution-body {
@@ -600,9 +797,9 @@
 
     .solution-note {
       margin: 0;
-      padding: 14px 16px;
+      padding: 13px 15px;
       color: var(--cp-text-muted);
-      font-size: 0.86rem;
+      font-size: 0.83rem;
     }
 
     .solution-body .code-card {
@@ -612,58 +809,27 @@
       box-shadow: none;
     }
 
-    .library-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-    }
-
-    .library-item {
-      padding: 15px 16px;
-      border: 1px dashed var(--cp-border-strong);
-      border-radius: 0.625rem;
-      background: var(--cp-surface);
-    }
-
-    .library-item.active {
-      border-style: solid;
-      border-color: var(--cp-accent);
-      background: var(--cp-accent-soft);
-    }
-
-    .library-item strong {
-      display: block;
-      margin-bottom: 2px;
-      font-size: 0.9rem;
-    }
-
-    .library-item span {
-      color: var(--cp-text-muted);
-      font-size: 0.75rem;
-    }
-
-    .library-item.active span {
-      color: var(--cp-accent);
-      font-weight: 700;
-    }
-
     .footer {
-      padding-top: 36px;
+      padding-top: 34px;
       color: var(--cp-text-muted);
-      font-size: 0.82rem;
+      font-size: 0.79rem;
+    }
+
+    .overlay {
+      display: none;
     }
 
     .toast {
       position: fixed;
       right: 20px;
       bottom: 20px;
-      z-index: 20;
+      z-index: 50;
       padding: 9px 12px;
       border: 1px solid var(--cp-border);
       border-radius: 0.625rem;
       background: var(--cp-panel-strong);
       box-shadow: var(--cp-shadow);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       opacity: 0;
       transform: translateY(8px);
@@ -676,27 +842,58 @@
       transform: translateY(0);
     }
 
+    @media (max-width: 860px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        width: 252px;
+        transform: translateX(-100%);
+        box-shadow: var(--cp-shadow);
+        transition: transform 180ms ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .menu-button {
+        display: grid;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        display: block;
+        background: var(--cp-overlay);
+        opacity: 0;
+        transition: opacity 180ms ease;
+        pointer-events: none;
+      }
+
+      .overlay.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
     @media (max-width: 680px) {
-      .topbar-inner,
-      .page {
+      .note {
         width: min(100% - 28px, 900px);
+        padding-top: 40px;
       }
 
-      .page {
-        padding-top: 44px;
+      .topbar {
+        padding: 0 14px;
       }
 
-      .pattern-grid {
+      .grid-2,
+      .steps {
         grid-template-columns: 1fr;
-      }
-
-      .clean-up {
-        grid-template-columns: 1fr;
-      }
-
-      .arrow {
-        text-align: center;
-        transform: rotate(90deg);
       }
     }
 
@@ -711,206 +908,210 @@
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
+  <div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Algorithm topics">
       <div class="brand">
-        <div class="brand-mark">BS</div>
+        <span class="brand-mark">A/N</span>
         <span>Algorithm Notes</span>
       </div>
-      <button class="theme-button" id="themeButton" type="button" aria-label="Toggle color theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
-        </svg>
-      </button>
-    </div>
-  </header>
 
-  <main class="page">
-    <header class="page-header">
-      <p class="kicker">Algorithm 01</p>
-      <h1>Binary Search</h1>
-      <p class="intro">Find a monotonic boundary. Save a valid midpoint, then move toward the first or last valid index.</p>
-    </header>
+      <div class="nav-label">Ready</div>
+      <nav class="topic-nav">
+        <button class="topic-button active" type="button" data-topic="binary">
+          <span class="topic-icon">BS</span>
+          <span>Binary Search</span>
+        </button>
+        <button class="topic-button" type="button" data-topic="backtracking">
+          <span class="topic-icon">BT</span>
+          <span>Backtracking</span>
+        </button>
+      </nav>
 
-    <nav class="contents" aria-label="On this page">
-      <a href="#framework">Framework</a>
-      <a href="#rules">Rules</a>
-      <a href="#rotated">Rotated arrays</a>
-      <a href="#solutions">Full solutions</a>
-      <a href="#library">Other algorithms</a>
-    </nav>
+      <div class="nav-label">Coming next</div>
+      <nav class="topic-nav">
+        <button class="topic-button" type="button" disabled><span class="topic-icon">AH</span><span>Arrays &amp; Hashing</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">2P</span><span>Two Pointers</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">SW</span><span>Sliding Window</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">ST</span><span>Stack</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">TR</span><span>Trees</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">GR</span><span>Graphs</span><span class="soon">Soon</span></button>
+        <button class="topic-button" type="button" disabled><span class="topic-icon">DP</span><span>Dynamic Programming</span><span class="soon">Soon</span></button>
+      </nav>
 
-    <section id="framework">
-      <div class="section-title">
-        <h2>Boundary framework</h2>
-        <p>The reusable setup stays the same.</p>
+      <div class="sidebar-spacer"></div>
+      <div class="theme-switch" role="group" aria-label="Color theme">
+        <button class="theme-option" type="button" data-theme-choice="light">Light</button>
+        <button class="theme-option" type="button" data-theme-choice="dark">Dark</button>
       </div>
+    </aside>
 
-      <div class="card code-card">
-        <div class="code-label">
-          <span>Fixed setup</span>
-          <button class="copy-button" type="button" data-copy="setupCode">Copy</button>
-        </div>
-        <pre id="setupCode">l, r = 0, len(nums) - 1
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton" type="button" aria-label="Open topic navigation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+        <span class="current-topic" id="currentTopic">Binary Search</span>
+      </header>
+
+      <article class="topic-panel active" id="topic-binary">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 01</p>
+            <h1>Binary Search</h1>
+            <p class="intro">Find a monotonic boundary. Save a valid midpoint, then move toward the first or last valid index.</p>
+          </header>
+
+          <nav class="contents" aria-label="Binary Search sections">
+            <a href="#bs-framework">Framework</a>
+            <a href="#bs-rules">Rules</a>
+            <a href="#bs-rotated">Rotated arrays</a>
+            <a href="#bs-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="bs-framework">
+            <div class="section-title">
+              <h2>Boundary framework</h2>
+              <p>The reusable setup stays the same.</p>
+            </div>
+
+            <div class="card code-card">
+              <div class="code-label"><span>Fixed setup</span><button class="copy-button" type="button" data-copy="bsSetup">Copy</button></div>
+              <pre id="bsSetup">l, r = 0, len(nums) - 1
 ans = -1
 
 while l &lt;= r:
     m = l + (r - l) // 2</pre>
-      </div>
+            </div>
 
-      <div class="pattern-grid">
-        <article class="card pattern">
-          <h3>First valid</h3>
-          <div class="shape" aria-label="False false false true true true">
-            <span>F</span><span>F</span><span>F</span>
-            <span class="true">T</span><span class="true">T</span><span class="true">T</span>
-          </div>
-          <pre>if valid(m):
+            <div class="grid-2">
+              <article class="card pad">
+                <h3>First valid</h3>
+                <div class="shape" aria-label="False false false true true true">
+                  <span>F</span><span>F</span><span>F</span><span class="true">T</span><span class="true">T</span><span class="true">T</span>
+                </div>
+                <pre>if valid(m):
     ans = m
     r = m - 1
 else:
     l = m + 1</pre>
-          <p class="hook">FIRST -> save -> go LEFT</p>
-        </article>
+                <p class="hook">FIRST -> save -> go LEFT</p>
+              </article>
 
-        <article class="card pattern">
-          <h3>Last valid</h3>
-          <div class="shape" aria-label="True true true false false false">
-            <span class="true">T</span><span class="true">T</span><span class="true">T</span>
-            <span>F</span><span>F</span><span>F</span>
-          </div>
-          <pre>if valid(m):
+              <article class="card pad">
+                <h3>Last valid</h3>
+                <div class="shape" aria-label="True true true false false false">
+                  <span class="true">T</span><span class="true">T</span><span class="true">T</span><span>F</span><span>F</span><span>F</span>
+                </div>
+                <pre>if valid(m):
     ans = m
     l = m + 1
 else:
     r = m - 1</pre>
-          <p class="hook">LAST -> save -> go RIGHT</p>
-        </article>
-      </div>
-
-      <div class="final-rule">
-        <span>First valid: save <code>m</code>, search left.</span>
-        <span>Last valid: save <code>m</code>, search right.</span>
-      </div>
-    </section>
-
-    <section id="rules">
-      <div class="section-title">
-        <h2>Before using the template</h2>
-        <p>Your predicate must pass both checks.</p>
-      </div>
-
-      <ul class="rule-list">
-        <li>
-          <span class="rule-number">1</span>
-          <div><strong>Fixed</strong><p><code>valid(i)</code> keeps the same meaning while <code>l</code> and <code>r</code> move.</p></div>
-        </li>
-        <li>
-          <span class="rule-number">2</span>
-          <div><strong>Monotonic</strong><p>The results have exactly one boundary: <code>F...T</code> or <code>T...F</code>.</p></div>
-        </li>
-      </ul>
-
-      <p class="operator-note">The operator does not decide FIRST or LAST. The boolean shape decides it.</p>
-
-      <div class="card table-wrap">
-        <table class="example-table">
-          <thead><tr><th>Predicate</th><th>Example</th><th>Result</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><code>nums[i] &gt;= target</code></td>
-              <td>
-                <code class="boolean-shape">[1,3,5,7,9] -> F F F T T</code>
-                <span class="boundary-detail">target = 7</span>
-              </td>
-              <td class="good">
-                First valid
-                <span class="boundary-detail">First True is index 3, value 7. Save and go left.</span>
-              </td>
-            </tr>
-            <tr>
-              <td><code>nums[i] &lt;= target</code></td>
-              <td>
-                <code class="boolean-shape">[1,3,5,7,9] -> T T T F F</code>
-                <span class="boundary-detail">target = 5</span>
-              </td>
-              <td class="good">
-                Last valid
-                <span class="boundary-detail">Last True is index 2, value 5. Save and go right.</span>
-              </td>
-            </tr>
-            <tr>
-              <td><code>nums[i] &lt;= nums[r]</code></td>
-              <td><span class="boundary-detail">The value of r moves during the search.</span></td>
-              <td class="bad">Not fixed</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="warning">
-        <strong>Exact target</strong>
-        <p>The boundary gives a candidate. Verify it afterward: <code>ans != -1 and nums[ans] == target</code>.</p>
-      </div>
-    </section>
-
-    <section id="rotated">
-      <div class="section-title">
-        <h2>Rotated sorted arrays</h2>
-        <p>First find the rotation boundary, then search one sorted side.</p>
-      </div>
-
-      <div class="rotation-block">
-        <article class="card rotation-item">
-          <h3>Distinct values</h3>
-          <p>Keep <code>last = nums[-1]</code> fixed. The first value satisfying <code>nums[i] &lt;= last</code> is the pivot.</p>
-          <div class="boolean-line">[4, 5, 6, 7, 0, 1, 2] -> F F F F T T T</div>
-          <p class="memory-hook">FIRST valid -> rotation boundary</p>
-        </article>
-
-        <article class="card rotation-item">
-          <h3>Duplicate values</h3>
-          <p>Copies of <code>last</code> at the beginning create an extra True prefix and break monotonicity.</p>
-
-          <div class="clean-up">
-            <div class="clean-up-box">
-              <span>Before</span>
-              <code>T T F F T T T</code>
+                <p class="hook">LAST -> save -> go RIGHT</p>
+              </article>
             </div>
-            <div class="arrow" aria-hidden="true">-&gt;</div>
-            <div class="clean-up-box">
-              <span>Skip leading copies of last</span>
-              <code>F F T T T</code>
+
+            <div class="callout">
+              <strong>Final rule</strong>
+              <p>First valid: save <code>m</code>, search left. Last valid: save <code>m</code>, search right.</p>
             </div>
-          </div>
+          </section>
 
-          <p class="memory-hook">Check target == last -> skip leading last values -> FIRST nums[i] &lt;= last</p>
-          <p class="complexity-note">Usually <code>O(log n)</code>; worst case <code>O(n)</code>. The linear worst case is unavoidable with unrestricted duplicates.</p>
-        </article>
-      </div>
-    </section>
+          <section class="note-section" id="bs-rules">
+            <div class="section-title">
+              <h2>Before using the template</h2>
+              <p>The predicate must be fixed and monotonic.</p>
+            </div>
 
-    <section id="solutions">
-      <div class="section-title">
-        <h2>Full solutions</h2>
-        <p>Keep these closed during quick review. Open only when needed.</p>
-      </div>
+            <ul class="rule-list">
+              <li><span class="number">1</span><div><strong>Fixed</strong><p><code>valid(i)</code> keeps the same meaning while <code>l</code> and <code>r</code> move.</p></div></li>
+              <li><span class="number">2</span><div><strong>Monotonic</strong><p>Its results have exactly one boundary: <code>F...T</code> or <code>T...F</code>.</p></div></li>
+            </ul>
 
-      <details>
-        <summary>Exact target using first valid</summary>
-        <div class="solution-body">
-          <p class="solution-note">Find the first <code>nums[i] &gt;= target</code>, then verify equality.</p>
-          <div class="card code-card">
-            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="exactCode">Copy</button></div>
-            <pre id="exactCode">class Solution:
+            <div class="callout">
+              <strong>The operator does not decide FIRST or LAST</strong>
+              <p>The boolean shape decides it.</p>
+            </div>
+
+            <div class="card table-wrap">
+              <table>
+                <thead><tr><th>Predicate</th><th>Example</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><code>nums[i] &gt;= target</code></td>
+                    <td><code>[1,3,5,7,9] -> F F F T T</code><span class="detail">target = 7</span></td>
+                    <td class="good">First valid<span class="detail">First True: index 3, value 7. Save and go left.</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>nums[i] &lt;= target</code></td>
+                    <td><code>[1,3,5,7,9] -> T T T F F</code><span class="detail">target = 5</span></td>
+                    <td class="good">Last valid<span class="detail">Last True: index 2, value 5. Save and go right.</span></td>
+                  </tr>
+                  <tr>
+                    <td><code>nums[i] &lt;= nums[r]</code></td>
+                    <td><span class="detail">The value of r moves during search.</span></td>
+                    <td class="bad">Not fixed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout warning">
+              <strong>Exact target</strong>
+              <p>The boundary gives a candidate. Verify: <code>ans != -1 and nums[ans] == target</code>.</p>
+            </div>
+          </section>
+
+          <section class="note-section" id="bs-rotated">
+            <div class="section-title">
+              <h2>Rotated sorted arrays</h2>
+              <p>Find the pivot, select one sorted side, then run boundary search.</p>
+            </div>
+
+            <div class="grid-2">
+              <article class="card pad">
+                <h3>Distinct values</h3>
+                <p>Freeze <code>last = nums[-1]</code>. The first <code>nums[i] &lt;= last</code> is the pivot.</p>
+                <div class="boolean-line">[4,5,6,7,0,1,2] -> F F F F T T T</div>
+                <p class="hook">FIRST valid -> pivot</p>
+              </article>
+              <article class="card pad">
+                <h3>Duplicate values</h3>
+                <p>Leading copies of <code>last</code> create an unwanted True prefix.</p>
+                <div class="boolean-line">T T F F T T T -> skip prefix -> F F T T T</div>
+                <p class="hook">Check target == last -> skip leading last values</p>
+              </article>
+            </div>
+
+            <div class="callout warning">
+              <strong>Complexity with unrestricted duplicates</strong>
+              <p>Usually <code>O(log n)</code>, but worst case <code>O(n)</code>. Equal values can hide the pivot, so the linear worst case is unavoidable.</p>
+            </div>
+          </section>
+
+          <section class="note-section" id="bs-solutions">
+            <div class="section-title">
+              <h2>Full solutions</h2>
+              <p>Open only when you need the complete reference.</p>
+            </div>
+
+            <details>
+              <summary><span class="summary-title"><strong>Exact target</strong><span>First nums[i] &gt;= target, then verify</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Find the first value greater than or equal to the target, then confirm it equals the target.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="bsExact">Copy</button></div>
+                  <pre id="bsExact">class Solution:
     def search(self, nums: List[int], target: int) -&gt; int:
         l, r = 0, len(nums) - 1
         ans = -1
 
         while l &lt;= r:
             m = l + (r - l) // 2
-
             if nums[m] &gt;= target:
                 ans = m
                 r = m - 1
@@ -918,17 +1119,17 @@ else:
                 l = m + 1
 
         return ans if ans != -1 and nums[ans] == target else -1</pre>
-          </div>
-        </div>
-      </details>
+                </div>
+              </div>
+            </details>
 
-      <details>
-        <summary>Search in Rotated Sorted Array</summary>
-        <div class="solution-body">
-          <p class="solution-note">Distinct values: find the first <code>nums[i] &lt;= last</code>, choose a sorted side, then run last-valid search.</p>
-          <div class="card code-card">
-            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="rotatedCode">Copy</button></div>
-            <pre id="rotatedCode">class Solution:
+            <details>
+              <summary><span class="summary-title"><strong>Search in Rotated Sorted Array</strong><span>Distinct values</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Find the pivot, choose the sorted portion containing the target, then find the last value at most target.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="bsRotated">Copy</button></div>
+                  <pre id="bsRotated">class Solution:
     def search(self, nums: List[int], target: int) -&gt; int:
         l, r = 0, len(nums) - 1
         last = nums[-1]
@@ -957,17 +1158,17 @@ else:
                 r = m - 1
 
         return ans if ans != -1 and nums[ans] == target else -1</pre>
-          </div>
-        </div>
-      </details>
+                </div>
+              </div>
+            </details>
 
-      <details>
-        <summary>Search in Rotated Sorted Array II</summary>
-        <div class="solution-body">
-          <p class="solution-note">Duplicates: remove the unwanted True prefix before applying the same boundary framework.</p>
-          <div class="card code-card">
-            <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="duplicateCode">Copy</button></div>
-            <pre id="duplicateCode">class Solution:
+            <details>
+              <summary><span class="summary-title"><strong>Search in Rotated Sorted Array II</strong><span>Duplicate values</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Protect target equal to last, skip the duplicate prefix, then reuse the distinct-value framework.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="bsRotatedDup">Copy</button></div>
+                  <pre id="bsRotatedDup">class Solution:
     def search(self, nums: List[int], target: int) -&gt; bool:
         end = len(nums) - 1
         last = nums[end]
@@ -979,10 +1180,8 @@ else:
         while start &lt; end and nums[start] == last:
             start += 1
 
-        # First nums[i] &lt;= last
         l, r = start, end
         pivot = -1
-
         while l &lt;= r:
             m = l + (r - l) // 2
             if nums[m] &lt;= last:
@@ -996,9 +1195,7 @@ else:
         else:
             l, r = start, pivot - 1
 
-        # Last nums[i] &lt;= target
         ans = -1
-
         while l &lt;= r:
             m = l + (r - l) // 2
             if nums[m] &lt;= target:
@@ -1008,42 +1205,430 @@ else:
                 r = m - 1
 
         return ans != -1 and nums[ans] == target</pre>
-          </div>
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Binary Search</footer>
         </div>
-      </details>
-    </section>
+      </article>
 
-    <section id="library">
-      <div class="section-title">
-        <h2>Algorithm library</h2>
-        <p>Binary Search is ready. These topics are placeholders for future notes.</p>
-      </div>
+      <article class="topic-panel" id="topic-backtracking">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 02</p>
+            <h1>Backtracking</h1>
+            <p class="intro">Build one candidate step by step. Explore each valid choice, then undo it so the next branch starts clean.</p>
+          </header>
 
-      <div class="library-grid">
-        <div class="library-item active"><strong>Binary Search</strong><span>Current note</span></div>
-        <div class="library-item"><strong>Arrays &amp; Hashing</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Two Pointers</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Sliding Window</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Stack</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Linked List</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Trees</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Heap / Priority Queue</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Backtracking</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Graphs</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Dynamic Programming</strong><span>Coming soon</span></div>
-        <div class="library-item"><strong>Greedy</strong><span>Coming soon</span></div>
-      </div>
-    </section>
+          <nav class="contents" aria-label="Backtracking sections">
+            <a href="#bt-thinking">How to think</a>
+            <a href="#bt-framework">Framework</a>
+            <a href="#bt-visualize">Visualize</a>
+            <a href="#bt-decisions">Decisions</a>
+            <a href="#bt-map">Problem map</a>
+            <a href="#bt-solutions">Solutions</a>
+          </nav>
 
-    <footer class="footer">Algorithm Notes / Binary Search</footer>
-  </main>
+          <section class="note-section" id="bt-thinking">
+            <div class="section-title">
+              <h2>How to think inside <code>dfs</code></h2>
+              <p>Focus on one call, not the entire recursion tree.</p>
+            </div>
+
+            <div class="callout">
+              <strong><code>dfs(state, path)</code></strong>
+              <p><code>path</code> is what you have built. <code>state</code> tells you where you are and which choices remain.</p>
+            </div>
+
+            <ul class="rule-list">
+              <li><span class="number">1</span><div><strong>Stop</strong><p>If <code>path</code> is complete, save <code>path.copy()</code> and return.</p></div></li>
+              <li><span class="number">2</span><div><strong>Choose and explore</strong><p>Add one valid choice, update state, and recurse.</p></div></li>
+              <li><span class="number">3</span><div><strong>Undo</strong><p>Remove the choice so the next branch starts from the same path.</p></div></li>
+            </ul>
+
+            <div class="callout warning">
+              <strong>Concrete example</strong>
+              <p><code>dfs(1, [1])</code> means: "I chose 1. Now decide whether to take or skip <code>nums[1]</code>."</p>
+            </div>
+          </section>
+
+          <section class="note-section" id="bt-framework">
+            <div class="section-title">
+              <h2>One framework</h2>
+              <p>Each problem changes the state, choices, completion rule, and pruning rule.</p>
+            </div>
+
+            <div class="card code-card">
+              <div class="code-label"><span>Universal backtracking template</span><button class="copy-button" type="button" data-copy="btTemplate">Copy</button></div>
+              <pre id="btTemplate">res = []
+
+def backtrack(state, path):
+    if complete(state, path):
+        res.append(path.copy())
+        return
+
+    for choice in choices(state, path):
+        if not valid(choice, state, path):
+            continue
+
+        path.append(choice)                    # choose
+        next_state = apply(choice, state)
+
+        backtrack(next_state, path)             # explore
+
+        undo(choice, state)                    # if state is mutable
+        path.pop()                             # undo path
+
+backtrack(initial_state, [])
+return res</pre>
+            </div>
+
+            <div class="steps">
+              <div class="step"><strong>Choose</strong><span>Add one decision to path.</span></div>
+              <div class="step"><strong>Explore</strong><span>Recurse with new state.</span></div>
+              <div class="step"><strong>Undo</strong><span>Restore state and path.</span></div>
+            </div>
+
+            <div class="callout warning">
+              <strong>Why copy path?</strong>
+              <p>The same mutable list is reused. Without <code>path.copy()</code>, later pops would change saved answers.</p>
+            </div>
+          </section>
+
+          <section class="note-section" id="bt-visualize">
+            <div class="section-title">
+              <h2>See the recursion tree</h2>
+              <p>Subsets of <code>[1, 2]</code>: each edge is a choice and each leaf is one answer.</p>
+            </div>
+
+            <div class="card code-card">
+              <div class="tree-scroll">
+                <svg class="tree-svg" viewBox="0 0 800 390" role="img" aria-labelledby="treeTitle treeDesc">
+                  <title id="treeTitle">Backtracking tree for subsets of one and two</title>
+                  <desc id="treeDesc">Take or skip one, then take or skip two, producing four subsets.</desc>
+
+                  <path class="tree-edge" d="M400 70 L220 133"></path>
+                  <path class="tree-edge" d="M400 70 L580 133"></path>
+                  <path class="tree-edge" d="M220 177 L100 278"></path>
+                  <path class="tree-edge" d="M220 177 L300 278"></path>
+                  <path class="tree-edge" d="M580 177 L500 278"></path>
+                  <path class="tree-edge" d="M580 177 L700 278"></path>
+
+                  <text class="tree-label" x="290" y="99">take 1</text>
+                  <text class="tree-label" x="510" y="99">skip 1</text>
+                  <text class="tree-label" x="145" y="226">take 2</text>
+                  <text class="tree-label" x="290" y="226">skip 2</text>
+                  <text class="tree-label" x="510" y="226">take 2</text>
+                  <text class="tree-label" x="655" y="226">skip 2</text>
+
+                  <g class="tree-node"><rect x="355" y="26" width="90" height="44" rx="10"></rect><text x="400" y="53">[]</text></g>
+                  <g class="tree-node"><rect x="170" y="133" width="100" height="44" rx="10"></rect><text x="220" y="160">[1]</text></g>
+                  <g class="tree-node"><rect x="535" y="133" width="90" height="44" rx="10"></rect><text x="580" y="160">[]</text></g>
+                  <g class="tree-node tree-leaf"><rect x="40" y="278" width="120" height="48" rx="10"></rect><text x="100" y="307">[1, 2]</text></g>
+                  <g class="tree-node tree-leaf"><rect x="250" y="278" width="100" height="48" rx="10"></rect><text x="300" y="307">[1]</text></g>
+                  <g class="tree-node tree-leaf"><rect x="450" y="278" width="100" height="48" rx="10"></rect><text x="500" y="307">[2]</text></g>
+                  <g class="tree-node tree-leaf"><rect x="655" y="278" width="90" height="48" rx="10"></rect><text x="700" y="307">[]</text></g>
+                  <text class="tree-label" x="400" y="370">Save path.copy() at every leaf</text>
+                </svg>
+              </div>
+              <p class="visual-caption">DFS explores take, returns and undoes it, then explores skip.</p>
+            </div>
+
+            <div class="path-cycle">
+              <div class="path-state"><strong>Current</strong><code>[1]</code></div>
+              <div class="path-arrow">&rarr;</div>
+              <div class="path-state"><strong>Choose 2</strong><code>[1, 2]</code></div>
+              <div class="path-arrow">&rarr;</div>
+              <div class="path-state"><strong>Explore</strong><code>save [1, 2]</code></div>
+              <div class="path-arrow">&rarr;</div>
+              <div class="path-state"><strong>Undo 2</strong><code>[1]</code></div>
+            </div>
+          </section>
+
+          <section class="note-section" id="bt-decisions">
+            <div class="section-title">
+              <h2>Pick the decision shape</h2>
+              <p>Most problems use take/skip or choose-from-many.</p>
+            </div>
+
+            <div class="grid-2">
+              <article class="card pad">
+                <h3>Take / skip</h3>
+                <p>At index <code>i</code>, decide whether the current value belongs in the answer.</p>
+                <pre>path.append(nums[i])
+dfs(next_i, path)    # take
+path.pop()
+
+dfs(skip_i, path)    # skip</pre>
+              </article>
+              <article class="card pad">
+                <h3>Choose from many</h3>
+                <p>At each answer position, try every currently available option.</p>
+                <pre>for i in range(len(nums)):
+    if used[i]:
+        continue
+    path.append(nums[i])
+    used[i] = True
+    dfs(path)
+    used[i] = False
+    path.pop()</pre>
+              </article>
+            </div>
+
+            <div class="card table-wrap">
+              <table>
+                <thead><tr><th>Question</th><th>Move</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td>Reuse this value?</td><td><code>dfs(i, ...)</code></td><td>Stay at the same index after take.</td></tr>
+                  <tr><td>Use it once?</td><td><code>dfs(i + 1, ...)</code></td><td>Move forward after take.</td></tr>
+                  <tr><td>Skip it?</td><td><code>dfs(i + 1, ...)</code></td><td>Move to the next candidate.</td></tr>
+                  <tr><td>Build an ordering?</td><td><code>for</code> + <code>used</code></td><td>Every unused value is a choice.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout warning">
+              <strong>Duplicates</strong>
+              <p>Sort first, then prevent equal values from starting equivalent branches at the same decision point.</p>
+            </div>
+          </section>
+
+          <section class="note-section" id="bt-map">
+            <div class="section-title">
+              <h2>Map problems to the framework</h2>
+              <p>Identify these pieces before writing recursion.</p>
+            </div>
+
+            <div class="card table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>State</th><th>Complete</th><th>Choices</th><th>Rule</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Subsets</strong></td><td><code>i, path</code></td><td><code>i == n</code></td><td>Take / skip</td><td>Use once</td></tr>
+                  <tr><td><strong>Combination Sum</strong></td><td><code>i, path, total</code></td><td><code>total == target</code></td><td>Take / skip</td><td>Reuse: stay at <code>i</code></td></tr>
+                  <tr><td><strong>Combination Sum II</strong></td><td><code>i, path, total</code></td><td><code>total == target</code></td><td>Take / skip</td><td>Sort; skip equals</td></tr>
+                  <tr><td><strong>Permutations</strong></td><td><code>path, used</code></td><td><code>len(path) == n</code></td><td>Any unused value</td><td>Loop + used array</td></tr>
+                  <tr><td><strong>Subsets II</strong></td><td><code>i, path</code></td><td><code>i == n</code></td><td>Take / skip</td><td>Sort; skip equals</td></tr>
+                  <tr><td><strong>Parentheses</strong></td><td><code>open, close, path</code></td><td><code>open == close == n</code></td><td>Add <code>(</code> or <code>)</code></td><td>Never close too early</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="note-section" id="bt-solutions">
+            <div class="section-title">
+              <h2>Full solutions</h2>
+              <p>Try identifying State, Stop, Choices, and Rules before opening.</p>
+            </div>
+
+            <details>
+              <summary><span class="summary-title"><strong>Subsets</strong><span>Take / skip every value</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note"><strong>State:</strong> <code>i, path</code>. <strong>Stop:</strong> all values processed. <strong>Choices:</strong> take or skip.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btSubsets">Copy</button></div>
+                  <pre id="btSubsets">class Solution:
+    def subsets(self, nums: List[int]) -&gt; List[List[int]]:
+        res = []
+
+        def dfs(i, path):
+            if i == len(nums):
+                res.append(path.copy())
+                return
+
+            path.append(nums[i])
+            dfs(i + 1, path)
+            path.pop()
+
+            dfs(i + 1, path)
+
+        dfs(0, [])
+        return res</pre>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="summary-title"><strong>Combination Sum</strong><span>Take / skip with reuse</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Taking stays at <code>i</code> because the same value can be reused.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btCombination">Copy</button></div>
+                  <pre id="btCombination">class Solution:
+    def combinationSum(self, nums: List[int], target: int) -&gt; List[List[int]]:
+        res = []
+
+        def dfs(i, path, total):
+            if total == target:
+                res.append(path.copy())
+                return
+            if i == len(nums) or total &gt; target:
+                return
+
+            path.append(nums[i])
+            dfs(i, path, total + nums[i])
+            path.pop()
+
+            dfs(i + 1, path, total)
+
+        dfs(0, [], 0)
+        return res</pre>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="summary-title"><strong>Combination Sum II</strong><span>Use once and remove duplicate combinations</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Sort first. Take moves to <code>i + 1</code>; skip jumps over all equal candidates.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btCombinationTwo">Copy</button></div>
+                  <pre id="btCombinationTwo">class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -&gt; List[List[int]]:
+        candidates.sort()
+        res = []
+
+        def dfs(i, path, total):
+            if total == target:
+                res.append(path.copy())
+                return
+            if i == len(candidates) or total &gt; target:
+                return
+
+            path.append(candidates[i])
+            dfs(i + 1, path, total + candidates[i])
+            path.pop()
+
+            next_i = i + 1
+            while next_i &lt; len(candidates) and candidates[next_i] == candidates[i]:
+                next_i += 1
+
+            dfs(next_i, path, total)
+
+        dfs(0, [], 0)
+        return res</pre>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="summary-title"><strong>Permutations</strong><span>Choose any unused value</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Each answer position loops over every unused index. Undo both <code>used</code> and <code>path</code>.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btPermutations">Copy</button></div>
+                  <pre id="btPermutations">class Solution:
+    def permute(self, nums: List[int]) -&gt; List[List[int]]:
+        res = []
+        used = [False] * len(nums)
+
+        def backtrack(path):
+            if len(path) == len(nums):
+                res.append(path.copy())
+                return
+
+            for i in range(len(nums)):
+                if used[i]:
+                    continue
+
+                path.append(nums[i])
+                used[i] = True
+                backtrack(path)
+                used[i] = False
+                path.pop()
+
+        backtrack([])
+        return res</pre>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="summary-title"><strong>Subsets II</strong><span>Take / skip without duplicate subsets</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">After exploring take, skip all equal values together on the exclude branch.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btSubsetsTwo">Copy</button></div>
+                  <pre id="btSubsetsTwo">class Solution:
+    def subsetsWithDup(self, nums: List[int]) -&gt; List[List[int]]:
+        nums.sort()
+        res = []
+
+        def dfs(i, path):
+            if i == len(nums):
+                res.append(path.copy())
+                return
+
+            path.append(nums[i])
+            dfs(i + 1, path)
+            path.pop()
+
+            next_i = i + 1
+            while next_i &lt; len(nums) and nums[next_i] == nums[i]:
+                next_i += 1
+
+            dfs(next_i, path)
+
+        dfs(0, [])
+        return res</pre>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="summary-title"><strong>Generate Parentheses</strong><span>Generate only choices that remain valid</span></span></summary>
+              <div class="solution-body">
+                <p class="solution-note">Open while <code>open_count &lt; n</code>. Close only while <code>close_count &lt; open_count</code>.</p>
+                <div class="card code-card">
+                  <div class="code-label"><span>Python</span><button class="copy-button" type="button" data-copy="btParentheses">Copy</button></div>
+                  <pre id="btParentheses">class Solution:
+    def generateParenthesis(self, n: int) -&gt; List[str]:
+        res = []
+
+        def backtrack(open_count, close_count, path):
+            if open_count == close_count == n:
+                res.append("".join(path))
+                return
+
+            if open_count &lt; n:
+                path.append("(")
+                backtrack(open_count + 1, close_count, path)
+                path.pop()
+
+            if close_count &lt; open_count:
+                path.append(")")
+                backtrack(open_count, close_count + 1, path)
+                path.pop()
+
+        backtrack(0, 0, [])
+        return res</pre>
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Backtracking</footer>
+        </div>
+      </article>
+    </main>
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const themeButton = document.getElementById("themeButton");
+    const topicButtons = [...document.querySelectorAll("[data-topic]")];
+    const topicPanels = [...document.querySelectorAll(".topic-panel")];
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const currentTopic = document.getElementById("currentTopic");
     const toast = document.getElementById("toast");
     let toastTimer;
+
+    const topicNames = {
+      binary: "Binary Search",
+      backtracking: "Backtracking",
+    };
 
     function showToast(message) {
       toast.textContent = message;
@@ -1052,10 +1637,75 @@ else:
       toastTimer = setTimeout(() => toast.classList.remove("visible"), 1400);
     }
 
-    themeButton.addEventListener("click", () => {
-      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-      document.documentElement.dataset.theme = next;
-      showToast(`${next[0].toUpperCase()}${next.slice(1)} theme`);
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("visible");
+    }
+
+    function showTopic(topic, updateHash = true) {
+      if (!topicNames[topic]) return;
+
+      topicButtons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.topic === topic);
+      });
+      topicPanels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `topic-${topic}`);
+      });
+      currentTopic.textContent = topicNames[topic];
+      document.title = `${topicNames[topic]} Notes`;
+      closeSidebar();
+
+      if (updateHash) {
+        history.replaceState(null, "", `#${topic}`);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function topicFromHash() {
+      const hash = location.hash.slice(1);
+      if (hash === "backtracking" || hash.startsWith("bt-")) return "backtracking";
+      return "binary";
+    }
+
+    function scrollToHashSection() {
+      const hash = location.hash.slice(1);
+      if (!hash || topicNames[hash]) return;
+
+      requestAnimationFrame(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "instant", block: "start" });
+      });
+    }
+
+    topicButtons.forEach((button) => {
+      button.addEventListener("click", () => showTopic(button.dataset.topic));
+    });
+
+    document.getElementById("menuButton").addEventListener("click", () => {
+      sidebar.classList.add("open");
+      overlay.classList.add("visible");
+    });
+    overlay.addEventListener("click", closeSidebar);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeSidebar();
+    });
+
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.themeChoice === theme);
+      });
+      try {
+        localStorage.setItem("algorithm-notes-theme", theme);
+      } catch {
+        // The theme still applies for this visit.
+      }
+    }
+
+    document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+      button.addEventListener("click", () => {
+        setTheme(button.dataset.themeChoice);
+        showToast(`${button.textContent} theme`);
+      });
     });
 
     function copyText(text) {
@@ -1081,6 +1731,15 @@ else:
         showToast("Copied");
       });
     });
+
+    window.addEventListener("hashchange", () => {
+      showTopic(topicFromHash(), false);
+      scrollToHashSection();
+    });
+
+    showTopic(topicFromHash(), false);
+    scrollToHashSection();
+    setTheme(document.documentElement.dataset.theme);
   </script>
 </body>
 </html>
