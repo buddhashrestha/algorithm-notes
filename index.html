@@ -842,6 +842,75 @@
       transform: translateY(0);
     }
 
+    /* GENERATED_TOPIC_STYLES_START */
+    .source-note {
+      display: inline-flex;
+      margin-top: 14px;
+      padding: 6px 10px;
+      border: 1px solid var(--cp-border);
+      border-radius: 999px;
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .pattern-cards,
+    .gap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .pattern-note,
+    .gap-card {
+      padding: 17px;
+    }
+
+    .pattern-note h3,
+    .gap-card strong {
+      display: block;
+      margin: 0 0 4px;
+      font-size: 0.92rem;
+    }
+
+    .pattern-note p,
+    .gap-card p {
+      margin: 0;
+      color: var(--cp-text-muted);
+      font-size: 0.83rem;
+    }
+
+    .pattern-note span {
+      display: block;
+      margin-top: 10px;
+      color: var(--cp-accent);
+      font-size: 0.73rem;
+      font-weight: 750;
+    }
+
+    .gap-card {
+      border: 1px solid var(--cp-border);
+      border-left: 4px solid var(--cp-warning);
+      border-radius: 0 0.625rem 0.625rem 0;
+      background: var(--cp-surface);
+    }
+
+    .submission-date {
+      display: inline-block;
+      margin-left: 6px;
+      color: var(--cp-text-soft);
+      font-size: 0.76rem;
+    }
+
+    @media (max-width: 680px) {
+      .pattern-cards,
+      .gap-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    /* GENERATED_TOPIC_STYLES_END */
+
     @media (max-width: 860px) {
       .app {
         grid-template-columns: 1fr;
@@ -925,15 +994,16 @@
           <span class="topic-icon">BT</span>
           <span>Backtracking</span>
         </button>
+        <button class="topic-button" type="button" data-topic="arrays"><span class="topic-icon">AH</span><span>Arrays &amp; Hashing</span></button>
+        <button class="topic-button" type="button" data-topic="two-pointers"><span class="topic-icon">2P</span><span>Two Pointers</span></button>
+        <button class="topic-button" type="button" data-topic="stack"><span class="topic-icon">ST</span><span>Stack</span></button>
+        <button class="topic-button" type="button" data-topic="linked-list"><span class="topic-icon">LL</span><span>Linked List</span></button>
+        <button class="topic-button" type="button" data-topic="sliding-window"><span class="topic-icon">SW</span><span>Sliding Window</span></button>
+        <button class="topic-button" type="button" data-topic="trees"><span class="topic-icon">TR</span><span>Trees</span></button>
       </nav>
 
       <div class="nav-label">Coming next</div>
       <nav class="topic-nav">
-        <button class="topic-button" type="button" disabled><span class="topic-icon">AH</span><span>Arrays &amp; Hashing</span><span class="soon">Soon</span></button>
-        <button class="topic-button" type="button" disabled><span class="topic-icon">2P</span><span>Two Pointers</span><span class="soon">Soon</span></button>
-        <button class="topic-button" type="button" disabled><span class="topic-icon">SW</span><span>Sliding Window</span><span class="soon">Soon</span></button>
-        <button class="topic-button" type="button" disabled><span class="topic-icon">ST</span><span>Stack</span><span class="soon">Soon</span></button>
-        <button class="topic-button" type="button" disabled><span class="topic-icon">TR</span><span>Trees</span><span class="soon">Soon</span></button>
         <button class="topic-button" type="button" disabled><span class="topic-icon">GR</span><span>Graphs</span><span class="soon">Soon</span></button>
         <button class="topic-button" type="button" disabled><span class="topic-icon">DP</span><span>Dynamic Programming</span><span class="soon">Soon</span></button>
       </nav>
@@ -1611,6 +1681,2695 @@ dfs(skip_i, path)    # skip</pre>
           <footer class="footer">Algorithm Notes / Backtracking</footer>
         </div>
       </article>
+      <!-- GENERATED_TOPICS_START -->
+      <article class="topic-panel generated-topic" id="topic-arrays">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 03 · 9 accepted submissions</p>
+            <h1>Arrays &amp; Hashing</h1>
+            <p class="intro">Use direct access to replace repeated searching: sets for membership, maps for relationships, counters for frequency, and positional passes when order matters.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Arrays &amp; Hashing sections">
+            <a href="#arrays-framework">Framework</a>
+            <a href="#arrays-patterns">Patterns</a>
+            <a href="#arrays-map">Problem map</a>
+            <a href="#arrays-gaps">Gaps</a>
+            <a href="#arrays-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="arrays-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>First ask: lookup, count/group, enforce constraints, or combine left and right information?</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="arrays-framework-code">Copy</button></div>
+              <pre id="arrays-framework-code">state = choose_structure()  # set, dict, count array, buckets
+
+for item in data:
+    key = normalize(item)
+
+    if answers_now(key, state):
+        return answer
+
+    update(state, key)
+
+return build_answer(state)</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="arrays-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>Lookup</h3>
+          <p>Set or dict</p>
+          <span>Contains Duplicate, Two Sum, Longest Consecutive</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Count / group</h3>
+          <p>Counter or canonical tuple key</p>
+          <span>Anagram, Group Anagrams, Top K</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Parallel constraints</h3>
+          <p>One set per row, column, or block</p>
+          <span>Valid Sudoku</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Positional passes</h3>
+          <p>Prefix/postfix or length-prefixed parsing</p>
+          <span>Product Except Self, Encode/Decode</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="arrays-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Contains Duplicate</strong><span class="detail">Easy</span></td>
+        <td>Sort + adjacent comparison</td>
+        <td>Duplicates become neighbors</td>
+        <td><code>O(n log n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Valid Anagram</strong><span class="detail">Easy</span></td>
+        <td>26-slot difference counter</td>
+        <td>Every final count is zero</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Two Sum</strong><span class="detail">Easy</span></td>
+        <td>Complement hash map</td>
+        <td>Check complement before inserting current index</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Group Anagrams</strong><span class="detail">Medium</span></td>
+        <td>26-count tuple key</td>
+        <td>Same tuple means same character multiset</td>
+        <td><code>O(nk)</code></td>
+        <td><code>O(nk)</code></td>
+      </tr><tr>
+        <td><strong>Top K Frequent Elements</strong><span class="detail">Medium</span></td>
+        <td>Counter + frequency buckets</td>
+        <td>Bucket index equals frequency</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Encode and Decode Strings</strong><span class="detail">Medium</span></td>
+        <td>Length-prefixed parsing</td>
+        <td>Read length before consuming exact payload</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Product of Array Except Self</strong><span class="detail">Medium</span></td>
+        <td>Prefix then postfix pass</td>
+        <td>Result holds product strictly left, then multiplies right</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)*</code></td>
+      </tr><tr>
+        <td><strong>Valid Sudoku</strong><span class="detail">Medium</span></td>
+        <td>Row, column, square sets</td>
+        <td>A digit may appear once in each constraint</td>
+        <td><code>O(1)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Longest Consecutive Sequence</strong><span class="detail">Medium</span></td>
+        <td>Set + chain heads</td>
+        <td>Count only when num - 1 is absent</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="arrays-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Contains Duplicate</strong>
+          <p>Your sort-and-scan solution is valid. The missing O(n) variant is a seen set: return when a value is already present.</p>
+        </article>
+        <article class="gap-card">
+          <strong>General character sets</strong>
+          <p>The 26-slot counter is ideal for lowercase English letters. Use a dict/Counter when the alphabet is not fixed.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Efficient encoding</strong>
+          <p>Repeated string concatenation may copy prior content. Build pieces in a list and join once for large inputs.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Next pattern</strong>
+          <p>Prefix sums are the main Arrays &amp; Hashing gap: store cumulative information so range queries become O(1).</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="arrays-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Contains Duplicate</strong>
+            <span>Sort + adjacent comparison · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Duplicates become neighbors <strong>Complexity:</strong> O(n log n) time, O(n) space. <span class="submission-date">Latest accepted: 08/09/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-0">Copy</button></div>
+            <pre id="arrays-solution-0">class Solution:
+    def hasDuplicate(self, nums: List[int]) -&gt; bool:
+        sorted_num = sorted(nums) #O(nlogn)
+
+        for i in range(len(sorted_num)-1):
+            if sorted_num[i] == sorted_num[i+1]:
+                return True
+
+        return False</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Valid Anagram</strong>
+            <span>26-slot difference counter · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Every final count is zero <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 07/26/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-1">Copy</button></div>
+            <pre id="arrays-solution-1">class Solution:
+    def isAnagram(self, s: str, t: str) -&gt; bool:
+        if len(s) != len(t):
+            return False
+
+        count = [0]*26
+        for i in range(len(s)):
+            count[ord(s[i])-ord('a')] +=1
+            count[ord(t[i])-ord('a')] -=1
+        
+        for val in count:
+            if val != 0:
+                return False
+        return True</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Two Sum</strong>
+            <span>Complement hash map · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Check complement before inserting current index <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/26/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-2">Copy</button></div>
+            <pre id="arrays-solution-2">class Solution:
+    def twoSum(self, nums: List[int], target: int) -&gt; List[int]:
+        dic = defaultdict(int)
+        for i,v in enumerate(nums):
+            diff = target - v
+            if diff in dic:
+                return [dic[diff],i]
+            dic[v] = i
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Group Anagrams</strong>
+            <span>26-count tuple key · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Same tuple means same character multiset <strong>Complexity:</strong> O(nk) time, O(nk) space. <span class="submission-date">Latest accepted: 07/26/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-3">Copy</button></div>
+            <pre id="arrays-solution-3">class Solution:
+    def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]:
+        dic = defaultdict(list)
+        for word in strs:
+            count = [0]*26
+            for ch in word:
+                count[ord(ch)-ord('a')] +=1
+            
+            dic[tuple(count)].append(word)
+        return list(dic.values())</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Top K Frequent Elements</strong>
+            <span>Counter + frequency buckets · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Bucket index equals frequency <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 01/14/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-4">Copy</button></div>
+            <pre id="arrays-solution-4">class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        freq = Counter(nums)
+        bucket = [[] for i in range(len(nums)+1)]
+        for x,f in freq.items():
+            bucket[f].append(x)
+
+        res = []
+        for i in range(len(bucket)-1,-1,-1):
+            for x in bucket[i]:
+                res.append(x)
+                if len(res)==k:
+                    return res
+        return []</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Encode and Decode Strings</strong>
+            <span>Length-prefixed parsing · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Read length before consuming exact payload <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 01/14/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-5">Copy</button></div>
+            <pre id="arrays-solution-5">class Solution:
+
+    def encode(self, strs: List[str]) -&gt; str:
+        encoded = &quot;&quot;
+        for s in strs:
+            length = len(s)
+            encoded += str(length) + &quot;#&quot; + s
+        return encoded
+
+    def decode(self, s: str) -&gt; List[str]:
+        
+        res = []
+
+        l,r = 0,0
+        while r &lt; len(s):
+            if s[r]==&quot;#&quot;:
+                length = int(s[l:r])
+                
+
+                word = s[r+1: r+1+length]
+                res.append(word)
+                l = r+1+length
+                r = r+1+length
+            else:
+                r+=1
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Product of Array Except Self</strong>
+            <span>Prefix then postfix pass · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Result holds product strictly left, then multiplies right <strong>Complexity:</strong> O(n) time, O(1)* space. <span class="submission-date">Latest accepted: 01/14/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-6">Copy</button></div>
+            <pre id="arrays-solution-6">class Solution:
+    def productExceptSelf(self, nums: List[int]) -&gt; List[int]:
+        
+        res = [1]*len(nums)
+
+        prefix = 1
+        for i in range(len(res)):
+            res[i] = prefix
+            prefix = prefix*nums[i]
+
+        postfix = 1
+        for j in range(len(res)-1,-1,-1):
+            res[j] *= postfix
+            postfix = postfix*nums[j]
+
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Valid Sudoku</strong>
+            <span>Row, column, square sets · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> A digit may appear once in each constraint <strong>Complexity:</strong> O(1) time, O(1) space. <span class="submission-date">Latest accepted: 07/28/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-7">Copy</button></div>
+            <pre id="arrays-solution-7">class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -&gt; bool:
+        
+
+        row = defaultdict(set)
+        col = defaultdict(set)
+        square = defaultdict(set)
+
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] in row[i] or board[i][j] in col[j] or board[i][j] in square[(i//3,j//3)]:
+                    return False
+                if board[i][j] == &quot;.&quot;:
+                    continue
+                row[i].add(board[i][j])
+                col[j].add(board[i][j])
+                square[(i//3,j//3)].add(board[i][j])
+        
+        return True</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Longest Consecutive Sequence</strong>
+            <span>Set + chain heads · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Count only when num - 1 is absent <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/28/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="arrays-solution-8">Copy</button></div>
+            <pre id="arrays-solution-8">class Solution:
+    def longestConsecutive(self, nums: List[int]) -&gt; int:
+        seen = set()
+        for num in nums:
+            if num not in seen:
+                seen.add(num)
+        res = 0
+        for num in seen:
+            if num-1 not in seen:
+                count = 0
+                candidate = num
+                while candidate in seen:
+                    count +=1
+                    candidate +=1
+                res = max(res,count)
+        return res</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Arrays &amp; Hashing</footer>
+        </div>
+      </article>
+
+      <article class="topic-panel generated-topic" id="topic-two-pointers">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 04 · 5 accepted submissions</p>
+            <h1>Two Pointers</h1>
+            <p class="intro">Place pointers where the search space has useful order, evaluate the pair, then move the pointer that cannot participate in a better answer.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Two Pointers sections">
+            <a href="#two-pointers-framework">Framework</a>
+            <a href="#two-pointers-patterns">Patterns</a>
+            <a href="#two-pointers-map">Problem map</a>
+            <a href="#two-pointers-gaps">Gaps</a>
+            <a href="#two-pointers-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="two-pointers-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>Compare -&gt; prove which side is impossible -&gt; move only that pointer.</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="two-pointers-framework-code">Copy</button></div>
+              <pre id="two-pointers-framework-code">l, r = 0, len(values) - 1
+
+while l &lt; r:
+    current = evaluate(values[l], values[r])
+
+    if current is the answer:
+        record_or_return()
+    elif left_side_is_too_small:
+        l += 1
+    else:
+        r -= 1</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="two-pointers-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>Converging ends</h3>
+          <p>Sorted pair search</p>
+          <span>Two Sum II</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Filter while moving</h3>
+          <p>Skip irrelevant characters before compare</p>
+          <span>Valid Palindrome</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Fix one, scan two</h3>
+          <p>Sort; fix i; converge l and r</p>
+          <span>3Sum</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Greedy elimination</h3>
+          <p>Move the limiting side</p>
+          <span>Container With Most Water</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="two-pointers-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Valid Palindrome</strong><span class="detail">Easy</span></td>
+        <td>Converging ends + character filtering</td>
+        <td>Both pointers always land on comparable characters</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Two Sum II Input Array Is Sorted</strong><span class="detail">Medium</span></td>
+        <td>Sorted sum convergence</td>
+        <td>Small sum moves left; large sum moves right</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>3Sum</strong><span class="detail">Medium</span></td>
+        <td>Sort + fixed index + two pointers</td>
+        <td>Skip duplicate fixed and left values</td>
+        <td><code>O(n²)</code></td>
+        <td><code>O(1)*</code></td>
+      </tr><tr>
+        <td><strong>Container With Most Water</strong><span class="detail">Medium</span></td>
+        <td>Greedy convergence</td>
+        <td>Only moving the shorter wall can improve area</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Trapping Rain Water</strong><span class="detail">Hard</span></td>
+        <td>Prefix/suffix maximum arrays</td>
+        <td>Water is min(left max, right max) - height</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="two-pointers-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Category outlier</strong>
+          <p>Your Trapping Rain Water submission uses prefix/suffix arrays, not two pointers. It is clear and correct, but uses O(n) extra space.</p>
+        </article>
+        <article class="gap-card">
+          <strong>O(1)-space rainwater</strong>
+          <p>Track leftMax and rightMax while moving the side with the smaller boundary; that side's water is already determined.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Other pointer shapes</strong>
+          <p>Your solved set emphasizes opposite ends. Add same-direction read/write, fast/slow, and partition pointers to complete the pattern family.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Mutation</strong>
+          <p>3Sum calls sort() and changes the input. Use sorted(nums) when preserving the caller's list matters.</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="two-pointers-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Valid Palindrome</strong>
+            <span>Converging ends + character filtering · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Both pointers always land on comparable characters <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 08/06/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="two-pointers-solution-0">Copy</button></div>
+            <pre id="two-pointers-solution-0">class Solution:
+    def isPalindrome(self, s: str) -&gt; bool:
+        l,r = 0, len(s)-1
+
+        while l &lt; r:
+            while l &lt; r and not self.alphaNum(s[l]):
+                l+=1
+            while r &gt; l and not self.alphaNum(s[r]):
+                r-=1
+            
+            if s[l].lower() == s[r].lower():
+                l+=1
+                r-=1
+            else:
+                return False
+        return True
+
+    def alphaNum(self,c):
+        return (ord('A')&lt;=ord(c)&lt;=ord('Z') or ord('a')&lt;=ord(c)&lt;=ord('z') or ord('0')&lt;=ord(c)&lt;=ord('9'))
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Two Sum II Input Array Is Sorted</strong>
+            <span>Sorted sum convergence · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Small sum moves left; large sum moves right <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 07/14/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="two-pointers-solution-1">Copy</button></div>
+            <pre id="two-pointers-solution-1">class Solution:
+    def twoSum(self, numbers: List[int], target: int) -&gt; List[int]:
+        
+        l,r = 0, len(numbers)-1
+
+        while l&lt;r:
+            a = numbers[l] + numbers[r]
+            if a == target:
+                return [l+1,r+1]
+            elif a &lt; target:
+                l +=1
+            else:
+                r-=1
+        return [None,None]
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>3Sum</strong>
+            <span>Sort + fixed index + two pointers · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Skip duplicate fixed and left values <strong>Complexity:</strong> O(n²) time, O(1)* space. <span class="submission-date">Latest accepted: 07/20/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="two-pointers-solution-2">Copy</button></div>
+            <pre id="two-pointers-solution-2">class Solution:
+    def threeSum(self, nums: List[int]) -&gt; List[List[int]]:
+        
+        nums.sort()
+        n = len(nums)
+        res = []
+        for i in range(n):
+            l,r = i+1, n-1
+            if i&gt;0 and nums[i] == nums[i-1]:
+                continue
+            while l&lt;r:
+                summ = nums[i] + nums[l] + nums[r]
+                if summ &gt; 0:
+                    r-=1
+                elif summ &lt; 0:
+                    l+=1
+                else:
+                    res.append([nums[i],nums[l],nums[r]])
+                    l+=1
+                    while l&lt;=r and nums[l]==nums[l-1]:
+                        l+=1
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Container With Most Water</strong>
+            <span>Greedy convergence · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Only moving the shorter wall can improve area <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 07/14/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="two-pointers-solution-3">Copy</button></div>
+            <pre id="two-pointers-solution-3">class Solution:
+    def maxArea(self, heights: List[int]) -&gt; int:
+        
+        l,r = 0, len(heights)-1
+        maxarea = 0
+        while l&lt; r:
+            area = min(heights[l], heights[r]) * (r-l)
+            maxarea = max(maxarea, area)
+
+            if heights[l] &lt; heights[r]:
+                l+=1
+            else:
+                r-=1
+        return maxarea
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Trapping Rain Water</strong>
+            <span>Prefix/suffix maximum arrays · Hard</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Water is min(left max, right max) - height <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 08/04/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="two-pointers-solution-4">Copy</button></div>
+            <pre id="two-pointers-solution-4">class Solution:
+    def trap(self, height: List[int]) -&gt; int:
+        if len(height) &lt; 2:
+            return 0
+
+        leftMaxArr = [0 for _ in range(len(height))]
+        rightMaxArr = [0 for _ in range(len(height))]
+
+        leftMax = height[0]
+        for i in range(1,len(height)):
+            leftMaxArr[i] = leftMax
+            leftMax = max(leftMax, height[i])
+
+        rightMax = height[-1]
+        for i in range(len(height)-2,-1,-1):
+            rightMaxArr[i] = rightMax
+            rightMax = max(rightMax,height[i])
+
+        allowWater = 0
+        for i in range(len(height)):
+            minHeight = min(leftMaxArr[i],rightMaxArr[i])
+            allowWater += (minHeight-height[i]) if minHeight-height[i] &gt;0 else 0
+        return allowWater</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Two Pointers</footer>
+        </div>
+      </article>
+
+      <article class="topic-panel generated-topic" id="topic-stack">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 05 · 6 accepted submissions</p>
+            <h1>Stack</h1>
+            <p class="intro">A stack stores unresolved work. Each new item either adds context or resolves items from the top in last-in, first-out order.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Stack sections">
+            <a href="#stack-framework">Framework</a>
+            <a href="#stack-patterns">Patterns</a>
+            <a href="#stack-map">Problem map</a>
+            <a href="#stack-gaps">Gaps</a>
+            <a href="#stack-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="stack-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>Define what the stack means, then define the exact event that pops it.</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="stack-framework-code">Copy</button></div>
+              <pre id="stack-framework-code">stack = []
+
+for i, item in enumerate(data):
+    while stack and current_resolves(stack[-1], item):
+        previous = stack.pop()
+        process(previous, i, item)
+
+    stack.append(metadata_for(i, item))
+
+finalize_remaining(stack)</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="stack-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>Matching</h3>
+          <p>Open items wait for their closing partner</p>
+          <span>Valid Parentheses</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Evaluation</h3>
+          <p>Operands wait until an operator resolves them</p>
+          <span>Reverse Polish Notation</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>State at every depth</h3>
+          <p>Store value plus answer-so-far</p>
+          <span>Min Stack</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Monotonic unresolved work</h3>
+          <p>Pop while current item resolves prior items</p>
+          <span>Temperatures, Fleet, Histogram</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="stack-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Valid Parentheses</strong><span class="detail">Easy</span></td>
+        <td>Matching stack</td>
+        <td>Top opening bracket must match current closing bracket</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Min Stack</strong><span class="detail">Medium</span></td>
+        <td>Parallel value/min stacks</td>
+        <td>minStack[i] is minimum through depth i</td>
+        <td><code>O(1) per op</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Evaluate Reverse Polish Notation</strong><span class="detail">Medium</span></td>
+        <td>Operand stack</td>
+        <td>Operator pops right then left operand</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Daily Temperatures</strong><span class="detail">Medium</span></td>
+        <td>Decreasing monotonic stack</td>
+        <td>Stored temperatures are unresolved and non-increasing</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Car Fleet</strong><span class="detail">Medium</span></td>
+        <td>Sorted sweep + arrival-time stack</td>
+        <td>Times remaining on stack represent distinct fleets</td>
+        <td><code>O(n log n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Largest Rectangle In Histogram</strong><span class="detail">Hard</span></td>
+        <td>Increasing monotonic stack</td>
+        <td>Each bar stores earliest valid start index</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="stack-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Ordinary vs monotonic</strong>
+          <p>Matching and RPN use pure LIFO. Temperatures and Histogram additionally preserve a monotonic invariant.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Car Fleet outlier</strong>
+          <p>The stack works only after sorting cars from closest to target to farthest; it is a sorted sweep plus monotonic times.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Division</strong>
+          <p>int(float(a) / b) truncates correctly under constraints but introduces float precision. A sign-aware integer division avoids that dependency.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Next structure</strong>
+          <p>A monotonic deque extends this idea when both ends must expire or answer queries, such as Sliding Window Maximum.</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="stack-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Valid Parentheses</strong>
+            <span>Matching stack · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Top opening bracket must match current closing bracket <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 08/25/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-0">Copy</button></div>
+            <pre id="stack-solution-0">class Solution:
+    def isValid(self, s: str) -&gt; bool:
+        closedParen = {
+            &quot;}&quot; :&quot;{&quot;,
+            &quot;]&quot;:&quot;[&quot;,
+            &quot;)&quot;:&quot;(&quot;
+        }
+        stack = []
+
+        for b in s:
+            if b in closedParen:
+                if stack and stack[-1] == closedParen[b]:
+                    stack.pop()
+                else:
+                    return False
+            else:
+                stack.append(b)
+        return True if not stack else False</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Min Stack</strong>
+            <span>Parallel value/min stacks · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> minStack[i] is minimum through depth i <strong>Complexity:</strong> O(1) per op time, O(n) space. <span class="submission-date">Latest accepted: 07/14/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-1">Copy</button></div>
+            <pre id="stack-solution-1">class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minStack = []
+
+    def push(self, val: int) -&gt; None:
+        self.stack.append(val)
+        localMin = val
+        if self.minStack and self.minStack[-1] &lt; val:
+            localMin = self.minStack[-1]
+
+        self.minStack.append(localMin)
+    
+    def pop(self) -&gt; None:
+        val = self.stack.pop()
+        self.minStack.pop()
+        return val
+
+    def top(self) -&gt; int:
+        if len(self.stack) &gt; 0:
+            return self.stack[-1]
+
+    def getMin(self) -&gt; int:
+        return self.minStack[-1]
+
+
+        
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Evaluate Reverse Polish Notation</strong>
+            <span>Operand stack · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Operator pops right then left operand <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/26/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-2">Copy</button></div>
+            <pre id="stack-solution-2">class Solution:
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        op = [&quot;+&quot;,&quot;-&quot;,&quot;*&quot;,&quot;/&quot;]
+        stack = []
+        for t in tokens:
+            if t in op:
+                second = stack.pop()
+                first = stack.pop()
+                if t == &quot;+&quot;:
+                    res = first + second
+                elif t == &quot;-&quot;:
+                    res = first - second
+                elif t== &quot;*&quot;:
+                    res = first * second
+                elif t == &quot;/&quot;:
+                    res = int(float(first)/second)
+                stack.append(res)
+            else:
+                stack.append(int(t))
+        return stack.pop()</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Daily Temperatures</strong>
+            <span>Decreasing monotonic stack · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Stored temperatures are unresolved and non-increasing <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/14/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-3">Copy</button></div>
+            <pre id="stack-solution-3">class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -&gt; List[int]:
+        res = [0] * len(temperatures)
+        stack = []
+
+        for i,t in enumerate(temperatures):
+            while stack and stack[-1][1] &lt; t:
+                diffDays = i - stack[-1][0]
+                res[stack[-1][0]] = diffDays
+                stack.pop()
+            stack.append([i,t])
+        return res
+                 
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Car Fleet</strong>
+            <span>Sorted sweep + arrival-time stack · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Times remaining on stack represent distinct fleets <strong>Complexity:</strong> O(n log n) time, O(n) space. <span class="submission-date">Latest accepted: 07/29/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-4">Copy</button></div>
+            <pre id="stack-solution-4">class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -&gt; int:
+        pair = [[p,s] for p,s in zip(position,speed)]
+        stack = []
+        for position, speed in sorted(pair)[::-1]:
+            time = (target-position)/speed
+            stack.append(time)
+            if len(stack) &gt;=2 and stack[-1] &lt;= stack[-2]:
+                stack.pop()
+        return len(stack)
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Largest Rectangle In Histogram</strong>
+            <span>Increasing monotonic stack · Hard</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Each bar stores earliest valid start index <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 08/02/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="stack-solution-5">Copy</button></div>
+            <pre id="stack-solution-5">class Solution:
+    def largestRectangleArea(self, heights: List[int]) -&gt; int:
+        maxArea = 0
+        stack = []
+
+        for i, h in enumerate(heights):
+            start = i
+            while stack and stack[-1][1] &gt; h:
+                index, height = stack.pop()
+                maxArea = max(maxArea, height * (i-index))
+                start = index
+            stack.append((start,h))
+        
+        for i,h in stack:
+            maxArea = max(maxArea, h* (len(heights)-i))
+        return maxArea</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Stack</footer>
+        </div>
+      </article>
+
+      <article class="topic-panel generated-topic" id="topic-linked-list">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 06 · 11 accepted submissions</p>
+            <h1>Linked List</h1>
+            <p class="intro">Linked-list problems are pointer bookkeeping. Save every edge you still need before changing it, then reconnect the transformed pieces.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Linked List sections">
+            <a href="#linked-list-framework">Framework</a>
+            <a href="#linked-list-patterns">Patterns</a>
+            <a href="#linked-list-map">Problem map</a>
+            <a href="#linked-list-gaps">Gaps</a>
+            <a href="#linked-list-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="linked-list-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>Save next -&gt; redirect pointers -&gt; advance -&gt; reconnect.</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="linked-list-framework-code">Copy</button></div>
+              <pre id="linked-list-framework-code">dummy = ListNode(0, head)  # when head may change
+prev, cur = None, head
+
+while cur:
+    nxt = cur.next       # save before mutation
+    cur.next = prev      # redirect
+    prev = cur           # advance
+    cur = nxt
+
+return prev</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="linked-list-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>Dummy anchor</h3>
+          <p>Unifies head insertion or removal</p>
+          <span>Merge, Remove Nth, Add Two, K Group</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Save / redirect / advance</h3>
+          <p>Safe pointer reversal</p>
+          <span>Reverse, Reorder, K Group</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Fast and slow</h3>
+          <p>Find midpoint, cycle, or fixed gap</p>
+          <span>Cycle, Reorder, Remove Nth, Duplicate</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Map + doubly linked list</h3>
+          <p>O(1) identity lookup and reordering</p>
+          <span>Random Copy, LRU</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="linked-list-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Reverse Linked List</strong><span class="detail">Easy</span></td>
+        <td>Save, redirect, advance</td>
+        <td>prev is reversed prefix; cur is untouched suffix</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Merge Two Sorted Lists</strong><span class="detail">Easy</span></td>
+        <td>Dummy + compare/append</td>
+        <td>tmp is tail of merged sorted prefix</td>
+        <td><code>O(m+n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Linked List Cycle</strong><span class="detail">Easy</span></td>
+        <td>Floyd fast/slow</td>
+        <td>A cycle forces the pointers to meet</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Reorder List</strong><span class="detail">Medium</span></td>
+        <td>Midpoint -&gt; reverse half -&gt; interleave</td>
+        <td>l1 and l2 are heads of remaining halves</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Remove Nth Node From End of List</strong><span class="detail">Medium</span></td>
+        <td>Dummy + n-node gap</td>
+        <td>fast remains n nodes ahead of slow</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Copy List With Random Pointer</strong><span class="detail">Medium</span></td>
+        <td>Old-to-copy map</td>
+        <td>Every original node maps to exactly one copy</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Add Two Numbers</strong><span class="detail">Medium</span></td>
+        <td>Dummy + carry</td>
+        <td>carry is propagated to the next digit</td>
+        <td><code>O(max(m,n))</code></td>
+        <td><code>O(max(m,n))</code></td>
+      </tr><tr>
+        <td><strong>Find The Duplicate Number</strong><span class="detail">Medium</span></td>
+        <td>Floyd on array-defined graph</td>
+        <td>nums[index] acts as next pointer</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>LRU Cache</strong><span class="detail">Medium</span></td>
+        <td>Hash map + doubly linked list</td>
+        <td>Front is most recent; tail.prev is least recent</td>
+        <td><code>O(1) per op</code></td>
+        <td><code>O(capacity)</code></td>
+      </tr><tr>
+        <td><strong>Merge K Sorted Lists</strong><span class="detail">Hard</span></td>
+        <td>Pairwise divide-and-conquer merge</td>
+        <td>Number of lists halves each round</td>
+        <td><code>O(n log k)</code></td>
+        <td><code>O(1)*</code></td>
+      </tr><tr>
+        <td><strong>Reverse Nodes In K Group</strong><span class="detail">Hard</span></td>
+        <td>Bounded block reversal</td>
+        <td>Only reverse after kth boundary exists</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="linked-list-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Category outlier</strong>
+          <p>Find Duplicate uses Floyd's cycle proof on a functional graph represented by an array, not a physical linked list.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Reorder cleanup</strong>
+          <p>The accepted solution contains unused dummy/tmp assignments and a final local head assignment. The three real phases are midpoint, reverse, interleave.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Alternative variants</strong>
+          <p>Next useful gaps are O(1)-space random-list cloning and heap-based Merge K Lists.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Boundary discipline</strong>
+          <p>Before reversing a block, save both the node after the block and the previous group's tail. Those anchors make reconnection safe.</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="linked-list-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Reverse Linked List</strong>
+            <span>Save, redirect, advance · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> prev is reversed prefix; cur is untouched suffix <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/17/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-0">Copy</button></div>
+            <pre id="linked-list-solution-0"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
+        prev = None
+        cur = head
+
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+
+        return prev
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Merge Two Sorted Lists</strong>
+            <span>Dummy + compare/append · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> tmp is tail of merged sorted prefix <strong>Complexity:</strong> O(m+n) time, O(1) space. <span class="submission-date">Latest accepted: 01/17/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-1">Copy</button></div>
+            <pre id="linked-list-solution-1"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -&gt; Optional[ListNode]:
+        
+        dummy = ListNode()
+        tmp = dummy
+        while list1 and list2:
+            if list1.val &lt;= list2.val:
+                tmp.next = list1
+                list1 = list1.next
+            else:
+                tmp.next = list2
+                list2 = list2.next
+            tmp = tmp.next
+
+
+        tmp.next = list1 or list2
+        
+        return dummy.next</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Linked List Cycle</strong>
+            <span>Floyd fast/slow · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> A cycle forces the pointers to meet <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/18/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-2">Copy</button></div>
+            <pre id="linked-list-solution-2"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -&gt; bool:
+        fast, slow = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+
+        return False</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Reorder List</strong>
+            <span>Midpoint -&gt; reverse half -&gt; interleave · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> l1 and l2 are heads of remaining halves <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/18/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-3">Copy</button></div>
+            <pre id="linked-list-solution-3"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -&gt; None:
+        
+        slow, fast = head, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        prev = None
+        cur = slow.next
+        slow.next = None
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+
+        l1 = head
+        l2 = prev
+        dummy = ListNode
+        tmp = dummy
+        while l1 and l2:
+            l2next = l2.next
+            l1next = l1.next
+
+            l1.next = l2
+            l2.next = l1next
+
+            l1 = l1next
+            l2 = l2next
+        head = l1</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Remove Nth Node From End of List</strong>
+            <span>Dummy + n-node gap · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> fast remains n nodes ahead of slow <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/18/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-4">Copy</button></div>
+            <pre id="linked-list-solution-4"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -&gt; Optional[ListNode]:
+        dummy = ListNode(0, head)
+        slow = fast = dummy
+
+        for i in range(n):
+            fast = fast.next
+
+        while fast and fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+
+        return dummy.next</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Copy List With Random Pointer</strong>
+            <span>Old-to-copy map · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Every original node maps to exactly one copy <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-5">Copy</button></div>
+            <pre id="linked-list-solution-5">&quot;&quot;&quot;
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+&quot;&quot;&quot;
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -&gt; 'Optional[Node]':
+        oldToCopy = {None:None}
+        cur = head
+
+        while cur:
+            newNode = Node(cur.val)
+            oldToCopy[cur] = newNode
+            cur = cur.next
+
+        cur = head
+
+        while cur:
+            copyNode = oldToCopy[cur]
+            copyNode.next = oldToCopy[cur.next]
+            copyNode.random = oldToCopy[cur.random]
+            cur = cur.next
+
+        return oldToCopy[head]
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Add Two Numbers</strong>
+            <span>Dummy + carry · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> carry is propagated to the next digit <strong>Complexity:</strong> O(max(m,n)) time, O(max(m,n)) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-6">Copy</button></div>
+            <pre id="linked-list-solution-6"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -&gt; Optional[ListNode]:
+        
+        carry = 0
+        dummy = ListNode()
+        prev = dummy
+        
+        while l1 or l2 or carry:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+
+            summ = v1 + v2 + carry
+            
+            carry = summ//10
+            val = summ % 10
+            newNode = ListNode(val)
+            prev.next = newNode
+            prev = prev.next
+
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return dummy.next
+
+
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Find The Duplicate Number</strong>
+            <span>Floyd on array-defined graph · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> nums[index] acts as next pointer <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-7">Copy</button></div>
+            <pre id="linked-list-solution-7">class Solution:
+    def findDuplicate(self, nums: List[int]) -&gt; int:
+        slow, fast = 0,0
+
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+            if slow == fast:
+                break
+
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+            if slow == slow2:
+                return slow
+                
+        
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>LRU Cache</strong>
+            <span>Hash map + doubly linked list · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Front is most recent; tail.prev is least recent <strong>Complexity:</strong> O(1) per op time, O(capacity) space. <span class="submission-date">Latest accepted: 01/19/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-8">Copy</button></div>
+            <pre id="linked-list-solution-8">class Node:
+    def __init__(self, key=0, val=0):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.head = Node()
+        self.tail = Node()
+        self.map = {}        
+        self.cap = capacity
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -&gt; int:
+        if key in self.map:
+            node = self.map[key]
+            self.remove_node(node)
+            self.insert_front(node)
+            return node.val
+        return -1
+        
+
+    def put(self, key: int, value: int) -&gt; None:
+        if key in self.map:
+            node = self.map[key]
+            node.val = value
+            self.remove_node(node)
+            self.insert_front(node)
+            return
+        node = Node(key,value)
+        self.map[key] = node
+        self.insert_front(node)
+
+        if len(self.map) &gt; self.cap:
+            lru = self.tail.prev
+            self.remove_node(lru)
+            del self.map[lru.key]
+
+    def insert_front(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+
+    def remove_node(self,node):
+        prev = node.prev
+        nxt = node.next
+        prev.next = nxt
+        nxt.prev = prev
+        
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Merge K Sorted Lists</strong>
+            <span>Pairwise divide-and-conquer merge · Hard</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Number of lists halves each round <strong>Complexity:</strong> O(n log k) time, O(1)* space. <span class="submission-date">Latest accepted: 08/30/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-9">Copy</button></div>
+            <pre id="linked-list-solution-9"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:    
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -&gt; Optional[ListNode]:
+        if not lists or len(lists) == 0:
+            return None
+        
+        while len(lists) &gt; 1:
+            newMergedList = []
+            for i in range(0, len(lists),2):
+                first = lists[i]
+                second = lists[i+1] if i+1 &lt; len(lists) else None
+                mergedTwo = self.merge(first,second)
+                newMergedList.append(mergedTwo)
+            lists = newMergedList
+        return lists[0]
+
+    def merge(self, l1, l2):
+        head = ListNode()
+        dummy = head
+
+        while l1 and l2:
+            if l1.val &lt; l2.val:
+                head.next = l1
+                l1 = l1.next
+            else:
+                head.next = l2
+                l2 = l2.next
+            head = head.next
+        head.next = l1 or l2
+        return dummy.next
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Reverse Nodes In K Group</strong>
+            <span>Bounded block reversal · Hard</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Only reverse after kth boundary exists <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/23/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="linked-list-solution-10">Copy</button></div>
+            <pre id="linked-list-solution-10"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -&gt; Optional[ListNode]:
+        
+        dummy = ListNode(0)
+        dummy.next = head
+        groupPrev = dummy
+
+        cur = head
+        while True:
+            kth = self.getkth(cur,k)
+            if kth is None:
+                break
+
+            groupNext = kth.next
+            prev = kth.next
+            
+            #reverse the kth group
+            while cur != groupNext:
+                nxt = cur.next
+                cur.next = prev
+                prev = cur
+                cur = nxt
+            
+            tmp = groupPrev.next
+            groupPrev.next = kth
+            groupPrev = tmp
+
+        return dummy.next
+
+    def getkth(self,node,k):
+        while k&gt;1 and node:
+            node = node.next
+            k-=1
+        return node</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Linked List</footer>
+        </div>
+      </article>
+
+      <article class="topic-panel generated-topic" id="topic-sliding-window">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 07 · 5 accepted submissions</p>
+            <h1>Sliding Window</h1>
+            <p class="intro">Reuse information from a contiguous range. Expand right, update state, shrink left according to the window rule, then evaluate.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Sliding Window sections">
+            <a href="#sliding-window-framework">Framework</a>
+            <a href="#sliding-window-patterns">Patterns</a>
+            <a href="#sliding-window-map">Problem map</a>
+            <a href="#sliding-window-gaps">Gaps</a>
+            <a href="#sliding-window-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="sliding-window-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>Expand -&gt; update -&gt; shrink to the required condition -&gt; evaluate.</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="sliding-window-framework-code">Copy</button></div>
+              <pre id="sliding-window-framework-code">state = {}
+l = 0
+answer = initial_value
+
+for r, item in enumerate(data):
+    add(item, state)
+
+    while window_is_invalid(state, l, r):
+        remove(data[l], state)
+        l += 1
+
+    answer = update_answer(answer, l, r, state)
+
+return answer</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="sliding-window-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>Running boundary</h3>
+          <p>Left tracks best buy/minimum so far</p>
+          <span>Best Time to Buy/Sell</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Longest valid window</h3>
+          <p>Shrink until constraint becomes valid</p>
+          <span>No Repeats, Character Replacement</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Fixed-size exact match</h3>
+          <p>Expire one item when window exceeds target size</p>
+          <span>Permutation in String</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Minimum covering window</h3>
+          <p>Shrink while valid and record the minimum</p>
+          <span>Minimum Window Substring</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="sliding-window-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Best Time to Buy And Sell Stock</strong><span class="detail">Easy</span></td>
+        <td>Running minimum pointer</td>
+        <td>prices[l] is minimum price seen so far</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Longest Substring Without Repeating Characters</strong><span class="detail">Medium</span></td>
+        <td>Variable window + set</td>
+        <td>Window contains no duplicate character</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Longest Repeating Character Replacement</strong><span class="detail">Medium</span></td>
+        <td>Variable window + counts</td>
+        <td>window size - max frequency &lt;= k</td>
+        <td><code>O(n)*</code></td>
+        <td><code>O(1)*</code></td>
+      </tr><tr>
+        <td><strong>Permutation In String</strong><span class="detail">Medium</span></td>
+        <td>Fixed-size frequency window</td>
+        <td>Compare exactly len(s1) characters</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(1)</code></td>
+      </tr><tr>
+        <td><strong>Minimum Window Substring</strong><span class="detail">Hard</span></td>
+        <td>Minimum-cover window</td>
+        <td>formed == required means every need is satisfied</td>
+        <td><code>O(n+m)</code></td>
+        <td><code>O(m)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="sliding-window-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Category outlier</strong>
+          <p>Stock is a running-min scan rather than a maintained window: l marks the cheapest price, not a window boundary that removes state.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Window families</strong>
+          <p>Separate fixed size, longest valid, minimum valid, and exact-frequency windows before choosing the shrink rule.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Character Replacement</strong>
+          <p>The accepted code has an unused seen set and recomputes max(count.values()). A stale max-frequency variable gives the standard O(n) invariant.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Missing solved gap</strong>
+          <p>Sliding Window Maximum is unsolved. It requires a decreasing deque, because expired and dominated indices must be removed from opposite ends.</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="sliding-window-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Best Time to Buy And Sell Stock</strong>
+            <span>Running minimum pointer · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> prices[l] is minimum price seen so far <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 07/29/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="sliding-window-solution-0">Copy</button></div>
+            <pre id="sliding-window-solution-0">class Solution:
+    def maxProfit(self, prices: List[int]) -&gt; int:
+
+        l,r = 0,0
+        profit = 0
+        while r&lt;len(prices):
+            if prices[r] &lt; prices[l]:
+                l = r
+            else:                    
+                profit = max(profit,prices[r] - prices[l])
+            r +=1
+        return profit
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Longest Substring Without Repeating Characters</strong>
+            <span>Variable window + set · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Window contains no duplicate character <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 08/15/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="sliding-window-solution-1">Copy</button></div>
+            <pre id="sliding-window-solution-1">class Solution:
+    def lengthOfLongestSubstring(self, s: str) -&gt; int:
+        
+
+        seen = set()
+        l = 0
+        max_subs = 0
+        for r in range(len(s)):
+            
+            while s[r] in seen:
+                seen.remove(s[l])
+                l +=1
+            
+            seen.add(s[r])
+            max_subs = max(max_subs, r-l+1)
+        return max_subs
+            </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Longest Repeating Character Replacement</strong>
+            <span>Variable window + counts · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> window size - max frequency &lt;= k <strong>Complexity:</strong> O(n)* time, O(1)* space. <span class="submission-date">Latest accepted: 08/16/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="sliding-window-solution-2">Copy</button></div>
+            <pre id="sliding-window-solution-2">class Solution:
+    def characterReplacement(self, s: str, k: int) -&gt; int:
+        seen = set()
+        count = Counter()
+        l = 0
+        res = 0
+        for r in range(len(s)):
+            count[s[r]] +=1
+            while (r-l+1) - max(count.values()) &gt; k: #while condition is true, shrink the window
+                count[s[l]] -=1
+                l +=1
+            res = max(res, r-l+1)
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Permutation In String</strong>
+            <span>Fixed-size frequency window · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Compare exactly len(s1) characters <strong>Complexity:</strong> O(n) time, O(1) space. <span class="submission-date">Latest accepted: 01/13/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="sliding-window-solution-3">Copy</button></div>
+            <pre id="sliding-window-solution-3">class Solution:
+    def checkInclusion(self, s1: str, s2: str) -&gt; bool:
+        s1arr = [0]*26
+        s2arr = [0]*26
+
+        for ch in s1:
+            s1arr[ord(ch) - ord('a')]+=1
+
+        l = 0
+        for r,ch in enumerate(s2):
+            s2arr[ord(ch)-ord('a')]+=1 #expand and update logic
+            
+            if r&gt;=len(s1): #shrink logic
+                s2arr[ord(s2[l])-ord('a')]-=1
+                l +=1
+
+            if s2arr == s1arr: #evaluate result
+                return True
+
+        return False</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Minimum Window Substring</strong>
+            <span>Minimum-cover window · Hard</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> formed == required means every need is satisfied <strong>Complexity:</strong> O(n+m) time, O(m) space. <span class="submission-date">Latest accepted: 01/13/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="sliding-window-solution-4">Copy</button></div>
+            <pre id="sliding-window-solution-4">class Solution:
+    def minWindow(self, s: str, t: str) -&gt; str:
+        need = Counter(t)
+        required = len(need)
+        window = defaultdict(int)
+        formed = 0
+        l = 0
+        res = float('inf')
+        res_str = ''
+        for r, ch in enumerate(s):
+            window[ch] +=1 #increase the window and update the dict
+
+            if ch in need and window[ch] == need[ch]:
+                formed +=1
+
+            while formed == required and l&lt;=r: #condition to reduce window
+                if r-l+1 &lt; res:
+                    res = r-l+1
+                    res_str = s[l:r+1]
+                
+                window[s[l]] -=1
+
+                if s[l] in need and window[s[l]] &lt; need[s[l]]:
+                    formed -=1
+                l+=1
+        return res_str</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Sliding Window</footer>
+        </div>
+      </article>
+
+      <article class="topic-panel generated-topic" id="topic-trees">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Algorithm 08 · 13 accepted submissions</p>
+            <h1>Trees</h1>
+            <p class="intro">Choose traversal by information flow: carry state downward, return summaries upward, process one level at a time, or exploit BST order.</p>
+            <div class="source-note">Built from your latest accepted NeetCode submissions.</div>
+          </header>
+
+          <nav class="contents" aria-label="Trees sections">
+            <a href="#trees-framework">Framework</a>
+            <a href="#trees-patterns">Patterns</a>
+            <a href="#trees-map">Problem map</a>
+            <a href="#trees-gaps">Gaps</a>
+            <a href="#trees-solutions">Solutions</a>
+          </nav>
+
+          <section class="note-section" id="trees-framework">
+            <div class="section-title">
+              <h2>How to think</h2>
+              <p>Ask where the information moves: down, up, across a level, or through sorted BST order.</p>
+            </div>
+            <div class="card code-card">
+              <div class="code-label"><span>Reusable framework</span><button class="copy-button" type="button" data-copy="trees-framework-code">Copy</button></div>
+              <pre id="trees-framework-code">def dfs(node, state):
+    if not node:
+        return base
+
+    left = dfs(node.left, next_state)
+    right = dfs(node.right, next_state)
+
+    update_global(node, left, right, state)
+    return summary_for_parent(node, left, right)</pre>
+            </div>
+          </section>
+
+          <section class="note-section" id="trees-patterns">
+            <div class="section-title">
+              <h2>Patterns in your submissions</h2>
+              <p>These are the recurring decisions your accepted code already makes.</p>
+            </div>
+            <div class="pattern-cards">
+        <article class="card pattern-note">
+          <h3>State travels down</h3>
+          <p>Pass path maximum or valid bounds</p>
+          <span>Good Nodes, Validate BST</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Summary travels up</h3>
+          <p>Children return height or validity</p>
+          <span>Diameter, Balanced Tree</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>Level state</h3>
+          <p>Snapshot queue length before processing</p>
+          <span>Level Order, Right Side View</span>
+        </article>
+        <article class="card pattern-note">
+          <h3>BST ordering</h3>
+          <p>Prune direction or use inorder order</p>
+          <span>LCA, Kth Smallest</span>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="trees-map">
+            <div class="section-title">
+              <h2>Problem map</h2>
+              <p>Technique, invariant, and complexity for every accepted solution.</p>
+            </div>
+            <div class="card table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Your technique</th><th>Invariant</th><th>Time</th><th>Space</th></tr></thead>
+      <tbody><tr>
+        <td><strong>Invert Binary Tree</strong><span class="detail">Easy</span></td>
+        <td>BFS transform</td>
+        <td>Swap children before enqueuing them</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(w)</code></td>
+      </tr><tr>
+        <td><strong>Maximum Depth of Binary Tree</strong><span class="detail">Easy</span></td>
+        <td>Iterative DFS stack</td>
+        <td>Each item stores node and its depth</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Diameter of Binary Tree</strong><span class="detail">Easy</span></td>
+        <td>Postorder height + global maximum</td>
+        <td>Return height; update left height + right height</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Balanced Binary Tree</strong><span class="detail">Easy</span></td>
+        <td>Postorder tuple</td>
+        <td>Return height and balanced status together</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Same Tree</strong><span class="detail">Easy</span></td>
+        <td>Synchronized BFS</td>
+        <td>Paired nodes must match in structure and value</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(w)</code></td>
+      </tr><tr>
+        <td><strong>Subtree of Another Tree</strong><span class="detail">Easy</span></td>
+        <td>DFS + same-tree helper</td>
+        <td>At each node, either match here or search children</td>
+        <td><code>O(nm)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Lowest Common Ancestor of a Binary Search Tree</strong><span class="detail">Medium</span></td>
+        <td>BST-directed recursion</td>
+        <td>Both values on one side means only search that side</td>
+        <td><code>O(h)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Binary Tree Level Order Traversal</strong><span class="detail">Medium</span></td>
+        <td>Level BFS</td>
+        <td>Process exactly the queue size captured for this level</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(w)</code></td>
+      </tr><tr>
+        <td><strong>Binary Tree Right Side View</strong><span class="detail">Medium</span></td>
+        <td>Level BFS</td>
+        <td>Last processed node in each level is visible</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(w)</code></td>
+      </tr><tr>
+        <td><strong>Count Good Nodes In Binary Tree</strong><span class="detail">Medium</span></td>
+        <td>Preorder carried maximum</td>
+        <td>maxval is greatest ancestor value on current path</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Validate Binary Search Tree</strong><span class="detail">Medium</span></td>
+        <td>DFS with open bounds</td>
+        <td>leftBound &lt; node.val &lt; rightBound</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(h)</code></td>
+      </tr><tr>
+        <td><strong>Kth Smallest Element In a Bst</strong><span class="detail">Medium</span></td>
+        <td>Full inorder collection</td>
+        <td>Inorder values are sorted</td>
+        <td><code>O(n)</code></td>
+        <td><code>O(n)</code></td>
+      </tr><tr>
+        <td><strong>Construct Binary Tree From Preorder And Inorder Traversal</strong><span class="detail">Medium</span></td>
+        <td>Recursive split</td>
+        <td>Preorder root partitions inorder sequence</td>
+        <td><code>O(n²)</code></td>
+        <td><code>O(n²)</code></td>
+      </tr></tbody>
+    </table>
+  </div>
+          </section>
+
+          <section class="note-section" id="trees-gaps">
+            <div class="section-title">
+              <h2>Gaps to close next</h2>
+              <p>Your accepted solution remains the reference; these are the adjacent variants worth learning.</p>
+            </div>
+            <div class="gap-grid">
+        <article class="gap-card">
+          <strong>Build Tree</strong>
+          <p>Repeated slicing and inorder.index() make the accepted solution O(n²). An index map plus preorder cursor gives O(n).</p>
+        </article>
+        <article class="gap-card">
+          <strong>Kth Smallest</strong>
+          <p>The accepted solution builds the full inorder array. Iterative inorder can stop after the kth pop and use O(h) space.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Subtree</strong>
+          <p>Direct comparison is O(nm) worst case. Serialization or subtree hashing is the next advanced variant.</p>
+        </article>
+        <article class="gap-card">
+          <strong>Traversal robustness</strong>
+          <p>Your mix of BFS and DFS is strong. Iterative DFS is the next gap for avoiding Python recursion-depth limits.</p>
+        </article></div>
+          </section>
+
+          <section class="note-section" id="trees-solutions">
+            <div class="section-title">
+              <h2>Your accepted solutions</h2>
+              <p>Exact latest accepted submissions, collapsed for quick review.</p>
+            </div>
+            <details>
+        <summary>
+          <span class="summary-title">
+            <strong>Invert Binary Tree</strong>
+            <span>BFS transform · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Swap children before enqueuing them <strong>Complexity:</strong> O(n) time, O(w) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-0">Copy</button></div>
+            <pre id="trees-solution-0"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -&gt; Optional[TreeNode]:
+        if not root:
+            return None
+        queue = deque([root])
+
+        while queue:
+            node = queue.popleft()
+            node.left,node.right = node.right,node.left
+
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return root
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Maximum Depth of Binary Tree</strong>
+            <span>Iterative DFS stack · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Each item stores node and its depth <strong>Complexity:</strong> O(n) time, O(h) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-1">Copy</button></div>
+            <pre id="trees-solution-1"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -&gt; int:
+
+        stack = [[root,1]]
+        res = 0
+        while stack:
+            node, depth = stack.pop()
+            if node:
+                res = max(res, depth)
+                stack.append([node.left, depth+1])
+                stack.append([node.right, depth+1])
+
+        return res
+
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Diameter of Binary Tree</strong>
+            <span>Postorder height + global maximum · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Return height; update left height + right height <strong>Complexity:</strong> O(n) time, O(h) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-2">Copy</button></div>
+            <pre id="trees-solution-2"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -&gt; int:
+        
+        globalmax = 0
+        def dfs(node):
+            nonlocal globalmax
+            if not node:
+                return 0
+
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            globalmax = max(globalmax, left + right)
+            return 1 + max(left,right)
+
+        dfs(root)
+        return globalmax
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Balanced Binary Tree</strong>
+            <span>Postorder tuple · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Return height and balanced status together <strong>Complexity:</strong> O(n) time, O(h) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-3">Copy</button></div>
+            <pre id="trees-solution-3"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -&gt; bool:
+
+
+        def dfs(node):
+            if not node:
+                return 0, True
+
+            lheight,lbalanced = dfs(node.left)
+            rheight, rbalanced = dfs(node.right)
+
+            height = 1 + max(lheight,rheight)
+            isbalanced = True if lbalanced and rbalanced and abs(lheight- rheight) &lt;=1 else False
+
+            return height,isbalanced
+        
+        _,isbalanced = dfs(root)
+        return isbalanced
+
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Same Tree</strong>
+            <span>Synchronized BFS · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Paired nodes must match in structure and value <strong>Complexity:</strong> O(n) time, O(w) space. <span class="submission-date">Latest accepted: 07/12/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-4">Copy</button></div>
+            <pre id="trees-solution-4"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -&gt; bool:
+
+        p1 = deque([p])
+        q1 = deque([q])
+
+        while p1 and q1:
+            for _ in range(len(p1)):
+                pnode = p1.popleft()
+                qnode = q1.popleft()
+
+                if pnode is None and qnode is None:
+                    continue
+                if pnode is None or qnode is None or pnode.val != qnode.val:
+                    return False
+                
+                p1.append(pnode.left)
+                p1.append(pnode.right)
+                q1.append(qnode.left)
+                q1.append(qnode.right)
+        return True
+
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Subtree of Another Tree</strong>
+            <span>DFS + same-tree helper · Easy</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> At each node, either match here or search children <strong>Complexity:</strong> O(nm) time, O(h) space. <span class="submission-date">Latest accepted: 01/28/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-5">Copy</button></div>
+            <pre id="trees-solution-5"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:   
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -&gt; bool:
+        if root is None and subRoot:
+            return False
+        
+        if self.isSame(root,subRoot):
+            return True
+
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right,subRoot)
+
+    def isSame(self,p,q):
+        if not p and not q:
+            return True
+        if not p and q:
+            return False
+        if not q and p:
+            return False
+        if p.val != q.val:
+            return False
+        return self.isSame(p.left,q.left) and self.isSame(p.right, q.right)</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Lowest Common Ancestor of a Binary Search Tree</strong>
+            <span>BST-directed recursion · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Both values on one side means only search that side <strong>Complexity:</strong> O(h) time, O(h) space. <span class="submission-date">Latest accepted: 07/13/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-6">Copy</button></div>
+            <pre id="trees-solution-6"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -&gt; TreeNode:
+        
+        if not root or not p or not q:
+            return None
+
+        if (p.val &lt; root.val and q.val &lt; root.val):
+            return self.lowestCommonAncestor(root.left,p,q)
+        elif (p.val &gt; root.val and q.val &gt; root.val):
+            return self.lowestCommonAncestor(root.right,p,q)
+        else:
+            return root
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Binary Tree Level Order Traversal</strong>
+            <span>Level BFS · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Process exactly the queue size captured for this level <strong>Complexity:</strong> O(n) time, O(w) space. <span class="submission-date">Latest accepted: 01/25/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-7">Copy</button></div>
+            <pre id="trees-solution-7"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -&gt; List[List[int]]:
+        res = []
+        if not root:
+            return res
+        q = deque([root])
+
+        while q:
+            level = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                level.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(level)
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Binary Tree Right Side View</strong>
+            <span>Level BFS · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Last processed node in each level is visible <strong>Complexity:</strong> O(n) time, O(w) space. <span class="submission-date">Latest accepted: 01/25/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-8">Copy</button></div>
+            <pre id="trees-solution-8"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -&gt; List[int]:
+        res = []
+        if root is None:
+            return res
+        
+        q = deque([root])
+
+        while q:
+            right = None
+            for _ in range(len(q)):
+                node = q.popleft()
+                right = node.val
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(right)
+        return res</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Count Good Nodes In Binary Tree</strong>
+            <span>Preorder carried maximum · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> maxval is greatest ancestor value on current path <strong>Complexity:</strong> O(n) time, O(h) space. <span class="submission-date">Latest accepted: 01/25/2026</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-9">Copy</button></div>
+            <pre id="trees-solution-9"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def goodNodes(self, root: TreeNode) -&gt; int:
+
+        res = 0
+        def dfs(node, maxval):
+            nonlocal res
+            if node is None:
+                return 
+                
+            if node.val &gt;= maxval:
+                res +=1
+                maxval = node.val
+            
+            dfs(node.left,maxval)
+            dfs(node.right,maxval)
+
+        dfs(root,-float(&quot;inf&quot;))
+        return res
+        </pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Validate Binary Search Tree</strong>
+            <span>DFS with open bounds · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> leftBound &lt; node.val &lt; rightBound <strong>Complexity:</strong> O(n) time, O(h) space. <span class="submission-date">Latest accepted: 07/13/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-10">Copy</button></div>
+            <pre id="trees-solution-10"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -&gt; bool:
+        
+        def isValid(node, leftB, rightB):
+            if not node:
+                return True
+
+            if node.val &gt; leftB and node.val &lt; rightB:
+                return (isValid(node.left, leftB, node.val) and
+                isValid(node.right, node.val, rightB))
+            else:
+                return False
+        
+        return isValid(root, float(&quot;-inf&quot;), float(&quot;inf&quot;))
+</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Kth Smallest Element In a Bst</strong>
+            <span>Full inorder collection · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Inorder values are sorted <strong>Complexity:</strong> O(n) time, O(n) space. <span class="submission-date">Latest accepted: 07/13/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-11">Copy</button></div>
+            <pre id="trees-solution-11"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -&gt; int:
+        arr = []
+        def inorder(node):
+            if not node:
+                return
+
+            inorder(node.left)
+            arr.append(node.val)
+            inorder(node.right)
+        
+        inorder(root)
+        return arr[k-1]</pre>
+          </div>
+        </div>
+      </details><details>
+        <summary>
+          <span class="summary-title">
+            <strong>Construct Binary Tree From Preorder And Inorder Traversal</strong>
+            <span>Recursive split · Medium</span>
+          </span>
+        </summary>
+        <div class="solution-body">
+          <p class="solution-note"><strong>Your invariant:</strong> Preorder root partitions inorder sequence <strong>Complexity:</strong> O(n²) time, O(n²) space. <span class="submission-date">Latest accepted: 07/13/2025</span></p>
+          <div class="card code-card">
+            <div class="code-label"><span>Your accepted Python submission</span><button class="copy-button" type="button" data-copy="trees-solution-12">Copy</button></div>
+            <pre id="trees-solution-12"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -&gt; Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+
+        node = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        leftNodeCount = mid+1
+
+        node.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        node.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+
+        return node</pre>
+          </div>
+        </div>
+      </details>
+          </section>
+
+          <footer class="footer">Algorithm Notes / Trees</footer>
+        </div>
+      </article>
+      <!-- GENERATED_TOPICS_END -->
     </main>
   </div>
 
@@ -1621,13 +4380,21 @@ dfs(skip_i, path)    # skip</pre>
     const topicPanels = [...document.querySelectorAll(".topic-panel")];
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("overlay");
+    const menuButton = document.getElementById("menuButton");
     const currentTopic = document.getElementById("currentTopic");
     const toast = document.getElementById("toast");
+    const mobileSidebar = window.matchMedia("(max-width: 860px)");
     let toastTimer;
 
     const topicNames = {
       binary: "Binary Search",
       backtracking: "Backtracking",
+      arrays: "Arrays & Hashing",
+      "two-pointers": "Two Pointers",
+      stack: "Stack",
+      "linked-list": "Linked List",
+      "sliding-window": "Sliding Window",
+      trees: "Trees",
     };
 
     function showToast(message) {
@@ -1637,9 +4404,20 @@ dfs(skip_i, path)    # skip</pre>
       toastTimer = setTimeout(() => toast.classList.remove("visible"), 1400);
     }
 
+    function syncSidebarAccessibility() {
+      const hidden = mobileSidebar.matches && !sidebar.classList.contains("open");
+      sidebar.inert = hidden;
+      if (hidden) sidebar.setAttribute("aria-hidden", "true");
+      else sidebar.removeAttribute("aria-hidden");
+    }
+
     function closeSidebar() {
+      if (mobileSidebar.matches && sidebar.contains(document.activeElement)) {
+        menuButton.focus();
+      }
       sidebar.classList.remove("open");
       overlay.classList.remove("visible");
+      syncSidebarAccessibility();
     }
 
     function showTopic(topic, updateHash = true) {
@@ -1663,7 +4441,21 @@ dfs(skip_i, path)    # skip</pre>
 
     function topicFromHash() {
       const hash = location.hash.slice(1);
-      if (hash === "backtracking" || hash.startsWith("bt-")) return "backtracking";
+      const prefixes = {
+        "bs-": "binary",
+        "bt-": "backtracking",
+        "arrays-": "arrays",
+        "two-pointers-": "two-pointers",
+        "stack-": "stack",
+        "linked-list-": "linked-list",
+        "sliding-window-": "sliding-window",
+        "trees-": "trees",
+      };
+
+      if (topicNames[hash]) return hash;
+      for (const [prefix, topic] of Object.entries(prefixes)) {
+        if (hash.startsWith(prefix)) return topic;
+      }
       return "binary";
     }
 
@@ -1680,9 +4472,10 @@ dfs(skip_i, path)    # skip</pre>
       button.addEventListener("click", () => showTopic(button.dataset.topic));
     });
 
-    document.getElementById("menuButton").addEventListener("click", () => {
+    menuButton.addEventListener("click", () => {
       sidebar.classList.add("open");
       overlay.classList.add("visible");
+      syncSidebarAccessibility();
     });
     overlay.addEventListener("click", closeSidebar);
     document.addEventListener("keydown", (event) => {
@@ -1736,10 +4529,13 @@ dfs(skip_i, path)    # skip</pre>
       showTopic(topicFromHash(), false);
       scrollToHashSection();
     });
+    mobileSidebar.addEventListener("change", syncSidebarAccessibility);
+    window.addEventListener("resize", syncSidebarAccessibility);
 
     showTopic(topicFromHash(), false);
     scrollToHashSection();
     setTheme(document.documentElement.dataset.theme);
+    syncSidebarAccessibility();
   </script>
 </body>
 </html>
