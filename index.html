@@ -974,6 +974,58 @@
         transition-duration: 0.01ms !important;
       }
     }
+
+
+    /* GOF_STYLES_START */
+    .gof-guide [hidden] { display: none !important; }
+    .gof-guide a { color: var(--cp-link); text-underline-offset: 3px; }
+    .gof-guide .gof-scope { color: var(--cp-text-muted); font-size: .8rem; margin-top: 16px; }
+    .gof-reading { color: var(--cp-text-muted); margin: 20px 0; font-size: .9rem; }
+    .gof-roadmap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 24px 0; }
+    .gof-roadmap span { font-size: .78rem; color: var(--cp-text-muted); }
+    .gof-roadmap b { display: block; color: var(--cp-text); font-size: .9rem; }
+    .gof-roadmap i { color: var(--cp-accent); font-style: normal; }
+    .gof-chapter-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0 0 24px; }
+    .gof-chapter-button { padding: 10px 8px; font-size: .8rem; cursor: pointer; border: 1px solid var(--cp-border); border-radius: .625rem; background: var(--cp-surface); color: var(--cp-text-muted); }
+    .gof-chapter-button[aria-pressed="true"] { background: var(--cp-accent-soft); color: var(--cp-accent); border-color: var(--cp-accent); font-weight: 700; }
+    .gof-lesson { scroll-margin-top: 10px; }
+    .gof-lesson .summary-title span { white-space: normal; }
+    .gof-lesson-body { padding: 20px; border-top: 1px solid var(--cp-border); }
+    .gof-lesson-body > p { font-size: .9rem; color: var(--cp-text-muted); margin: 10px 0 18px; }
+    .gof-lesson-body .gof-story { color: var(--cp-text); }
+    .gof-family { display: inline-block; font-size: .72rem; color: var(--cp-accent); font-weight: 700; }
+    .gof-lesson-body h4 { margin: 20px 0 6px; font-size: .85rem; }
+    .gof-change { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .gof-change h4 { margin: 0 0 6px; }
+    .gof-change p, .gof-restraint p { margin: 0; font-size: .86rem; color: var(--cp-text-muted); }
+    .gof-roles { display: flex; align-items: center; gap: 8px; margin: 20px 0; }
+    .gof-roles span { flex: 1; border: 1px solid var(--cp-border); border-radius: .625rem; padding: 10px; background: var(--cp-bg-elevated); font-size: .77rem; text-align: center; overflow-wrap: anywhere; }
+    .gof-roles b { color: var(--cp-accent); }
+    .gof-lesson-body .gof-hook { color: var(--cp-accent); }
+    .gof-output { margin: 12px 0 20px; }
+    .gof-output > span { font-size: .73rem; color: var(--cp-text-muted); }
+    .gof-output pre { padding: 10px 12px; border-left: 2px solid var(--cp-border-strong); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .gof-restraint { padding: 12px 14px; border-left: 3px solid var(--cp-warning); background: var(--cp-bg-elevated); }
+    .gof-restraint h4 { margin-top: 0; }
+    .gof-recall { margin-top: 20px; background: var(--cp-bg-elevated); }
+    .gof-recall summary { font-size: .85rem; }
+    .gof-recall p { padding: 0 16px 12px; font-size: .86rem; }
+    .gof-lesson-body .gof-next { font-size: .8rem; margin: 18px 0 0; }
+    .gof-act-exit { font-size: .86rem; color: var(--cp-text-muted); padding: 12px 0; }
+    .gof-pager { display: flex; justify-content: space-between; gap: 16px; font-size: .84rem; }
+    .gof-sources { padding-left: 20px; font-size: .86rem; }
+    .gof-sources li { margin-bottom: 10px; }
+    @media (max-width: 680px) {
+      .gof-chapter-nav { grid-template-columns: 1fr 1fr; }
+      .gof-roadmap { display: grid; grid-template-columns: 1fr 1fr; }
+      .gof-roadmap i { display: none; }
+      .gof-change { grid-template-columns: 1fr; gap: 16px; }
+      .gof-lesson-body { padding: 14px; }
+      .gof-roles { flex-direction: column; align-items: stretch; }
+      .gof-roles b { transform: rotate(90deg); text-align: center; }
+    }
+    /* GOF_STYLES_END */
+
   </style>
 </head>
 <body>
@@ -1000,6 +1052,11 @@
         <button class="topic-button" type="button" data-topic="linked-list"><span class="topic-icon">LL</span><span>Linked List</span></button>
         <button class="topic-button" type="button" data-topic="sliding-window"><span class="topic-icon">SW</span><span>Sliding Window</span></button>
         <button class="topic-button" type="button" data-topic="trees"><span class="topic-icon">TR</span><span>Trees</span></button>
+      </nav>
+
+      <div class="nav-label">Software design</div>
+      <nav class="topic-nav" aria-label="Software design topics">
+        <button class="topic-button" type="button" data-topic="gof"><span class="topic-icon">GoF</span><span>Design Patterns</span></button>
       </nav>
 
       <div class="nav-label">Coming next</div>
@@ -4370,6 +4427,1898 @@ class Solution:
         </div>
       </article>
       <!-- GENERATED_TOPICS_END -->
+
+      <!-- GOF_GUIDE_START -->
+      <article class="topic-panel gof-guide" id="topic-gof">
+        <div class="note">
+          <header class="note-header">
+            <p class="kicker">Design notebook · 23 patterns · one project</p>
+            <h1>Neighborhood Kitchen</h1>
+            <p class="intro">A small café grows into a delivery and catering service. Learn the Gang of Four patterns by helping Maya change one thing at a time.</p>
+            <p class="gof-scope">5 creational · 7 structural · 11 behavioral. Including Interpreter.</p>
+          </header>
+
+          <div class="callout">
+            <strong>Requirement first. Pattern second.</strong>
+            <p>Ask: what keeps changing, where is it coupled, and what is the smallest useful separation? A pattern names the solution; it does not create the need.</p>
+          </div>
+          <p class="gof-reading">Read one chapter at a time. Open a lesson, predict its output, then answer the recall question. Each code block is a complete, independently runnable <strong>checkpoint in the same project story</strong>, not a file to paste after the previous block. A final checkpoint shows several patterns working together.</p>
+
+          <details id="gof-start" class="gof-baseline">
+            <summary><span class="summary-title"><strong>Day zero: no patterns needed</strong><span>A menu and a total are enough for the first customer.</span></span></summary>
+            <div class="gof-lesson-body">
+              <p>Maya sells soup for 700 cents and bread for 200 cents. A dataclass and a function are sufficient. We will not replace simple code until a new requirement makes the change worthwhile.</p>
+              
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · Day zero</span><button class="copy-button" type="button" data-copy="gof-baseline-code">Copy</button></div>
+    <pre id="gof-baseline-code" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Dish:
+    name: str
+    cents: int
+
+def total(dishes):
+    return sum(dish.cents for dish in dishes)
+
+lunch = [Dish(&quot;Soup&quot;, 700), Dish(&quot;Bread&quot;, 200)]
+assert total(lunch) == 900
+print(total(lunch))</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-baseline-code">900</pre></div>
+              <p>Examples use integer cents, in-memory data, and fake external services. They teach design, not payment processing, durable messaging, or production concurrency.</p>
+            </div>
+          </details>
+
+          <div class="gof-roadmap" aria-label="Project growth">
+            <span><b>Counter</b>Custom meals</span><i aria-hidden="true">&rarr;</i>
+            <span><b>Kitchen</b>Drafts &amp; preparation</span><i aria-hidden="true">&rarr;</i>
+            <span><b>Delivery</b>People &amp; services</span><i aria-hidden="true">&rarr;</i>
+            <span><b>Growth</b>Rules &amp; reports</span>
+          </div>
+
+          <nav class="gof-chapter-nav" aria-label="Story chapters">
+            <button type="button" class="gof-chapter-button" data-gof-act="1" aria-pressed="true">1. Custom lunches</button>
+<button type="button" class="gof-chapter-button" data-gof-act="2" aria-pressed="false">2. Kitchen workflow</button>
+<button type="button" class="gof-chapter-button" data-gof-act="3" aria-pressed="false">3. Delivery & people</button>
+<button type="button" class="gof-chapter-button" data-gof-act="4" aria-pressed="false">4. Growth & restraint</button>
+          </nav>
+          
+          <section class="gof-act" id="gof-act-1" >
+            <div class="section-title"><h2>Chapter 1: The counter gets busy</h2><p>Maya starts with soup and bread. Customers now want delivery fees, extras, family bundles, and repeat orders. We first learn composition: swap behavior, wrap one item, and group many items.</p></div>
+            
+    <details class="gof-lesson" id="gof-strategy" data-gof-category="Behavioral" data-gof-number="1">
+      <summary><span class="summary-title"><strong>01. Strategy</strong>
+      <span>Swap fee logic without touching checkout</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya opens Neighborhood Kitchen and starts taking both pickup and delivery orders from her tiny storefront. Every order needs a different fee added on top of the subtotal, and she wants to add catering later without rewriting her checkout code.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Her checkout function has a growing if/elif chain checking order type just to decide how to add fees.</p></div>
+          <div><h4>The small design move</h4><p>Strategy pulls each fee calculation out into its own interchangeable function that takes a subtotal and returns a fee. The checkout code stays fixed and simply calls whichever policy function is plugged in for that order.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Dish</span><b aria-hidden="true">&rarr;</b><span>FeePolicy</span><b aria-hidden="true">&rarr;</b><span>Order</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Swap fee logic without touching checkout</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-strategy">Copy</button></div>
+    <pre id="gof-code-strategy" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Dish:
+    name: str
+    price_cents: int
+
+def pickup_fee(subtotal_cents):
+    return 0
+
+def delivery_fee(subtotal_cents):
+    return 350
+
+def catering_fee(subtotal_cents):
+    return max(500, subtotal_cents // 10)
+
+def total_cents(dishes, fee_policy):
+    subtotal = sum(d.price_cents for d in dishes)
+    return subtotal + fee_policy(subtotal)
+
+order = [Dish(&quot;Soup&quot;, 700), Dish(&quot;Salad&quot;, 550)]
+pickup_total = total_cents(order, pickup_fee)
+delivery_total = total_cents(order, delivery_fee)
+catering_total = total_cents(order, catering_fee)
+assert pickup_total == 1250
+assert delivery_total == 1600
+assert catering_total == 1750
+print(f&quot;pickup={pickup_total} delivery={delivery_total} catering={catering_total}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-strategy">pickup=1250 delivery=1600 catering=1750</pre></div>
+        <h4>Read the example</h4><p>Each fee policy is a small pure function with the same signature, so total_cents() never needs to know which one it's calling. Adding a new fee type later means writing one more function, not editing existing logic.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For only two or three fee types a single if/elif would be simpler and just as readable; Strategy pays off once policies multiply or need independent testing.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Template Method, Strategy swaps the whole fee algorithm via composition (a passed-in function), not by subclassing and overriding one step.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a 'staff_discount' fee policy that always returns -200 cents and use it for the pickup order.</span></summary>
+          <p>Define def staff_discount(subtotal_cents): return -200, then call total_cents(order, staff_discount).</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Regulars start asking Maya to customize dishes with extras, and her plain Dish record has no way to represent add-ons.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-decorator" data-gof-category="Structural" data-gof-number="2">
+      <summary><span class="summary-title"><strong>02. Decorator</strong>
+      <span>Stack add-ons around a plain dish</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Regulars start asking Maya to customize their Soup with extra cheese or a gluten-free bun, sometimes both at once. She wants each add-on priced and named consistently without creating a new Dish subclass for every combination.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>A single Dish class would need one field per possible add-on, and the name string would have to be rebuilt by hand for every combination.</p></div>
+          <div><h4>The small design move</h4><p>Decorator wraps a Dish in another object that implements the same name()/price_cents() interface, forwarding to the wrapped dish and adding its own bit on top. Stacking decorators lets any combination of add-ons compose naturally, in any order.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Dish</span><b aria-hidden="true">&rarr;</b><span>DishDecorator</span><b aria-hidden="true">&rarr;</b><span>AddOn</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Stack add-ons around a plain dish</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-decorator">Copy</button></div>
+    <pre id="gof-code-decorator" data-gof-python>class DishComponent:
+    def name(self) -&gt; str:
+        raise NotImplementedError
+    def price_cents(self) -&gt; int:
+        raise NotImplementedError
+
+class Dish(DishComponent):
+    def __init__(self, name: str, price_cents: int):
+        self._name = name
+        self._price_cents = price_cents
+    def name(self) -&gt; str:
+        return self._name
+    def price_cents(self) -&gt; int:
+        return self._price_cents
+
+class DishDecorator(DishComponent):
+    def __init__(self, wrapped: DishComponent):
+        self._wrapped = wrapped
+    def name(self) -&gt; str:
+        return self._wrapped.name()
+    def price_cents(self) -&gt; int:
+        return self._wrapped.price_cents()
+
+class ExtraCheese(DishDecorator):
+    def name(self) -&gt; str:
+        return self._wrapped.name() + &quot; + extra cheese&quot;
+    def price_cents(self) -&gt; int:
+        return self._wrapped.price_cents() + 150
+
+class GlutenFreeBun(DishDecorator):
+    def name(self) -&gt; str:
+        return self._wrapped.name() + &quot; + gluten-free bun&quot;
+    def price_cents(self) -&gt; int:
+        return self._wrapped.price_cents() + 200
+
+soup = Dish(&quot;Soup&quot;, 700)
+loaded = GlutenFreeBun(ExtraCheese(soup))
+
+assert loaded.name() == &quot;Soup + extra cheese + gluten-free bun&quot;
+assert loaded.price_cents() == 1050
+
+print(f&quot;{loaded.name()} costs {loaded.price_cents()} cents&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-decorator">Soup + extra cheese + gluten-free bun costs 1050 cents</pre></div>
+        <h4>Read the example</h4><p>GlutenFreeBun and ExtraCheese only know the DishComponent interface, so neither decorator needs to know about the other. These additive fees give the same total in either wrapping order, but the displayed name follows that order and other decorators could make order affect behavior too.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For one or two fixed add-ons a boolean flag on Dish would be far simpler; Decorator earns its keep when add-ons are optional, combinable, and growing in number.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Composite, a Decorator has exactly one wrapped child and exists to add behavior, not to represent a part-whole tree of many children.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a SpicyKick decorator that appends ' + spicy kick' and adds 100 cents, then wrap it around the existing loaded dish.</span></summary>
+          <p>class SpicyKick(DishDecorator) overriding name()/price_cents() to add the suffix and 100; then wrap with SpicyKick(loaded).</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Customers now want to order whole combo meals, some containing other combos, and Maya needs one way to price all of them.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-composite" data-gof-category="Structural" data-gof-number="3">
+      <summary><span class="summary-title"><strong>03. Composite</strong>
+      <span>Treat single dishes and bundles alike</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Customers start asking for combo meals, and some combos should be nestable inside bigger family packs for office orders. Maya needs one price and description calculation that works whether she's looking at a single dish or a whole nested bundle.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Pricing code has separate branches for 'is this a single dish or a bundle', and nested bundles-of-bundles are not handled at all.</p></div>
+          <div><h4>The small design move</h4><p>Composite gives Dish and Bundle a shared interface with price_cents() and describe(), where a Bundle just delegates to whatever children it holds. Because a Bundle's children can themselves be Bundles, the same recursive call handles any depth of nesting for free.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Dish</span><b aria-hidden="true">&rarr;</b><span>Bundle</span><b aria-hidden="true">&rarr;</b><span>MenuComponent</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Treat single dishes and bundles alike</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-composite">Copy</button></div>
+    <pre id="gof-code-composite" data-gof-python>class MenuComponent:
+    def price_cents(self) -&gt; int:
+        raise NotImplementedError
+    def describe(self) -&gt; str:
+        raise NotImplementedError
+
+class Dish(MenuComponent):
+    def __init__(self, name: str, price_cents: int):
+        self.name = name
+        self._price_cents = price_cents
+    def price_cents(self) -&gt; int:
+        return self._price_cents
+    def describe(self) -&gt; str:
+        return self.name
+
+class Bundle(MenuComponent):
+    def __init__(self, name: str):
+        self.name = name
+        self.children = []
+    def add(self, component: MenuComponent) -&gt; &quot;Bundle&quot;:
+        self.children.append(component)
+        return self
+    def price_cents(self) -&gt; int:
+        return sum(c.price_cents() for c in self.children)
+    def describe(self) -&gt; str:
+        parts = &quot;, &quot;.join(c.describe() for c in self.children)
+        return f&quot;{self.name} [{parts}]&quot;
+
+soup = Dish(&quot;Soup&quot;, 700)
+salad = Dish(&quot;Salad&quot;, 550)
+bread = Dish(&quot;Bread&quot;, 200)
+
+lunch_combo = Bundle(&quot;Lunch Combo&quot;).add(soup).add(bread)
+family_pack = Bundle(&quot;Family Pack&quot;).add(lunch_combo).add(salad)
+
+assert lunch_combo.price_cents() == 900
+assert family_pack.price_cents() == 1450
+assert family_pack.describe() == &quot;Family Pack [Lunch Combo [Soup, Bread], Salad]&quot;
+
+print(f&quot;{family_pack.describe()} = {family_pack.price_cents()} cents&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-composite">Family Pack [Lunch Combo [Soup, Bread], Salad] = 1450 cents</pre></div>
+        <h4>Read the example</h4><p>Bundle.price_cents() simply sums whatever price_cents() its children return, so it never needs to check whether a child is a Dish or another Bundle. This recursive delegation is what lets family_pack correctly total a bundle nested inside it.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Recursive bundles add tree-management responsibilities and this example assumes an acyclic menu; if menus are flat, a list of dishes and sum() is simpler.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Decorator's single wrapped child used to add behavior, Composite holds a collection of children used to represent a part-whole tree.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a Beverage dish priced 300 cents directly to the family_pack bundle and recompute its total.</span></summary>
+          <p>family_pack.add(Dish('Beverage', 300)) then family_pack.price_cents() becomes 1750.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> As orders grow multiple lines, the kitchen display needs to step through them one at a time in the order they were added.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-iterator" data-gof-category="Behavioral" data-gof-number="4">
+      <summary><span class="summary-title"><strong>04. Iterator</strong>
+      <span>Walk order lines without exposing storage</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Orders now routinely have many lines, and Maya's kitchen display and receipt printer both need to step through them one dish at a time, in the exact order they were added. She doesn't want either piece of code to know how Order stores its lines internally.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Both the kitchen display and the receipt printer reach directly into Order's private list and index it by hand, so any change to how lines are stored breaks two places at once.</p></div>
+          <div><h4>The small design move</h4><p>Iterator gives Order its own __iter__ that hands back a dedicated OrderIterator object tracking position independently of the Order itself. Client code just calls next() or loops with for, and the iterator raises StopIteration once every line has been visited exactly once.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Order</span><b aria-hidden="true">&rarr;</b><span>Dish</span><b aria-hidden="true">&rarr;</b><span>OrderIterator</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Walk order lines without exposing storage</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-iterator">Copy</button></div>
+    <pre id="gof-code-iterator" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Dish:
+    name: str
+    price_cents: int
+
+class Order:
+    def __init__(self):
+        self._lines = []
+    def add(self, dish: Dish) -&gt; None:
+        self._lines.append(dish)
+    def __iter__(self) -&gt; &quot;OrderIterator&quot;:
+        return OrderIterator(tuple(self._lines))
+
+class OrderIterator:
+    def __init__(self, lines: tuple):
+        self._lines = lines
+        self._index = 0
+    def __iter__(self) -&gt; &quot;OrderIterator&quot;:
+        return self
+    def __next__(self) -&gt; Dish:
+        if self._index &gt;= len(self._lines):
+            raise StopIteration
+        line = self._lines[self._index]
+        self._index += 1
+        return line
+
+order = Order()
+for dish in (Dish(&quot;Soup&quot;, 700), Dish(&quot;Salad&quot;, 550), Dish(&quot;Bread&quot;, 200)):
+    order.add(dish)
+names = [line.name for line in order]
+it, other = iter(order), iter(order)
+first = next(it)
+assert first.name == &quot;Soup&quot; and len(list(other)) == 3
+remaining = list(it)
+assert [line.name for line in remaining] == [&quot;Salad&quot;, &quot;Bread&quot;]
+order.add(Dish(&quot;Tea&quot;, 300))
+try:
+    next(it)
+    raised = False
+except StopIteration:
+    raised = True
+assert raised and list(it) == [] and list(Order()) == []
+assert names == [&quot;Soup&quot;, &quot;Salad&quot;, &quot;Bread&quot;] and len(list(order)) == 4
+print(f&quot;visited={names} exhausted={raised}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-iterator">visited=['Soup', 'Salad', 'Bread'] exhausted=True</pre></div>
+        <h4>Read the example</h4><p>Each OrderIterator has its own index and a tuple of frozen Dish lines captured when traversal starts, so two kitchen readers progress independently. New lines appear only in new traversals, and even appending Tea after exhaustion cannot revive an exhausted iterator.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>The tuple snapshot copies line references and the iterator adds a class; returning iter(tuple(self._lines)) would provide the same behavior here with less code.</p></div>
+        <h4>Do not confuse it with...</h4><p>Composite models part-whole structure, whereas Iterator controls traversal without exposing storage; an iterator can walk either a flat order or a composite bundle tree.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a fourth dish 'Tea' priced 300 cents to the order and confirm the iterator still visits exactly four lines before exhausting.</span></summary>
+          <p>The checkpoint already adds order.add(Dish('Tea', 300)); a new iterator visits four lines, while the earlier exhausted iterator stays exhausted.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Phone orders come in piecemeal over a call, and Maya needs a way to assemble one step at a time before it's finalized.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-builder" data-gof-category="Creational" data-gof-number="5">
+      <summary><span class="summary-title"><strong>05. Builder</strong>
+      <span>Assemble step by step, finalize once</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Creational</span>
+        <p class="gof-story">Phone orders come in piecemeal while Maya juggles the register, a dish here, a delivery fee there, and she only wants a finished, immutable Order once everything is confirmed. She needs to prevent an accidentally incomplete order from ever reaching the kitchen.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Passing a giant Order constructor call with every field at once is error-prone over the phone, and there is no way to stop an empty order from being finalized.</p></div>
+          <div><h4>The small design move</h4><p>Builder collects dishes and fees step by step on a mutable OrderBuilder, returning itself from each call so steps can chain fluently. Only build() produces the final immutable BuiltOrder, and it can enforce invariants like refusing to build an order with zero dishes.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>OrderBuilder</span><b aria-hidden="true">&rarr;</b><span>BuiltOrder</span><b aria-hidden="true">&rarr;</b><span>OrderLine</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Assemble step by step, finalize once</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-builder">Copy</button></div>
+    <pre id="gof-code-builder" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class BuiltOrder:
+    customer: str
+    lines: tuple
+    fee_cents: int
+    def subtotal_cents(self) -&gt; int:
+        return sum(price for _, price in self.lines)
+    def total_cents(self) -&gt; int:
+        return self.subtotal_cents() + self.fee_cents
+
+class OrderBuilder:
+    def __init__(self, customer: str):
+        self._customer = customer
+        self._lines = []
+        self._fee_cents = 0
+    def add_dish(self, name: str, price_cents: int) -&gt; &quot;OrderBuilder&quot;:
+        self._lines.append((name, price_cents))
+        return self
+    def with_delivery_fee(self, fee_cents: int) -&gt; &quot;OrderBuilder&quot;:
+        self._fee_cents = fee_cents
+        return self
+    def build(self) -&gt; BuiltOrder:
+        if not self._lines:
+            raise ValueError(&quot;cannot build an order with no dishes&quot;)
+        return BuiltOrder(self._customer, tuple(self._lines), self._fee_cents)
+
+order = (
+    OrderBuilder(&quot;Priya&quot;)
+    .add_dish(&quot;Soup&quot;, 700)
+    .add_dish(&quot;Salad&quot;, 550)
+    .with_delivery_fee(350)
+    .build()
+)
+
+assert order.subtotal_cents() == 1250
+assert order.total_cents() == 1600
+
+try:
+    OrderBuilder(&quot;Empty&quot;).build()
+    failed = False
+except ValueError:
+    failed = True
+
+assert failed
+
+print(f&quot;customer={order.customer} total={order.total_cents()} empty_rejected={failed}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-builder">customer=Priya total=1600 empty_rejected=True</pre></div>
+        <h4>Read the example</h4><p>Each OrderBuilder method updates assembly state and returns self, letting the phone-order flow read as a chain of steps. build() rejects empty orders and copies the lines into a tuple in a frozen BuiltOrder, separating the finished product from later builder edits; this small example does not validate every possible business rule.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For a simple two-field order a plain dataclass constructor would be simpler; Builder earns its cost once assembly has several optional steps and needs a final validation gate.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Prototype's approach of cloning an existing configured object, Builder constructs a new object from scratch through a sequence of explicit steps.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Call OrderBuilder('Sam').build() without adding any dishes and confirm it raises ValueError.</span></summary>
+          <p>The call raises ValueError('cannot build an order with no dishes') because _lines is empty when build() runs.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Maya starts getting repeat catering requests that all start from the same standard office-lunch setup, just tweaked slightly each time.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-prototype" data-gof-category="Creational" data-gof-number="6">
+      <summary><span class="summary-title"><strong>06. Prototype</strong>
+      <span>Clone a proven template, then customize</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Creational</span>
+        <p class="gof-story">With step-by-step ordering working, office catering clients keep asking Maya for 'the usual' with small tweaks, and a wedding client requests upgraded soup plus a cake. She wants to start from her proven Office Lunch template each time without accidentally editing the original template.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Manually rebuilding a catering order from scratch each time risks typos and forgetting a dish, and copying the template object directly would let edits to the new order bleed back into the master template.</p></div>
+          <div><h4>The small design move</h4><p>Prototype clones a fully configured CateringTemplate using deepcopy so the copy owns entirely independent nested Dish objects, not shared references. Maya then mutates the clone's label and dish list freely, knowing the original template's dishes and prices are untouched.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>CateringTemplate</span><b aria-hidden="true">&rarr;</b><span>Dish</span><b aria-hidden="true">&rarr;</b><span>Clone</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Clone a proven template, then customize</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-prototype">Copy</button></div>
+    <pre id="gof-code-prototype" data-gof-python>import copy
+from dataclasses import dataclass
+
+@dataclass
+class Dish:
+    name: str
+    price_cents: int
+
+@dataclass
+class CateringTemplate:
+    label: str
+    dishes: list
+    def clone(self) -&gt; &quot;CateringTemplate&quot;:
+        return copy.deepcopy(self)
+
+office_lunch_template = CateringTemplate(
+    label=&quot;Office Lunch&quot;,
+    dishes=[Dish(&quot;Soup&quot;, 700), Dish(&quot;Salad&quot;, 550)],
+)
+
+wedding_order = office_lunch_template.clone()
+wedding_order.label = &quot;Wedding Reception&quot;
+wedding_order.dishes.append(Dish(&quot;Cake&quot;, 1200))
+wedding_order.dishes[0].price_cents = 900
+
+assert office_lunch_template.label == &quot;Office Lunch&quot;
+assert len(office_lunch_template.dishes) == 2
+assert office_lunch_template.dishes[0].price_cents == 700
+
+assert wedding_order.label == &quot;Wedding Reception&quot;
+assert len(wedding_order.dishes) == 3
+assert wedding_order.dishes[0].price_cents == 900
+
+print(f&quot;template_dishes={len(office_lunch_template.dishes)} clone_dishes={len(wedding_order.dishes)} template_soup={office_lunch_template.dishes[0].price_cents}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-prototype">template_dishes=2 clone_dishes=3 template_soup=700</pre></div>
+        <h4>Read the example</h4><p>copy.deepcopy() rebuilds the entire nested dishes list rather than reusing references, which is why mutating wedding_order.dishes[0].price_cents leaves office_lunch_template.dishes[0].price_cents at 700. Without a deep copy, that mutation would have silently corrupted the shared template.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>If templates never share mutable nested state, a plain shallow copy() would be cheaper; deepcopy's cost only matters because Dish objects are mutable and nested inside a list.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Builder's step-by-step construction from nothing, Prototype starts from an already-populated object and only needs to describe the differences.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Clone office_lunch_template again for a 'Birthday Party' and remove its Salad dish without affecting the original template.</span></summary>
+          <p>birthday = office_lunch_template.clone(); birthday.dishes = [d for d in birthday.dishes if d.name != 'Salad'] leaves the template's two dishes intact.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> As catering orders get built up interactively, staff need to add and remove dish lines with the ability to undo a mistaken entry.</p>
+      </div>
+    </details>
+            <p class="gof-act-exit">We can assemble customized orders. Next, the staff need to edit drafts safely and turn them into real kitchen work.</p>
+            <nav class="gof-pager" aria-label="Chapter 1 navigation">
+              <span></span>
+              <a href="#gof-act-2">Next chapter &rarr;</a>
+            </nav>
+          </section>
+
+          <section class="gof-act" id="gof-act-2" hidden>
+            <div class="section-title"><h2>Chapter 2: A draft becomes a job</h2><p>The menu from chapter 1 now feeds catering drafts. Staff edit them, undo mistakes, and submit them to the kitchen. Preparation and packaging vary, but the overall process stays recognizable.</p></div>
+            
+    <details class="gof-lesson" id="gof-command" data-gof-category="Behavioral" data-gof-number="7">
+      <summary><span class="summary-title"><strong>07. Command</strong>
+      <span>Wrap each edit as an undoable object</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">After cloning a standard catering setup, staff adjust its draft at the order terminal, and sometimes the wrong dish gets added. Maya wants an in-memory edit history so staff can undo the most recent step without retyping the draft.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Staff currently just mutate the draft's line list directly, so there is no record of what changed and no way to undo the last action specifically.</p></div>
+          <div><h4>The small design move</h4><p>Command wraps each action, like adding a dish, as its own object holding the receiver (the Draft) and the details needed to both execute() and undo() that specific change. A CommandInvoker runs commands and keeps a history stack, so undoing just means popping the last command and calling its undo().</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Draft</span><b aria-hidden="true">&rarr;</b><span>Command</span><b aria-hidden="true">&rarr;</b><span>CommandInvoker</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Wrap each edit as an undoable object</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-command">Copy</button></div>
+    <pre id="gof-code-command" data-gof-python>class Draft:
+    def __init__(self):
+        self.lines = []
+    def add_line(self, name: str, price_cents: int) -&gt; None:
+        self.lines.append((name, price_cents))
+    def remove_last(self) -&gt; tuple:
+        return self.lines.pop()
+
+class Command:
+    def execute(self) -&gt; None:
+        raise NotImplementedError
+    def undo(self) -&gt; None:
+        raise NotImplementedError
+
+class AddDishCommand(Command):
+    def __init__(self, draft: Draft, name: str, price_cents: int):
+        self._draft = draft
+        self._name = name
+        self._price_cents = price_cents
+    def execute(self) -&gt; None:
+        self._draft.add_line(self._name, self._price_cents)
+    def undo(self) -&gt; None:
+        self._draft.remove_last()
+
+class CommandInvoker:
+    def __init__(self):
+        self._history = []
+    def run(self, command: Command) -&gt; None:
+        command.execute()
+        self._history.append(command)
+    def undo_last(self) -&gt; None:
+        if not self._history:
+            raise ValueError(&quot;no commands to undo&quot;)
+        command = self._history.pop()
+        command.undo()
+
+draft = Draft()
+invoker = CommandInvoker()
+
+invoker.run(AddDishCommand(draft, &quot;Soup&quot;, 700))
+invoker.run(AddDishCommand(draft, &quot;Salad&quot;, 550))
+assert draft.lines == [(&quot;Soup&quot;, 700), (&quot;Salad&quot;, 550)]
+
+invoker.undo_last()
+assert draft.lines == [(&quot;Soup&quot;, 700)]
+
+empty_invoker = CommandInvoker()
+try:
+    empty_invoker.undo_last()
+    failed = False
+except ValueError:
+    failed = True
+assert failed
+
+print(f&quot;lines={draft.lines} undo_guard={failed}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-command">lines=[('Soup', 700)] undo_guard=True</pre></div>
+        <h4>Read the example</h4><p>AddDishCommand captures a receiver and arguments, while CommandInvoker invokes execute() and undo() without knowing about dishes. This append/pop inverse works because this checkpoint routes all edits through one invoker and undoes strictly in reverse order; an empty history raises ValueError.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Command adds objects and history bookkeeping, and this toy inverse does not handle out-of-band edits or selective undo; direct method calls are simpler when edits need neither queuing nor undo.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Memento which snapshots an entire object's state for wholesale restoration, Command captures a single reversible action and its own undo logic.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a RemoveDishCommand whose undo() re-adds the removed dish, and run it through the same invoker.</span></summary>
+          <p>Store the removed (name, price_cents) tuple in execute() before popping, then undo() calls draft.add_line(*that_tuple).</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Before staff commit to submitting a catering draft, they want to experiment freely and be able to jump back to an earlier version of the whole order.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-memento" data-gof-category="Behavioral" data-gof-number="8">
+      <summary><span class="summary-title"><strong>08. Memento</strong>
+      <span>Snapshot and restore, but never submitted</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Before submitting a catering draft, staff want to freely experiment with the line items and be able to snap back to an earlier full version if a round of edits does not work out. Once a draft is actually submitted to the kitchen, though, Maya insists it must never be silently rewound.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Storing and restoring 'the whole draft as it was' by hand means either exposing Draft's internals to the caretaker or risking accidental edits to a saved snapshot.</p></div>
+          <div><h4>The small design move</h4><p>Memento has the Draft itself produce an immutable DraftMemento snapshot and later restore from one, so the Caretaker only stores and hands back opaque snapshots without reading their contents. The Draft checks snapshot ownership and rejects edits, saves, and restores after submission, keeping draft experimentation separate from submitted work.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Draft</span><b aria-hidden="true">&rarr;</b><span>DraftMemento</span><b aria-hidden="true">&rarr;</b><span>Caretaker</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Snapshot and restore, but never submitted</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-memento">Copy</button></div>
+    <pre id="gof-code-memento" data-gof-python>from dataclasses import dataclass, FrozenInstanceError
+
+@dataclass(frozen=True, slots=True, repr=False)
+class DraftMemento:
+    _owner: object
+    _lines: tuple[tuple[str, int], ...]
+
+class Draft:
+    def __init__(self):
+        self._owner, self._lines, self._submitted = object(), [], False
+    @property
+    def lines(self) -&gt; tuple:
+        return tuple(self._lines)
+    @property
+    def submitted(self) -&gt; bool:
+        return self._submitted
+    def _require_draft(self) -&gt; None:
+        if self._submitted:
+            raise ValueError(&quot;only unsubmitted drafts may be edited or snapshotted&quot;)
+    def add_line(self, name: str, price_cents: int) -&gt; None:
+        self._require_draft()
+        self._lines.append((name, price_cents))
+    def save(self) -&gt; DraftMemento:
+        self._require_draft()
+        return DraftMemento(self._owner, tuple(self._lines))
+    def restore(self, snapshot: DraftMemento) -&gt; None:
+        self._require_draft()
+        if not isinstance(snapshot, DraftMemento) or snapshot._owner is not self._owner:
+            raise ValueError(&quot;snapshot belongs to a different draft&quot;)
+        self._lines = list(snapshot._lines)
+    def submit(self) -&gt; None:
+        self._submitted = True
+
+class Caretaker:
+    def __init__(self):
+        self.history = []
+    def checkpoint(self, draft: Draft) -&gt; None:
+        self.history.append(draft.save())
+    def undo(self, draft: Draft) -&gt; None:
+        if not self.history:
+            raise ValueError(&quot;no checkpoint&quot;)
+        draft.restore(self.history[-1])
+        self.history.pop()
+
+def rejected(action, error=ValueError):
+    try:
+        action()
+    except error:
+        return True
+    raise RuntimeError(&quot;expected rejection&quot;)
+
+draft, caretaker = Draft(), Caretaker()
+draft.add_line(&quot;Soup&quot;, 700)
+caretaker.checkpoint(draft)
+snapshot = caretaker.history[-1]
+foreign = rejected(lambda: Draft().restore(snapshot))
+frozen = rejected(lambda: setattr(snapshot, &quot;_lines&quot;, ()), FrozenInstanceError)
+draft.add_line(&quot;Salad&quot;, 550)
+caretaker.undo(draft)
+assert draft.lines == ((&quot;Soup&quot;, 700),) and foreign and frozen
+caretaker.checkpoint(draft)
+draft.submit()
+failed = rejected(lambda: caretaker.undo(draft))
+blocked_save = rejected(draft.save)
+blocked_edit = rejected(lambda: draft.add_line(&quot;Tea&quot;, 300))
+assert failed and blocked_save and blocked_edit and len(caretaker.history) == 1
+print(f&quot;lines={list(draft.lines)} submitted={draft.submitted} restore_blocked={failed}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-memento">lines=[('Soup', 700)] submitted=True restore_blocked=True</pre></div>
+        <h4>Read the example</h4><p>A frozen DraftMemento holds immutable line tuples and an identity token, while Caretaker treats it as an opaque handle and never reads its fields. Draft alone saves and restores state through its public API, rejecting foreign snapshots and any save, edit, or restore after submission. Underscore privacy is a Python convention rather than a security boundary, and rejected restores leave history intact.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For a draft with only one or two fields, simply storing a manual copy of the list would be simpler than a dedicated memento class; the pattern earns its keep as the snapshot's shape grows or needs origin-binding checks.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Command's recorded action and inverse operation, Memento captures restorable state without exposing it to the caretaker; commands can also use mementos to implement undo.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Before submitting, try restoring a checkpoint from a different Draft with identical dish lines.</span></summary>
+          <p>other = Draft(); other.add_line('Soup', 700); draft.restore(other.save()) raises ValueError because equal contents do not share the originator's identity token.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Once submitted, a draft needs to move through real kitchen stages, placed, preparing, ready, each allowing only certain next actions.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-state" data-gof-category="Behavioral" data-gof-number="9">
+      <summary><span class="summary-title"><strong>09. State</strong>
+      <span>Let each stage own its own rules</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Once a draft is submitted, it needs to move through real kitchen stages, placed, preparing, ready, and Maya wants it to be impossible to, say, cancel an order that is already preparing. Different stages should each know their own valid next steps rather than that logic living in one giant switch statement.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>A plain status string plus if/elif checks scattered through the codebase makes it easy to accidentally allow an illegal transition, like cancelling a ready order.</p></div>
+          <div><h4>The small design move</h4><p>State represents each stage as its own object implementing advance() and cancel(), and the Order simply delegates to whatever state object it currently holds. Transitioning to a new stage means the state object itself swaps in the next state object, so illegal transitions like cancelling from PreparingState are rejected by the state object that is actually active.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Order</span><b aria-hidden="true">&rarr;</b><span>OrderState</span><b aria-hidden="true">&rarr;</b><span>Transition</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Let each stage own its own rules</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-state">Copy</button></div>
+    <pre id="gof-code-state" data-gof-python>class OrderState:
+    def advance(self, order: &quot;Order&quot;) -&gt; None:
+        raise ValueError(f&quot;cannot advance from {self.name}&quot;)
+    def cancel(self, order: &quot;Order&quot;) -&gt; None:
+        raise ValueError(f&quot;cannot cancel from {self.name}&quot;)
+
+class PlacedState(OrderState):
+    name = &quot;placed&quot;
+    def advance(self, order: &quot;Order&quot;) -&gt; None:
+        order.state = PreparingState()
+    def cancel(self, order: &quot;Order&quot;) -&gt; None:
+        order.state = CancelledState()
+
+class PreparingState(OrderState):
+    name = &quot;preparing&quot;
+    def advance(self, order: &quot;Order&quot;) -&gt; None:
+        order.state = ReadyState()
+
+class ReadyState(OrderState):
+    name = &quot;ready&quot;
+
+class CancelledState(OrderState):
+    name = &quot;cancelled&quot;
+
+class Order:
+    def __init__(self):
+        self.state = PlacedState()
+    def advance(self) -&gt; None:
+        self.state.advance(self)
+    def cancel(self) -&gt; None:
+        self.state.cancel(self)
+
+def rejected(action):
+    try:
+        action()
+    except ValueError:
+        return True
+    raise RuntimeError(&quot;illegal transition accepted&quot;)
+
+order = Order()
+order.advance()
+preparing_blocked = rejected(order.cancel)
+assert order.state.name == &quot;preparing&quot; and preparing_blocked
+order.advance()
+failed, cancel_failed = rejected(order.advance), rejected(order.cancel)
+assert order.state.name == &quot;ready&quot; and failed and cancel_failed
+cancelled = Order()
+cancelled.cancel()
+cancelled_blocked = rejected(cancelled.advance)
+assert cancelled.state.name == &quot;cancelled&quot; and cancelled_blocked
+print(f&quot;state={order.state.name} advance_blocked={failed} cancel_blocked={cancel_failed}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-state">state=ready advance_blocked=True cancel_blocked=True</pre></div>
+        <h4>Read the example</h4><p>This standalone checkpoint starts with an already-placed Order, whose advance() and cancel() methods delegate rather than branch on status strings. PlacedState permits cancellation, PreparingState permits only progress, and the terminal states inherit rejection of both actions from OrderState.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For only two or three simple states, a status enum with a couple of if-checks would be simpler; State earns its cost once transition rules and stage-specific behavior multiply.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Strategy's interchangeable algorithms chosen by the caller, State objects control the context's own transitions and are swapped internally by the states themselves.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Try cancelling the already-cancelled order a second time and check that it stays cancelled.</span></summary>
+          <p>cancelled.cancel() raises ValueError through OrderState.cancel(); no state replacement occurs, so its state remains CancelledState.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Meanwhile, in the kitchen, every dish still follows the same overall prep sequence, just with different techniques at each step.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-template-method" data-gof-category="Behavioral" data-gof-number="10">
+      <summary><span class="summary-title"><strong>10. Template Method</strong>
+      <span>Fix the sequence, vary each step</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">In the kitchen, every dish still follows the same overall sequence, gather ingredients, cook, maybe garnish, then plate, but the actual techniques differ wildly between a soup and a salad. Maya wants new cooks to only have to fill in the dish-specific steps, not re-learn the whole workflow.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Each dish's prep function currently duplicates the full gather-cook-garnish-plate sequence with only a couple of lines actually differing between recipes.</p></div>
+          <div><h4>The small design move</h4><p>Template Method puts the fixed prepare() sequence in a base PrepWorkflow class, calling out to overridable hook methods like gather_ingredients() and cook() at each step. Subclasses like SoupPrep and SaladPrep only override the steps that differ, while needs_garnish() lets soup opt into an extra step that salad skips entirely.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>PrepWorkflow</span><b aria-hidden="true">&rarr;</b><span>SoupPrep</span><b aria-hidden="true">&rarr;</b><span>SaladPrep</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Fix the sequence, vary each step</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-template-method">Copy</button></div>
+    <pre id="gof-code-template-method" data-gof-python>class PrepWorkflow:
+    def prepare(self) -&gt; list:
+        steps = []
+        steps.append(self.gather_ingredients())
+        steps.append(self.cook())
+        if self.needs_garnish():
+            steps.append(self.garnish())
+        steps.append(self.plate())
+        return steps
+    def gather_ingredients(self) -&gt; str:
+        raise NotImplementedError
+    def cook(self) -&gt; str:
+        raise NotImplementedError
+    def needs_garnish(self) -&gt; bool:
+        return False
+    def garnish(self) -&gt; str:
+        return &quot;add garnish&quot;
+    def plate(self) -&gt; str:
+        return &quot;plate dish&quot;
+
+class SoupPrep(PrepWorkflow):
+    def gather_ingredients(self) -&gt; str:
+        return &quot;gather vegetables and broth&quot;
+    def cook(self) -&gt; str:
+        return &quot;simmer for 20 minutes&quot;
+    def needs_garnish(self) -&gt; bool:
+        return True
+    def garnish(self) -&gt; str:
+        return &quot;add parsley&quot;
+
+class SaladPrep(PrepWorkflow):
+    def gather_ingredients(self) -&gt; str:
+        return &quot;gather greens and vegetables&quot;
+    def cook(self) -&gt; str:
+        return &quot;toss with dressing&quot;
+
+soup_steps = SoupPrep().prepare()
+salad_steps = SaladPrep().prepare()
+
+assert soup_steps == [
+    &quot;gather vegetables and broth&quot;,
+    &quot;simmer for 20 minutes&quot;,
+    &quot;add parsley&quot;,
+    &quot;plate dish&quot;,
+]
+assert salad_steps == [
+    &quot;gather greens and vegetables&quot;,
+    &quot;toss with dressing&quot;,
+    &quot;plate dish&quot;,
+]
+
+print(f&quot;soup={soup_steps} salad={salad_steps}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-template-method">soup=['gather vegetables and broth', 'simmer for 20 minutes', 'add parsley', 'plate dish'] salad=['gather greens and vegetables', 'toss with dressing', 'plate dish']</pre></div>
+        <h4>Read the example</h4><p>Both subclasses inherit prepare() unchanged, so these workflows reuse its sequence and optional garnish step. SoupPrep and SaladPrep supply only the varying details; Python does not prevent another subclass from overriding prepare(), so preserving the skeleton remains part of the subclass contract.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>For only two very different dishes, separate standalone prep functions might be simpler; Template Method pays off once many dish types share most of the sequence.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Strategy's runtime-swappable whole algorithm passed in as an object, Template Method fixes the algorithm's shape via inheritance and only lets subclasses vary individual steps.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a BreadPrep class that skips garnish and overrides only gather_ingredients() and cook(), then call prepare() on it.</span></summary>
+          <p>class BreadPrep(PrepWorkflow) overriding those two methods (needs_garnish stays False by default) yields a 3-step list ending in 'plate dish'.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Once a dish is ready, it still needs to be packaged, and dine-in orders and catering orders need very different packaging built the same way.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-factory-method" data-gof-category="Creational" data-gof-number="11">
+      <summary><span class="summary-title"><strong>11. Factory Method</strong>
+      <span>Let subclasses choose the package type</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Creational</span>
+        <p class="gof-story">Once food is ready, it still needs packaging, and Maya realizes dine-in trays and catering boxes are chosen very differently but always go through the same 'compute total and label it' packing workflow. She wants that shared workflow to stay in one place while each station decides its own package type.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>The shared packing logic has to branch on 'is this dine-in or catering' just to pick a package type, mixing station-specific decisions into otherwise identical workflow code.</p></div>
+          <div><h4>The small design move</h4><p>Factory Method keeps pack_order() as the one shared workflow on PackagingStation, but has it call an overridable create_package() hook that each subclass implements differently. DineInStation and CateringStation only override that one hook, so the packing math and labeling logic in pack_order() never needs to know which package type it is using.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>PackagingStation</span><b aria-hidden="true">&rarr;</b><span>Package</span><b aria-hidden="true">&rarr;</b><span>DineInStation</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Let subclasses choose the package type</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-factory-method">Copy</button></div>
+    <pre id="gof-code-factory-method" data-gof-python>class Package:
+    kind = &quot;plain&quot;
+    fee_cents = 0
+    def label(self, total_cents: int) -&gt; str:
+        return f&quot;{self.kind} package for order totaling {total_cents} cents&quot;
+
+class ReusableTray(Package):
+    kind = &quot;reusable tray&quot;
+
+class InsulatedBox(Package):
+    kind = &quot;insulated box&quot;
+    fee_cents = 400
+
+class PackagingStation:
+    def pack_order(self, subtotal_cents: int) -&gt; tuple:
+        if type(subtotal_cents) is not int or subtotal_cents &lt; 0:
+            raise ValueError(&quot;subtotal must be nonnegative integer cents&quot;)
+        package = self.create_package()
+        total_cents = subtotal_cents + package.fee_cents
+        return package, package.label(total_cents)
+    def create_package(self) -&gt; Package:
+        raise NotImplementedError
+
+class DineInStation(PackagingStation):
+    def create_package(self) -&gt; Package:
+        return ReusableTray()
+
+class CateringStation(PackagingStation):
+    def create_package(self) -&gt; Package:
+        return InsulatedBox()
+
+dine_in_package, dine_in_label = DineInStation().pack_order(1250)
+catering_package, catering_label = CateringStation().pack_order(1250)
+assert isinstance(dine_in_package, ReusableTray)
+assert isinstance(catering_package, InsulatedBox)
+assert dine_in_label == &quot;reusable tray package for order totaling 1250 cents&quot;
+assert catering_label == &quot;insulated box package for order totaling 1650 cents&quot;
+try:
+    CateringStation().pack_order(-1)
+except ValueError:
+    pass
+else:
+    raise RuntimeError(&quot;negative subtotal accepted&quot;)
+print(f&quot;{dine_in_label} | {catering_label}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-factory-method">reusable tray package for order totaling 1250 cents | insulated box package for order totaling 1650 cents</pre></div>
+        <h4>Read the example</h4><p>pack_order() calls self.create_package() inside its validation, pricing, and labeling workflow rather than selecting a product class itself. The station subclasses instantiate distinct ReusableTray and InsulatedBox products, both usable through Package's interface, while inheriting that workflow unchanged.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>With just two fixed package types, a simple dictionary lookup keyed by station name would be simpler; Factory Method earns its cost once the shared workflow around package creation grows more complex.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Abstract Factory's family of several related objects created together, Factory Method here overrides a single creation step embedded inside one larger shared algorithm.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a PopUpStation that creates a compostable Clamshell costing 250 cents and pack a 1250-cent order.</span></summary>
+          <p>Define Clamshell(Package) with kind = 'compostable clamshell' and fee_cents = 250; override PopUpStation.create_package() to return Clamshell(), producing a 1500-cent label.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Some catering clients also demand every part of the packaging, container and lid alike, come from the same eco-friendly material family.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-abstract-factory" data-gof-category="Creational" data-gof-number="12">
+      <summary><span class="summary-title"><strong>12. Abstract Factory</strong>
+      <span>Produce matching families, not loose parts</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Creational</span>
+        <p class="gof-story">After letting each station choose its package, Maya adds catering options whose container and lid must come from one family, either compostable or recycled plastic. She wants to choose that family once instead of separately selecting each part.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Picking a container and a lid separately risks accidentally pairing a compostable container with a plastic lid if the two choices are not made together.</p></div>
+          <div><h4>The small design move</h4><p>Abstract Factory groups create_container() and create_lid() behind one PackagingFactory interface, with CompostablePackagingFactory and PlasticPackagingFactory each producing only matching-material pairs. Client code like assemble_package() just calls both methods on whichever factory it was given, never branching on material type itself.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>PackagingFactory</span><b aria-hidden="true">&rarr;</b><span>Container</span><b aria-hidden="true">&rarr;</b><span>Lid</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Produce matching families, not loose parts</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-abstract-factory">Copy</button></div>
+    <pre id="gof-code-abstract-factory" data-gof-python>class Lid:
+    material = &quot;unspecified&quot;
+
+class Container:
+    material = &quot;unspecified&quot;
+    def close(self, lid: Lid) -&gt; str:
+        if self.material != lid.material:
+            raise ValueError(&quot;container and lid materials must match&quot;)
+        return f&quot;{self.material} container with matching lid&quot;
+
+class FiberContainer(Container):
+    material = &quot;compostable fiber&quot;
+
+class FiberLid(Lid):
+    material = &quot;compostable fiber&quot;
+
+class PlasticContainer(Container):
+    material = &quot;recycled plastic&quot;
+
+class PlasticLid(Lid):
+    material = &quot;recycled plastic&quot;
+
+class PackagingFactory:
+    def create_container(self) -&gt; Container:
+        raise NotImplementedError
+    def create_lid(self) -&gt; Lid:
+        raise NotImplementedError
+
+class CompostablePackagingFactory(PackagingFactory):
+    def create_container(self) -&gt; Container:
+        return FiberContainer()
+    def create_lid(self) -&gt; Lid:
+        return FiberLid()
+
+class PlasticPackagingFactory(PackagingFactory):
+    def create_container(self) -&gt; Container:
+        return PlasticContainer()
+    def create_lid(self) -&gt; Lid:
+        return PlasticLid()
+
+def assemble_package(factory: PackagingFactory) -&gt; str:
+    container = factory.create_container()
+    return container.close(factory.create_lid())
+
+compostable_result = assemble_package(CompostablePackagingFactory())
+plastic_result = assemble_package(PlasticPackagingFactory())
+assert compostable_result == &quot;compostable fiber container with matching lid&quot;
+assert plastic_result == &quot;recycled plastic container with matching lid&quot;
+try:
+    FiberContainer().close(PlasticLid())
+except ValueError:
+    pass
+else:
+    raise RuntimeError(&quot;mixed packaging accepted&quot;)
+print(f&quot;{compostable_result} | {plastic_result}&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-abstract-factory">compostable fiber container with matching lid | recycled plastic container with matching lid</pre></div>
+        <h4>Read the example</h4><p>assemble_package() obtains both products through the same PackagingFactory interface, with no branch naming a concrete family. The runtime material check rejects mixed families in this toy model; actual lid fit, food suitability, and recycling requirements would need additional specifications.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>With only two material families and two products, hardcoding two tuples like (compostable_container, compostable_lid) might be simpler; Abstract Factory earns its cost once more product types or material families are added.</p></div>
+        <h4>Do not confuse it with...</h4><p>Unlike Factory Method's single overridden creation step inside one workflow, Abstract Factory groups multiple related creation methods that must stay consistent with each other as a family.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a mismatched test factory that returns a compostable container and a recycled-plastic lid.</span></summary>
+          <p>Subclass CompostablePackagingFactory and override create_lid() to return PlasticLid(); assemble_package() must raise ValueError.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> With catering's matching packaging families established, Maya is ready to examine how the kitchen will coordinate its shared resources.</p>
+      </div>
+    </details>
+            <p class="gof-act-exit">Orders can move from draft to preparation with appropriate packaging. Next, the kitchen must cooperate with couriers, screens, and support staff.</p>
+            <nav class="gof-pager" aria-label="Chapter 2 navigation">
+              <a href="#gof-act-1">&larr; Previous chapter</a>
+              <a href="#gof-act-3">Next chapter &rarr;</a>
+            </nav>
+          </section>
+
+          <section class="gof-act" id="gof-act-3" hidden>
+            <div class="section-title"><h2>Chapter 3: The kitchen meets the outside world</h2><p>Prepared meals need couriers and receipts. Maya adds integrations, readiness notifications, dispatch coordination, tracking, and refunds. We separate translation, collaboration, and access control.</p></div>
+            
+    <details class="gof-lesson" id="gof-adapter" data-gof-category="Structural" data-gof-number="13">
+      <summary><span class="summary-title"><strong>13. Adapter</strong>
+      <span>Translate the courier at the door</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Maya takes Neighborhood Kitchen's existing Order and packing workflow into neighborhood delivery. Her first courier speaks a different interface from the cafe's delivery code.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Every order caller would need to translate the courier's argument names and unpack its shipping-slip dictionary.</p></div>
+          <div><h4>The small design move</h4><p>Wrap the incompatible courier in an object exposing the dispatch method that order callers expect. Translate arguments and results at that boundary without changing either caller or courier.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Order caller</span><b aria-hidden="true">&rarr;</b><span>Courier adapter</span><b aria-hidden="true">&rarr;</b><span>Legacy courier</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Translate the courier at the door</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-adapter">Copy</button></div>
+    <pre id="gof-code-adapter" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Order:
+    order_id: str
+    address: str
+    packed_grams: int
+
+class LegacyCourier:
+    def __init__(self):
+        self.bookings = []
+
+    def book_parcel(self, destination, weight_kg):
+        self.bookings.append((destination, weight_kg))
+        return {&quot;slip_number&quot;: &quot;LOCAL-7&quot;}
+
+class CourierAdapter:
+    def __init__(self, courier):
+        self.courier = courier
+
+    def dispatch(self, order):
+        slip = self.courier.book_parcel(
+            destination=order.address,
+            weight_kg=order.packed_grams / 1000,
+        )
+        return f&quot;{order.order_id}:{slip['slip_number']}&quot;
+
+courier = LegacyCourier()  # In-memory stand-in, not a network client.
+delivery = CourierAdapter(courier)
+tracking = delivery.dispatch(Order(&quot;NK-42&quot;, &quot;8 Maple Lane&quot;, 1500))
+assert courier.bookings == [(&quot;8 Maple Lane&quot;, 1.5)]
+assert tracking == &quot;NK-42:LOCAL-7&quot;
+print(f&quot;Tracking: {tracking}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-adapter">Tracking: NK-42:LOCAL-7</pre></div>
+        <h4>Read the example</h4><p>dispatch accepts the cafe's Order while book_parcel requires a destination and kilograms. The adapter converts packed grams and the slip dictionary; the order caller never learns the courier's vocabulary.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>A wrapper adds another place to maintain when the courier changes; one translation function is simpler if no interchangeable delivery objects are needed.</p></div>
+        <h4>Do not confuse it with...</h4><p>Bridge separates two intentionally independent dimensions; Adapter repairs an existing interface mismatch.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>How would Maya support a courier whose slip key is parcel_id?</span></summary>
+          <p>Add another adapter with the same dispatch(order) method and translate parcel_id into the same tracking-string format.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> With parcels leaving the cafe, Maya needs receipts for customers and kitchen tickets for staff in both text and HTML.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-bridge" data-gof-category="Structural" data-gof-number="14">
+      <summary><span class="summary-title"><strong>14. Bridge</strong>
+      <span>Two documents cross two renderers</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Maya now attaches customer receipts and staff kitchen tickets to the delivery workflow. The earlier Order totals and packing counts must appear in both text and HTML without four document subclasses.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>ReceiptText, ReceiptHTML, KitchenTicketText, and KitchenTicketHTML duplicate document rules whenever Maya adds a format.</p></div>
+          <div><h4>The small design move</h4><p>Separate document types from rendering implementations and connect each document to a renderer. Let Receipt and KitchenTicket assemble their own content using shared heading, field, and finish primitives.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Receipt / KitchenTicket</span><b aria-hidden="true">&rarr;</b><span>Renderer primitives</span><b aria-hidden="true">&rarr;</b><span>Text / HTML</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Two documents cross two renderers</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-bridge">Copy</button></div>
+    <pre id="gof-code-bridge" data-gof-python>from html import escape
+
+class Text:
+    def heading(self, title):
+        return title
+    def field(self, label, value):
+        return f&quot;{label}: {value}&quot;
+    def finish(self, parts):
+        return &quot;\n&quot;.join(parts)
+
+class HTML:
+    def heading(self, title):
+        return f&quot;&lt;h1&gt;{escape(title)}&lt;/h1&gt;&quot;
+    def field(self, label, value):
+        return f&quot;&lt;p&gt;{escape(label)}: {escape(str(value))}&lt;/p&gt;&quot;
+    def finish(self, parts):
+        return &quot;&lt;article&gt;&quot; + &quot;&quot;.join(parts) + &quot;&lt;/article&gt;&quot;
+
+class Document:
+    def __init__(self, renderer):
+        self.renderer = renderer
+
+class Receipt(Document):
+    def render(self, total_cents):
+        r = self.renderer
+        return r.finish([r.heading(&quot;Receipt&quot;),
+                         r.field(&quot;Total cents&quot;, total_cents)])
+
+class KitchenTicket(Document):
+    def render(self, dish, quantity):
+        r = self.renderer
+        return r.finish([r.heading(&quot;Kitchen ticket&quot;),
+                         r.field(&quot;Dish&quot;, dish), r.field(&quot;Qty&quot;, quantity)])
+
+documents = [Receipt(Text()).render(1550),
+             Receipt(HTML()).render(1550),
+             KitchenTicket(Text()).render(&quot;Soup &amp; bread&quot;, 2),
+             KitchenTicket(HTML()).render(&quot;Soup &amp; bread&quot;, 2)]
+assert documents[0] == &quot;Receipt\nTotal cents: 1550&quot;
+assert &quot;Total cents: 1550&quot; in documents[1]
+assert documents[2].endswith(&quot;Qty: 2&quot;)
+assert &quot;Soup &amp;amp; bread&quot; in documents[3]
+print(&quot;\n&quot;.join(documents), end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-bridge">Receipt
+Total cents: 1550
+&lt;article&gt;&lt;h1&gt;Receipt&lt;/h1&gt;&lt;p&gt;Total cents: 1550&lt;/p&gt;&lt;/article&gt;
+Kitchen ticket
+Dish: Soup &amp; bread
+Qty: 2
+&lt;article&gt;&lt;h1&gt;Kitchen ticket&lt;/h1&gt;&lt;p&gt;Dish: Soup &amp;amp; bread&lt;/p&gt;&lt;p&gt;Qty: 2&lt;/p&gt;&lt;/article&gt;</pre></div>
+        <h4>Read the example</h4><p>Receipt and KitchenTicket each choose which fields belong in their document. Text and HTML implement several low-level rendering primitives, so document structure and rendering format can grow independently rather than swapping one whole-document algorithm.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Two connected families introduce extra objects and a primitive API; ordinary formatting functions are simpler when only one document or format exists.</p></div>
+        <h4>Do not confuse it with...</h4><p>Strategy typically swaps an algorithm within one task; this Bridge connects independently extensible document abstractions and rendering implementations.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Where should Maya add a delivery-label document?</span></summary>
+          <p>Add DeliveryLabel beside Receipt and KitchenTicket, composing the existing renderer primitives so both formats work without renderer changes.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> As delivery orders change state, Maya wants the counter display and customer notices to update without adding them to Order.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-observer" data-gof-category="Behavioral" data-gof-number="15">
+      <summary><span class="summary-title"><strong>15. Observer</strong>
+      <span>One order announces many updates</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya's delivery orders now move through the kitchen states introduced earlier. A counter display and customer notices need the same updates, but either listener may leave or fail.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Order contains direct calls to every display and notice sender, so adding a listener changes order-state code.</p></div>
+          <div><h4>The small design move</h4><p>Let callbacks subscribe to an Order and notify a snapshot of them after each state change. Commit the state first, isolate ordinary callback failures, continue notifying, and return failures without rolling back or retrying.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Order subject</span><b aria-hidden="true">&rarr;</b><span>Callback subscriptions</span><b aria-hidden="true">&rarr;</b><span>Counter / notices</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> One order announces many updates</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-observer">Copy</button></div>
+    <pre id="gof-code-observer" data-gof-python>class Order:
+    def __init__(self, order_id):
+        self.order_id = order_id
+        self.state = &quot;draft&quot;
+        self.listeners = []
+
+    def subscribe(self, callback):
+        if callback not in self.listeners:
+            self.listeners.append(callback)
+
+    def unsubscribe(self, callback):
+        if callback in self.listeners:
+            self.listeners.remove(callback)
+
+    def set_state(self, state):
+        self.state = state
+        failures = []
+        for callback in tuple(self.listeners):
+            try:
+                callback(self.order_id, state)
+            except Exception as error:
+                failures.append(str(error))
+        return failures
+
+seen = []
+def counter(order_id, state):
+    seen.append(f&quot;{order_id}:{state}&quot;)
+
+def broken_notice(order_id, state):
+    raise RuntimeError(&quot;notice unavailable&quot;)
+
+order = Order(&quot;NK-42&quot;)
+order.subscribe(broken_notice)
+order.subscribe(counter)
+failures = order.set_state(&quot;confirmed&quot;)
+assert failures == [&quot;notice unavailable&quot;]
+order.unsubscribe(counter)
+failures = order.set_state(&quot;packed&quot;)
+assert seen == [&quot;NK-42:confirmed&quot;]
+assert order.state == &quot;packed&quot; and failures == [&quot;notice unavailable&quot;]
+print(f&quot;Seen: {', '.join(seen)}&quot;)
+print(f&quot;State: {order.state}; failures: {len(failures)}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-observer">Seen: NK-42:confirmed
+State: packed; failures: 1</pre></div>
+        <h4>Read the example</h4><p>tuple(self.listeners) fixes the recipients of the current notification even if subscriptions change during a callback. The failing notice does not stop the counter, unsubscribe prevents later counter updates, and packed remains committed despite the second notice failure.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Notifications introduce ordering, lifetime, and failure-policy decisions; direct calls are simpler for one permanent listener, and durable delivery would need more than this synchronous demo.</p></div>
+        <h4>Do not confuse it with...</h4><p>Mediator directs collaboration between colleagues; Observer broadcasts a change without deciding how listeners should coordinate.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Should Maya expect an unsubscribed callback to disappear from an already-started notification?</span></summary>
+          <p>No: this snapshot policy keeps it in the current notification and removes it from subsequent notifications.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Notices can report progress, but Maya still needs someone to decide when the kitchen, packer, and courier may act.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-mediator" data-gof-category="Behavioral" data-gof-number="16">
+      <summary><span class="summary-title"><strong>16. Mediator</strong>
+      <span>One coordinator owns the handoffs</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya combines the earlier kitchen and packing workflows with the new courier handoff. The three workers must collaborate in order rather than merely observe status announcements.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Kitchen, packer, and courier call one another directly and each duplicates checks about whether food is ready to leave.</p></div>
+          <div><h4>The small design move</h4><p>Give each worker a delivery coordinator instead of references to the other workers. Make that mediator own the handoff stages, start the next worker, and reject out-of-order completion events.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Kitchen</span><b aria-hidden="true">&rarr;</b><span>Delivery coordinator</span><b aria-hidden="true">&rarr;</b><span>Packer / courier</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> One coordinator owns the handoffs</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-mediator">Copy</button></div>
+    <pre id="gof-code-mediator" data-gof-python>class Kitchen:
+    def __init__(self, coordinator):
+        self.coordinator = coordinator
+    def cook(self):
+        self.coordinator.log.append(&quot;kitchen cooked&quot;)
+        self.coordinator.cooked()
+
+class Packer:
+    def __init__(self, coordinator):
+        self.coordinator = coordinator
+    def pack(self):
+        self.coordinator.log.append(&quot;packer sealed&quot;)
+        self.coordinator.packed()
+
+class Courier:
+    def __init__(self, coordinator):
+        self.coordinator = coordinator
+    def collect(self):
+        self.coordinator.log.append(&quot;courier collected&quot;)
+        self.coordinator.collected()
+
+class DeliveryCoordinator:
+    def __init__(self):
+        self.stage, self.log = &quot;queued&quot;, []
+        self.kitchen = Kitchen(self)
+        self.packer = Packer(self)
+        self.courier = Courier(self)
+    def advance(self, expected, next_stage):
+        if self.stage != expected:
+            raise ValueError(&quot;out-of-order handoff&quot;)
+        self.stage = next_stage
+    def start(self):
+        self.advance(&quot;queued&quot;, &quot;cooking&quot;)
+        self.kitchen.cook()
+    def cooked(self):
+        self.advance(&quot;cooking&quot;, &quot;packing&quot;)
+        self.packer.pack()
+    def packed(self):
+        self.advance(&quot;packing&quot;, &quot;collecting&quot;)
+        self.courier.collect()
+    def collected(self):
+        self.advance(&quot;collecting&quot;, &quot;dispatched&quot;)
+
+job = DeliveryCoordinator()  # One coordinator per delivery order.
+job.start()
+assert job.stage == &quot;dispatched&quot;
+assert job.log == [&quot;kitchen cooked&quot;, &quot;packer sealed&quot;, &quot;courier collected&quot;]
+print(&quot; -&gt; &quot;.join(job.log), end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-mediator">kitchen cooked -&gt; packer sealed -&gt; courier collected</pre></div>
+        <h4>Read the example</h4><p>The cooked and packed callbacks return control to the mediator, which checks the stage before activating another worker. Workers know only their coordinator, so collaboration rules live in one place rather than in peer-to-peer calls.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>The coordinator can become a large collection of workflow rules; a straight-line function is simpler if workers never report events back.</p></div>
+        <h4>Do not confuse it with...</h4><p>Facade gives callers a simpler entry point; Mediator also receives colleague events and governs their ongoing interactions.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>What happens if a second collected() completion notification reaches the coordinator?</span></summary>
+          <p>A repeated job.collected() call raises ValueError because its expected stage is collecting, not dispatched. This guards completion notifications, not physical courier actions; validate before performing an external action if that action must not repeat.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Maya opens catering bookings and wants counter staff to reserve portions, quote delivery fees, and issue a kitchen ticket through one entry point.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-facade" data-gof-category="Structural" data-gof-number="17">
+      <summary><span class="summary-title"><strong>17. Facade</strong>
+      <span>One counter hides several steps</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Maya adds small catering bookings alongside Neighborhood Kitchen's deliveries. The stock checks, integer-cent fees, and kitchen tickets from earlier requirements now need a convenient counter-facing entry point.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Every counter caller must remember how to quote fees, reserve portions, and issue a ticket in the right order.</p></div>
+          <div><h4>The small design move</h4><p>Expose a book method that delegates to separate stock, fee, and ticket services. Keep those services usable on their own while the facade supplies the common booking sequence.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Counter caller</span><b aria-hidden="true">&rarr;</b><span>Catering facade</span><b aria-hidden="true">&rarr;</b><span>Stock / fees / tickets</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> One counter hides several steps</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-facade">Copy</button></div>
+    <pre id="gof-code-facade" data-gof-python>class Stock:
+    def __init__(self, portions):
+        self.portions = portions
+    def reserve(self, quantity):
+        if quantity &lt; 1 or quantity &gt; self.portions:
+            raise ValueError(&quot;not enough portions or invalid quantity&quot;)
+        self.portions -= quantity
+
+class Fees:
+    def quote(self, subtotal_cents):
+        return 0 if subtotal_cents &gt;= 5000 else 400
+
+class Tickets:
+    def __init__(self):
+        self.issued = []
+    def issue(self, quantity):
+        ticket_id = f&quot;K-{len(self.issued) + 1}&quot;
+        self.issued.append((ticket_id, quantity))
+        return ticket_id
+
+class CateringFacade:
+    def __init__(self, stock, fees, tickets):
+        self.stock, self.fees, self.tickets = stock, fees, tickets
+    def book(self, quantity, unit_cents):
+        if unit_cents &lt; 0:
+            raise ValueError(&quot;price must be nonnegative&quot;)
+        subtotal = quantity * unit_cents
+        total = subtotal + self.fees.quote(subtotal)
+        self.stock.reserve(quantity)
+        return self.tickets.issue(quantity), total
+
+stock, fees, tickets = Stock(20), Fees(), Tickets()
+counter = CateringFacade(stock, fees, tickets)
+ticket, total = counter.book(quantity=6, unit_cents=700)
+assert stock.portions == 14
+assert tickets.issued == [(&quot;K-1&quot;, 6)]
+assert total == 4600
+print(f&quot;Ticket: {ticket}; total cents: {total}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-facade">Ticket: K-1; total cents: 4600</pre></div>
+        <h4>Read the example</h4><p>book calculates the subtotal, asks Fees for the delivery charge, reserves real in-memory stock, and delegates ticket creation. Assertions inspect the services' changed state, so the facade is more than a method returning a canned booking.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>A facade can hide important failure details and does not make these steps transactional; direct service calls are simpler for a single caller, while fallible persistence would require rollback or compensation.</p></div>
+        <h4>Do not confuse it with...</h4><p>Adapter conforms an incompatible object to an expected interface; Facade introduces a convenient higher-level interface over several services.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>What total should Maya quote for eight portions at 700 cents each?</span></summary>
+          <p>5600 cents: the subtotal reaches the 5000-cent free-delivery threshold, so Fees adds zero.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Catering customers repeatedly check their booking status, so Maya wants to avoid asking the status source on every refresh.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-proxy" data-gof-category="Structural" data-gof-number="18">
+      <summary><span class="summary-title"><strong>18. Proxy</strong>
+      <span>Same door with a timed cache</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Maya's delivery and catering status page now reuses the order states introduced earlier. Repeated refreshes ask for the same status even when kitchen progress has not changed.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Every refresh reads the underlying status source, while an unlimited cache would conceal a completed courier handoff.</p></div>
+          <div><h4>The small design move</h4><p>Put a caching stand-in in front of the status source with the same get_status interface. Bound staleness with a time-to-live and provide explicit invalidation after known changes, using an injected clock for deterministic checks.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Status caller</span><b aria-hidden="true">&rarr;</b><span>Caching proxy</span><b aria-hidden="true">&rarr;</b><span>Status source</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Same door with a timed cache</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-proxy">Copy</button></div>
+    <pre id="gof-code-proxy" data-gof-python>class StatusSource:
+    def __init__(self):
+        self.states = {&quot;NK-42&quot;: &quot;cooking&quot;}
+        self.reads = 0
+    def get_status(self, order_id):
+        self.reads += 1
+        return self.states[order_id]
+
+class CachedStatus:
+    def __init__(self, source, clock, ttl):
+        if ttl &lt;= 0:
+            raise ValueError(&quot;ttl must be positive&quot;)
+        self.source, self.clock, self.ttl = source, clock, ttl
+        self.cache = {}
+    def get_status(self, order_id):
+        now = self.clock()
+        cached = self.cache.get(order_id)
+        if cached is not None and now &lt; cached[0]:
+            return cached[1]
+        status = self.source.get_status(order_id)
+        self.cache[order_id] = (now + self.ttl, status)
+        return status
+    def invalidate(self, order_id):
+        self.cache.pop(order_id, None)
+
+now = [0]
+source = StatusSource()
+status = CachedStatus(source, clock=lambda: now[0], ttl=10)
+initial = status.get_status(&quot;NK-42&quot;)
+assert initial == &quot;cooking&quot;
+source.states[&quot;NK-42&quot;] = &quot;packed&quot;
+now[0] = 9
+cached = status.get_status(&quot;NK-42&quot;)
+assert cached == &quot;cooking&quot; and source.reads == 1
+now[0] = 10
+refreshed = status.get_status(&quot;NK-42&quot;)
+assert refreshed == &quot;packed&quot; and source.reads == 2
+source.states[&quot;NK-42&quot;] = &quot;dispatched&quot;
+status.invalidate(&quot;NK-42&quot;)
+latest = status.get_status(&quot;NK-42&quot;)
+assert latest == &quot;dispatched&quot; and source.reads == 3
+print(f&quot;Status: {latest}&quot;)
+print(f&quot;Backend reads: {source.reads}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-proxy">Status: dispatched
+Backend reads: 3</pre></div>
+        <h4>Read the example</h4><p>Both objects offer get_status(order_id), so callers can use either without changing their status lookup. now &lt; cached[0] expires the entry exactly at the TTL boundary, while invalidate forces a fresh read immediately after a known update.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Caching permits bounded stale answers and consumes memory, with eviction needed for a growing order list; direct reads are simpler when the source is cheap, and a real elapsed-time clock should be monotonic.</p></div>
+        <h4>Do not confuse it with...</h4><p>Decorator adds responsibilities to an object; Proxy primarily controls access to the underlying object, here deciding whether a source read happens.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>At fake time 10, what would a second lookup do before invalidation?</span></summary>
+          <p>Return packed from the refreshed cache without another source read, because its new expiry is time 20.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> When a delivery goes wrong, Maya needs refund requests to reach the first staff member authorized for the amount.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-chain-of-responsibility" data-gof-category="Behavioral" data-gof-number="19">
+      <summary><span class="summary-title"><strong>19. Chain of Responsibility</strong>
+      <span>First capable person handles it</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya now handles refund requests for the delivery and catering orders built in earlier checkpoints. Refund amounts use the same integer cents as the cafe's totals and fees.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>The counter hard-codes every approval threshold and must change whenever Maya adds or reorders refund authorities.</p></div>
+          <div><h4>The small design move</h4><p>Link handlers from the counter through the shift lead to Maya, letting each accept a request or pass it onward. Stop at the first capable handler and return an explicit unhandled result when the chain ends.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Refund request</span><b aria-hidden="true">&rarr;</b><span>Linked approvers</span><b aria-hidden="true">&rarr;</b><span>Approval / unhandled</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> First capable person handles it</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-chain-of-responsibility">Copy</button></div>
+    <pre id="gof-code-chain-of-responsibility" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Refund:
+    order_id: str
+    cents: int
+    def __post_init__(self):
+        if self.cents &lt;= 0:
+            raise ValueError(&quot;refund must be positive&quot;)
+
+class Approver:
+    def __init__(self, name, limit_cents, successor=None):
+        self.name, self.limit_cents = name, limit_cents
+        self.successor = successor
+        self.handled = []
+    def handle(self, request):
+        if request.cents &lt;= self.limit_cents:
+            self.handled.append(request)
+            return f&quot;{request.cents}: approved by {self.name}&quot;
+        if self.successor is not None:
+            return self.successor.handle(request)
+        return f&quot;{request.cents}: unhandled; manual review&quot;
+
+maya = Approver(&quot;Maya&quot;, 10000)
+lead = Approver(&quot;shift lead&quot;, 2000, maya)
+counter = Approver(&quot;counter&quot;, 500, lead)
+results = [counter.handle(Refund(&quot;NK-42&quot;, cents))
+           for cents in (350, 1500, 8000, 15000)]
+assert [r.cents for r in counter.handled] == [350]
+assert [r.cents for r in lead.handled] == [1500]
+assert [r.cents for r in maya.handled] == [8000]
+assert results[-1] == &quot;15000: unhandled; manual review&quot;
+print(&quot;\n&quot;.join(results), end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-chain-of-responsibility">350: approved by counter
+1500: approved by shift lead
+8000: approved by Maya
+15000: unhandled; manual review</pre></div>
+        <h4>Read the example</h4><p>The immediate return after an approval prevents later handlers from processing the same request. successor.handle forwards only declined requests, and the final branch reports no approval instead of pretending the refund succeeded.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>A request may traverse many handlers or remain unhandled, and chain order changes who approves; a small fixed threshold table is simpler when routing never varies.</p></div>
+        <h4>Do not confuse it with...</h4><p>Decorator usually invokes the wrapped object while adding behavior; Chain of Responsibility may stop without forwarding because one handler has accepted the request.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Who handles a refund of exactly 2000 cents?</span></summary>
+          <p>The shift lead: the counter passes it on, the lead's inclusive limit accepts it, and Maya is never called.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> With delivery operations settled, Maya begins act four by expressing small catering eligibility rules explicitly.</p>
+      </div>
+    </details>
+            <p class="gof-act-exit">The counter, kitchen, and courier can work together. Growth now brings staff-authored rules, new reports, and memory pressure.</p>
+            <nav class="gof-pager" aria-label="Chapter 3 navigation">
+              <a href="#gof-act-2">&larr; Previous chapter</a>
+              <a href="#gof-act-4">Next chapter &rarr;</a>
+            </nav>
+          </section>
+
+          <section class="gof-act" id="gof-act-4" hidden>
+            <div class="section-title"><h2>Chapter 4: More capability, fewer assumptions</h2><p>The business serves community events. Staff need menu rules and reports; repeated recipe descriptions waste memory. Finally, Maya asks whether globally shared fee settings are really a good idea.</p></div>
+            
+    <details class="gof-lesson" id="gof-interpreter" data-gof-category="Behavioral" data-gof-number="20">
+      <summary><span class="summary-title"><strong>20. Interpreter</strong>
+      <span>Small rules become expression trees</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya offers catering delivery perks based on the earlier order subtotals and delivery zones. She wants a small rule language whose meaning remains visible when conditions are combined.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Repeated nested conditions obscure which subtotal and zone combinations qualify for a catering perk.</p></div>
+          <div><h4>The small design move</h4><p>Represent a tiny grammar as expression objects, with terminal predicates reading order facts and nonterminals combining expressions. Evaluate a hand-built abstract syntax tree without a parser or Python eval.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Order facts</span><b aria-hidden="true">&rarr;</b><span>Rule expression tree</span><b aria-hidden="true">&rarr;</b><span>Eligibility result</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Small rules become expression trees</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-interpreter">Copy</button></div>
+    <pre id="gof-code-interpreter" data-gof-python>from dataclasses import dataclass
+
+# Grammar: rule := subtotal &gt;= CENTS | zone = NAME
+#                | (rule AND rule) | (rule OR rule)
+# Hand-built AST only: there is no text parser.
+@dataclass(frozen=True)
+class Facts:
+    subtotal_cents: int
+    zone: str
+
+# Terminal predicates have no child expressions.
+@dataclass(frozen=True)
+class SubtotalAtLeast:
+    cents: int
+    def evaluate(self, facts):
+        return facts.subtotal_cents &gt;= self.cents
+
+@dataclass(frozen=True)
+class ZoneIs:
+    name: str
+    def evaluate(self, facts):
+        return facts.zone == self.name
+
+# Nonterminals recursively interpret their children.
+@dataclass(frozen=True)
+class And:
+    left: object
+    right: object
+    def evaluate(self, facts):
+        return self.left.evaluate(facts) and self.right.evaluate(facts)
+
+@dataclass(frozen=True)
+class Or:
+    left: object
+    right: object
+    def evaluate(self, facts):
+        return self.left.evaluate(facts) or self.right.evaluate(facts)
+
+rule = Or(And(SubtotalAtLeast(5000), ZoneIs(&quot;near&quot;)),
+          SubtotalAtLeast(10000))
+orders = [Facts(6000, &quot;near&quot;), Facts(6000, &quot;far&quot;), Facts(10000, &quot;far&quot;)]
+results = [rule.evaluate(order) for order in orders]
+assert results == [True, False, True]
+assert not rule.evaluate(Facts(4999, &quot;near&quot;))
+print(f&quot;Eligible: {results}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-interpreter">Eligible: [True, False, True]</pre></div>
+        <h4>Read the example</h4><p>SubtotalAtLeast and ZoneIs give meaning to the grammar's terminal predicates using the supplied facts. And and Or recursively evaluate child expressions with short-circuit semantics, so the object tree directly represents the composed rule.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Each grammar feature adds expression types and tests, and accepting text would also require a parser and validation; a normal predicate function is simpler for one fixed rule.</p></div>
+        <h4>Do not confuse it with...</h4><p>Composite supplies a tree shape; Interpreter gives that tree a language grammar and evaluation meaning.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Build Maya's rule for near-zone orders worth at least 8000 cents.</span></summary>
+          <p>Use And(ZoneIs(&quot;near&quot;), SubtotalAtLeast(8000)) and call evaluate with the order facts.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Catering also needs new calculations over Maya's existing Dish and Bundle menu structures without adding another method for every report.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-visitor" data-gof-category="Behavioral" data-gof-number="21">
+      <summary><span class="summary-title"><strong>21. Visitor</strong>
+      <span>Stable menu welcomes new operations</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Behavioral</span>
+        <p class="gof-story">Maya keeps the Dish and Bundle shapes established in the cafe's earlier menu work. Catering now needs both integer-cent totals and packing lists over those same stable node types.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Every new report adds another operation to both Dish and Bundle even though their menu structure has not changed.</p></div>
+          <div><h4>The small design move</h4><p>Give each node an accept method that dispatches to its type-specific visitor method. Put total calculation and packing-list generation in separate visitors, with each visitor owning traversal and accept never recursing.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Dish / Bundle nodes</span><b aria-hidden="true">&rarr;</b><span>accept dispatch</span><b aria-hidden="true">&rarr;</b><span>Total / packing visitors</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Stable menu welcomes new operations</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-visitor">Copy</button></div>
+    <pre id="gof-code-visitor" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Dish:
+    name: str
+    unit_cents: int
+    quantity: int
+    def accept(self, visitor):
+        return visitor.visit_dish(self)
+
+@dataclass(frozen=True)
+class Bundle:
+    name: str
+    children: tuple
+    def accept(self, visitor):
+        return visitor.visit_bundle(self)
+
+class Total:
+    def visit_dish(self, dish):
+        return dish.unit_cents * dish.quantity
+    def visit_bundle(self, bundle):
+        return sum(child.accept(self) for child in bundle.children)
+
+class PackingList:
+    def visit_dish(self, dish):
+        return [f&quot;{dish.name} x{dish.quantity}&quot;]
+    def visit_bundle(self, bundle):
+        return [entry for child in bundle.children
+                for entry in child.accept(self)]
+
+lunch = Bundle(&quot;Lunch&quot;, (
+    Dish(&quot;Soup&quot;, 650, 2),
+    Bundle(&quot;Side&quot;, (Dish(&quot;Bread&quot;, 250, 1),)),
+))
+total = lunch.accept(Total())
+packing = lunch.accept(PackingList())
+assert total == 1550
+assert packing == [&quot;Soup x2&quot;, &quot;Bread x1&quot;]
+print(f&quot;Total cents: {total}&quot;)
+print(&quot;Packing: &quot; + &quot;, &quot;.join(packing), end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-visitor">Total cents: 1550
+Packing: Soup x2, Bread x1</pre></div>
+        <h4>Read the example</h4><p>Dish.accept selects visit_dish and Bundle.accept selects visit_bundle, exposing the concrete node type to each operation. Only visitor methods traverse children, so each operation visits every tree occurrence once instead of double-counting through both accept and visitor recursion.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Adding an operation is easy, but adding another node type such as Extra requires updating every visitor; ordinary functions or node methods are simpler when the menu types change frequently.</p></div>
+        <h4>Do not confuse it with...</h4><p>Composite organizes Dish and Bundle into a tree; Visitor separates operations from that structure using type-specific accept dispatch.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Add a visitor that counts individual portions in this lunch.</span></summary>
+          <p>Make visit_dish return dish.quantity and visit_bundle sum child.accept(self); lunch.accept with that visitor returns 3.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> As catering orders multiply, Maya notices repeated recipe specifications occupying space on many otherwise different order lines.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-flyweight" data-gof-category="Structural" data-gof-number="22">
+      <summary><span class="summary-title"><strong>22. Flyweight</strong>
+      <span>Share recipes not customer choices</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Structural</span>
+        <p class="gof-story">Maya's catering orders reuse recipes across the Dish-based lines introduced earlier. Each line still needs its own quantity, packing notes, and charged price even when its recipe is identical.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Thousands of order lines retain duplicate recipe specifications, while sharing whole lines would incorrectly share quantities and customer notes.</p></div>
+          <div><h4>The small design move</h4><p>Intern immutable, versioned recipe specifications in a pool and let order lines reference them. Keep quantity, notes, and charged unit price outside the shared recipe as per-line state.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Recipe pool</span><b aria-hidden="true">&rarr;</b><span>Shared recipe spec</span><b aria-hidden="true">&rarr;</b><span>Individual order lines</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> Share recipes not customer choices</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-flyweight">Copy</button></div>
+    <pre id="gof-code-flyweight" data-gof-python>from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class RecipeSpec:
+    name: str
+    version: int
+    ingredients: tuple[tuple[str, int], ...]
+
+class RecipePool:
+    def __init__(self):
+        self.specs = {}
+    def get(self, name, version, ingredients):
+        ingredients = tuple((name, amount) for name, amount in ingredients)
+        key = (name, version)
+        if key not in self.specs:
+            self.specs[key] = RecipeSpec(name, version, ingredients)
+        elif self.specs[key].ingredients != ingredients:
+            raise ValueError(&quot;changed recipe needs a new version&quot;)
+        return self.specs[key]
+
+@dataclass
+class OrderLine:
+    recipe: RecipeSpec
+    quantity: int
+    notes: str
+    charged_unit_cents: int
+    def total_cents(self):
+        return self.quantity * self.charged_unit_cents
+
+pool = RecipePool()
+v1 = ((&quot;lentils_g&quot;, 120), (&quot;stock_ml&quot;, 300))
+v2 = ((&quot;lentils_g&quot;, 150), (&quot;stock_ml&quot;, 300))
+lines = [
+    OrderLine(pool.get(&quot;Soup&quot;, 1, v1), 1, &quot;no salt&quot;, 700),
+    OrderLine(pool.get(&quot;Soup&quot;, 1, v1), 3, &quot;extra herbs&quot;, 650),
+    OrderLine(pool.get(&quot;Soup&quot;, 2, v2), 1, &quot;standard&quot;, 700),
+]
+assert lines[0].recipe is lines[1].recipe
+assert lines[0].recipe is not lines[2].recipe
+assert len(pool.specs) == 2
+assert [(line.quantity, line.notes, line.charged_unit_cents) for line in lines] == [
+    (1, &quot;no salt&quot;, 700), (3, &quot;extra herbs&quot;, 650), (1, &quot;standard&quot;, 700)]
+assert sum(line.total_cents() for line in lines) == 3350
+print(f&quot;Lines: {len(lines)}; shared recipe specs: {len(pool.specs)}&quot;)
+print(f&quot;Charged cents: {sum(line.total_cents() for line in lines)}&quot;, end=&quot;&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-flyweight">Lines: 3; shared recipe specs: 2
+Charged cents: 3350</pre></div>
+        <h4>Read the example</h4><p>The pool keys by recipe name and version, sharing a frozen specification with immutable ingredient tuples while rejecting conflicting content for an existing version. Three live lines retain two recipe specifications rather than three, avoiding one retained duplicate specification and its ingredient structure rather than merely interning a name string. Quantity, notes, and historical charged price remain on each line, so sharing does not merge customer choices.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Pool lookups and retained entries have overhead, and savings depend on substantial repeated recipe data rather than a guaranteed byte count; separate small records are simpler for a tiny menu, with pool eviction needed for long-lived growth.</p></div>
+        <h4>Do not confuse it with...</h4><p>Singleton permits one instance of a class; Flyweight permits many shared instances, one per intrinsic recipe identity, while keeping extrinsic order data separate.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>Should Maya edit Soup version 1 when its lentil quantity changes?</span></summary>
+          <p>No: create a new version through the pool so existing lines retain their original specification and charged price.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Maya finally asks whether the cafe's shared default fee settings should also be a single globally accessible object.</p>
+      </div>
+    </details>
+
+    <details class="gof-lesson" id="gof-singleton" data-gof-category="Creational" data-gof-number="23">
+      <summary><span class="summary-title"><strong>23. Singleton</strong>
+      <span>One instance with visible costs</span></span></summary>
+      <div class="gof-lesson-body">
+        <span class="gof-family">Creational</span>
+        <p class="gof-story">Maya considers one shared default fee configuration after separating recipes from individual order prices. The earlier integer-cent fee calculation still needs predictable behavior in isolated tests and future catering branches.</p>
+        <div class="gof-change">
+          <div><h4>What hurts now</h4><p>Constructing settings at several call sites could create conflicting defaults, but hidden global settings could also leak changes between tests.</p></div>
+          <div><h4>The small design move</h4><p>Use __new__ to return one shared instance and expose a global accessor for that instance. Guard initialization so repeated construction does not overwrite settings, while explicitly limiting this non-thread-safe demo to one process.</p></div>
+        </div>
+        <div class="gof-roles" role="group" aria-label="Roles in this lesson"><span>Global settings accessor</span><b aria-hidden="true">&rarr;</b><span>Unique settings instance</span><b aria-hidden="true">&rarr;</b><span>Fee callers</span></div>
+        <p class="gof-hook"><strong>Remember:</strong> One instance with visible costs</p>
+        
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · standalone checkpoint</span><button class="copy-button" type="button" data-copy="gof-code-singleton">Copy</button></div>
+    <pre id="gof-code-singleton" data-gof-python>from types import SimpleNamespace
+
+# One-process, non-thread-safe demonstration only.
+class KitchenSettings:
+    _instance = None
+    def __new__(cls, fee_bps=500):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    def __init__(self, fee_bps=500):
+        if getattr(self, &quot;_initialized&quot;, False):
+            return  # First initialization wins; later arguments are ignored.
+        self.fee_bps = fee_bps
+        self._initialized = True
+
+def settings():
+    return KitchenSettings()
+
+def fee_cents(subtotal_cents, config=None):
+    if config is None:
+        config = settings()
+    return subtotal_cents * config.fee_bps // 10000
+
+# Isolate this test's class-level state, then restore the previous instance.
+saved = KitchenSettings._instance
+try:
+    KitchenSettings._instance = None
+    first = KitchenSettings(500)
+    second = KitchenSettings(900)
+    assert first is second is settings()
+    assert second.fee_bps == 500
+    assert fee_cents(2000) == 100
+    assert fee_cents(2000, SimpleNamespace(fee_bps=0)) == 0
+    print(f&quot;Same instance: {first is second}&quot;)
+    print(f&quot;Default fee cents: {fee_cents(2000)}&quot;)
+    print(f&quot;Injected fee cents: {fee_cents(2000, SimpleNamespace(fee_bps=0))}&quot;, end=&quot;&quot;)
+finally:
+    KitchenSettings._instance = saved</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-code-singleton">Same instance: True
+Default fee cents: 100
+Injected fee cents: 0</pre></div>
+        <h4>Read the example</h4><p>__new__ enforces identity on ordinary construction, while settings provides global access and the initialization guard prevents a second constructor call from resetting values. This demo is only one-process and non-thread-safe, not a cross-process uniqueness guarantee; its deliberate first-initialization-wins policy ignores later constructor arguments. The test restores class-level state in finally, and an explicitly injected configuration avoids the global dependency for fee tests.</p>
+        <div class="gof-restraint"><h4>What it costs / when to skip it</h4><p>Global access hides dependencies, complicates state isolation, and needs additional design for threads or multiple processes; creating one ordinary settings object at startup and injecting it is usually simpler and safer.</p></div>
+        <h4>Do not confuse it with...</h4><p>Flyweight shares many immutable values by key; Singleton controls one class instance and provides a global access point, without making that instance immutable.</p>
+        <details class="gof-recall">
+          <summary><span><strong>Try it before revealing</strong><br>How can Maya test a zero-fee catering branch without changing the singleton?</span></summary>
+          <p>Pass a separate configuration with fee_bps set to 0 into fee_cents, as the injected example does; prefer that explicit dependency for branch-specific behavior.</p>
+        </details>
+        <p class="gof-next"><strong>Next in the story:</strong> Maya can now review the whole cafe-to-catering journey and keep only the patterns that solve a concrete recurring problem.</p>
+      </div>
+    </details>
+            <p class="gof-act-exit">The goal was never to install 23 abstractions. Keep only the ones justified by a real source of change; the others remain tools you can recognize.</p>
+            <nav class="gof-pager" aria-label="Chapter 4 navigation">
+              <a href="#gof-act-3">&larr; Previous chapter</a>
+              <a href="#gof-together">See the project together &rarr;</a>
+            </nav>
+          </section>
+
+          <section class="note-section">
+            <div class="section-title"><h2>Review without rereading</h2><p>Use the index for a quick hook, or compare patterns that look alike.</p></div>
+            <details id="gof-index">
+              <summary><strong>All 23 patterns at a glance</strong></summary>
+              <div class="table-wrap"><table>
+                <thead><tr><th>Pattern</th><th>Family</th><th>Mental hook</th></tr></thead>
+                <tbody><tr><td><a href="#gof-strategy">01. Strategy</a></td><td>Behavioral</td><td>Swap fee logic without touching checkout</td></tr><tr><td><a href="#gof-decorator">02. Decorator</a></td><td>Structural</td><td>Stack add-ons around a plain dish</td></tr><tr><td><a href="#gof-composite">03. Composite</a></td><td>Structural</td><td>Treat single dishes and bundles alike</td></tr><tr><td><a href="#gof-iterator">04. Iterator</a></td><td>Behavioral</td><td>Walk order lines without exposing storage</td></tr><tr><td><a href="#gof-builder">05. Builder</a></td><td>Creational</td><td>Assemble step by step, finalize once</td></tr><tr><td><a href="#gof-prototype">06. Prototype</a></td><td>Creational</td><td>Clone a proven template, then customize</td></tr><tr><td><a href="#gof-command">07. Command</a></td><td>Behavioral</td><td>Wrap each edit as an undoable object</td></tr><tr><td><a href="#gof-memento">08. Memento</a></td><td>Behavioral</td><td>Snapshot and restore, but never submitted</td></tr><tr><td><a href="#gof-state">09. State</a></td><td>Behavioral</td><td>Let each stage own its own rules</td></tr><tr><td><a href="#gof-template-method">10. Template Method</a></td><td>Behavioral</td><td>Fix the sequence, vary each step</td></tr><tr><td><a href="#gof-factory-method">11. Factory Method</a></td><td>Creational</td><td>Let subclasses choose the package type</td></tr><tr><td><a href="#gof-abstract-factory">12. Abstract Factory</a></td><td>Creational</td><td>Produce matching families, not loose parts</td></tr><tr><td><a href="#gof-adapter">13. Adapter</a></td><td>Structural</td><td>Translate the courier at the door</td></tr><tr><td><a href="#gof-bridge">14. Bridge</a></td><td>Structural</td><td>Two documents cross two renderers</td></tr><tr><td><a href="#gof-observer">15. Observer</a></td><td>Behavioral</td><td>One order announces many updates</td></tr><tr><td><a href="#gof-mediator">16. Mediator</a></td><td>Behavioral</td><td>One coordinator owns the handoffs</td></tr><tr><td><a href="#gof-facade">17. Facade</a></td><td>Structural</td><td>One counter hides several steps</td></tr><tr><td><a href="#gof-proxy">18. Proxy</a></td><td>Structural</td><td>Same door with a timed cache</td></tr><tr><td><a href="#gof-chain-of-responsibility">19. Chain of Responsibility</a></td><td>Behavioral</td><td>First capable person handles it</td></tr><tr><td><a href="#gof-interpreter">20. Interpreter</a></td><td>Behavioral</td><td>Small rules become expression trees</td></tr><tr><td><a href="#gof-visitor">21. Visitor</a></td><td>Behavioral</td><td>Stable menu welcomes new operations</td></tr><tr><td><a href="#gof-flyweight">22. Flyweight</a></td><td>Structural</td><td>Share recipes not customer choices</td></tr><tr><td><a href="#gof-singleton">23. Singleton</a></td><td>Creational</td><td>One instance with visible costs</td></tr></tbody>
+              </table></div>
+            </details>
+            <details id="gof-contrasts">
+              <summary><strong>Similar shape, different intent</strong></summary>
+              <div class="table-wrap"><table>
+                <thead><tr><th>Contrast</th><th>Ask this</th><th>In our kitchen</th></tr></thead>
+                <tbody><tr><td>Strategy / State</td><td>Swap how a calculation works / change behavior as an order moves through its lifecycle.</td><td>Delivery-fee policy / Draft versus Cooking.</td></tr><tr><td>Factory Method / Abstract Factory</td><td>A subclass supplies a product to a workflow / a factory supplies a compatible family of products.</td><td>Prep workflow's container hook / matching container and lid kit.</td></tr><tr><td>Adapter / Bridge</td><td>Translate an existing incompatible interface / separate two independent axes of variation.</td><td>Legacy courier fields / receipt or ticket × text or HTML.</td></tr><tr><td>Decorator / Proxy</td><td>Add responsibilities / control access to an object with the same interface.</td><td>An extra on a dish / a cached tracking stand-in.</td></tr><tr><td>Composite / Decorator</td><td>A whole with many children / an enhancement around one child.</td><td>A family bundle / an added dish extra.</td></tr><tr><td>Command / Strategy</td><td>Capture a request to perform / supply an algorithm to use.</td><td>Add-item ticket / fee calculation.</td></tr><tr><td>Observer / Mediator</td><td>Announce to independent listeners / coordinate participants under a shared rule.</td><td>Order-ready notification / kitchen-packaging-courier dispatch.</td></tr><tr><td>Prototype / Memento</td><td>Create a new independently editable object / restore the same object's earlier state.</td><td>Next week's order / undo today's draft edit.</td></tr><tr><td>Template Method / Strategy</td><td>Inheritance fixes a workflow and overrides steps / composition swaps a behavior.</td><td>Prep checklist / delivery-fee policy.</td></tr><tr><td>Facade / Mediator</td><td>Simplify a subsystem's entry point / manage collaboration among colleagues.</td><td>Counter's place_order / dispatch readiness decisions.</td></tr></tbody>
+              </table></div>
+            </details>
+            <details id="gof-together">
+              <summary><span class="summary-title"><strong>Project checkpoint: an order from counter to ready</strong><span>Composite + Decorator + Strategy + Observer + Facade</span></span></summary>
+              <div class="gof-lesson-body">
+                <p>Maya's counter now places a customized family lunch, chooses delivery, and tells listeners when it is ready. This small checkpoint connects five of the lessons without forcing the other eighteen into the application.</p>
+                <div class="gof-roles"><span>Build a meal</span><b aria-hidden="true">&rarr;</b><span>Choose a fee</span><b aria-hidden="true">&rarr;</b><span>Place &amp; announce</span></div>
+                
+  <div class="card code-card">
+    <div class="code-label"><span>Python 3.10+ · connected project checkpoint</span><button class="copy-button" type="button" data-copy="gof-capstone-code">Copy</button></div>
+    <pre id="gof-capstone-code" data-gof-python>from dataclasses import dataclass
+
+# Composite and Decorator agree on a price() interface.
+@dataclass(frozen=True)
+class Dish:
+    name: str
+    cents: int
+
+    def price(self):
+        return self.cents
+
+@dataclass(frozen=True)
+class Extra:
+    dish: object
+    cents: int
+
+    def price(self):
+        return self.dish.price() + self.cents
+
+@dataclass(frozen=True)
+class Bundle:
+    children: tuple
+
+    def price(self):
+        return sum(child.price() for child in self.children)
+
+# Strategy: callers choose a fee calculation.
+def pickup(subtotal):
+    return 0
+
+def local_delivery(subtotal):
+    return 300
+
+# Observer: readiness has independent listeners.
+class ReadyEvents:
+    def __init__(self):
+        self.listeners = []
+
+    def subscribe(self, listener):
+        self.listeners.append(listener)
+
+    def announce(self, order_id):
+        for listener in tuple(self.listeners):
+            listener(order_id)
+
+# Facade: the counter uses one small entry point.
+class KitchenApp:
+    def __init__(self, events):
+        self.events = events
+        self.orders = {}
+
+    def place_order(self, order_id, meal, fee_policy):
+        if order_id in self.orders:
+            raise ValueError(&quot;Order ID already used&quot;)
+        subtotal = meal.price()
+        charged = subtotal + fee_policy(subtotal)
+        self.orders[order_id] = charged
+        return charged
+
+    def mark_ready(self, order_id):
+        if order_id not in self.orders:
+            raise KeyError(order_id)
+        self.events.announce(order_id)
+
+notifications = []
+events = ReadyEvents()
+events.subscribe(notifications.append)
+app = KitchenApp(events)
+family_lunch = Bundle((
+    Extra(Dish(&quot;Soup&quot;, 700), 100),
+    Dish(&quot;Bread&quot;, 200),
+))
+
+assert family_lunch.price() == 1000
+charged = app.place_order(&quot;K-1&quot;, family_lunch, local_delivery)
+assert charged == 1300
+app.mark_ready(&quot;K-1&quot;)
+assert notifications == [&quot;K-1&quot;]
+print(&quot;K-1: 1300 cents; ready notification sent&quot;)</pre>
+  </div>
+  <div class="gof-output"><span>Expected output</span><pre data-gof-output-for="gof-capstone-code">K-1: 1300 cents; ready notification sent</pre></div>
+                <p>The façade stores an order; it does not contact a real courier or charge a card. Repeated readiness calls would repeat notifications. Durable state, retries, and idempotency belong to a later production-design lesson.</p>
+              </div>
+            </details>
+            <details id="gof-sources">
+              <summary><strong>Why this story? Research &amp; sources</strong></summary>
+              <div class="gof-lesson-body">
+                <p><strong>A reasoned choice, not a proven universal best.</strong> A café is familiar, while its growth into catering naturally supplies nested bundles, editable drafts, compatible packaging, courier interfaces, reports, and shared recipes. That lets us teach difficult patterns without jumping between unrelated projects.</p>
+                <p>The progression is original. The GoF authors discuss motivating patterns through design problems and before/after examples. The IES guide recommends worked examples paired with exercises and connecting concrete and abstract representations. That supports the teaching method generally; it does not prove this specific Python story is optimal.</p>
+                <ul class="gof-sources">
+                  <li><a href="https://www.informit.com/store/design-patterns-elements-of-reusable-object-oriented-9780201633610" target="_blank" rel="noopener noreferrer">Original GoF book (publisher)</a> — the catalog and three families.</li>
+                  <li><a href="https://en.wikipedia.org/wiki/Design_Patterns" target="_blank" rel="noopener noreferrer">Complete categorized list</a> — all 23, including Interpreter.</li>
+                  <li><a href="https://www.informit.com/articles/article.aspx?p=1404056" target="_blank" rel="noopener noreferrer">GoF authors, 15 years later</a> — refactoring, teaching, and Singleton caveats.</li>
+                  <li><a href="https://ies.ed.gov/ncee/wwc/PracticeGuide/1" target="_blank" rel="noopener noreferrer">IES: Organizing Instruction and Study</a> — worked examples, practice, and explanatory questions.</li>
+                  <li><a href="https://refactoring.guru/design-patterns" target="_blank" rel="noopener noreferrer">Pattern intents and relationships</a> — useful for the contrast lessons; this modern catalog omits Interpreter.</li>
+                  <li><a href="https://sourcemaking.com/design_patterns/interpreter" target="_blank" rel="noopener noreferrer">Interpreter</a> — grammar and expression-tree semantics.</li>
+                  <li><a href="https://docs.python.org/3/library/copy.html" target="_blank" rel="noopener noreferrer">Python copying</a> and <a href="https://docs.python.org/3/tutorial/classes.html#generators" target="_blank" rel="noopener noreferrer">generators</a> — language-native tools for Prototype and Iterator.</li>
+                </ul>
+                <p>All kitchen examples and explanations here are original. The references explain the underlying patterns, not this particular project.</p>
+              </div>
+            </details>
+          </section>
+          <footer class="footer">Algorithm Notes / GoF Design Patterns · Read for intent, not for class count.</footer>
+        </div>
+      </article>
+      <!-- GOF_GUIDE_END -->
     </main>
   </div>
 
@@ -4387,6 +6336,7 @@ class Solution:
     let toastTimer;
 
     const topicNames = {
+      gof: "Design Patterns",
       binary: "Binary Search",
       backtracking: "Backtracking",
       arrays: "Arrays & Hashing",
@@ -4442,6 +6392,7 @@ class Solution:
     function topicFromHash() {
       const hash = location.hash.slice(1);
       const prefixes = {
+        "gof-": "gof",
         "bs-": "binary",
         "bt-": "backtracking",
         "arrays-": "arrays",
@@ -4537,5 +6488,42 @@ class Solution:
     setTheme(document.documentElement.dataset.theme);
     syncSidebarAccessibility();
   </script>
+
+
+  <!-- GOF_SCRIPT_START -->
+  <script>
+    (() => {
+      const guide = document.getElementById("topic-gof");
+      const buttons = [...guide.querySelectorAll("[data-gof-act]")];
+      const chapters = [...guide.querySelectorAll(".gof-act")];
+
+      function revealChapter(id) {
+        chapters.forEach(chapter => { chapter.hidden = chapter.id !== id; });
+        buttons.forEach(button => button.setAttribute("aria-pressed", String(id === "gof-act-" + button.dataset.gofAct)));
+      }
+
+      function revealHash() {
+        const hash = location.hash.slice(1);
+        if (!hash.startsWith("gof-")) return;
+        const target = document.getElementById(hash);
+        if (!target || !guide.contains(target)) return;
+        const chapter = target.closest(".gof-act");
+        if (chapter) revealChapter(chapter.id);
+        if (target instanceof HTMLDetailsElement) target.open = true;
+      }
+
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const id = "gof-act-" + button.dataset.gofAct;
+          revealChapter(id);
+          location.hash = id;
+        });
+      });
+      window.addEventListener("hashchange", revealHash);
+      revealHash();
+    })();
+  </script>
+  <!-- GOF_SCRIPT_END -->
+
 </body>
 </html>
